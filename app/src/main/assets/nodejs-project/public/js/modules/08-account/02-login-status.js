@@ -117,7 +117,7 @@ async function refreshLoginStatus(force) {
       syncLikeStatusForSongs(playQueue.concat(playlist || []));
     } else {
       neteasePlaylists = [];
-      userPlaylists = qqPlaylists.concat(kugouPlaylists || [], qishuiPlaylists || [], spotifyPlaylists || []);
+      userPlaylists = qqPlaylists.concat(kugouPlaylists || [], qishuiPlaylists || []);
       playlistCatalogRevision += 1;
       myPodcastCollections = [];
       myPodcastItems = {};
@@ -441,74 +441,6 @@ function startQishuiLoginStatusAutoRefresh() {
   }, 45000);
 }
 
-function normalizeSpotifyLoginStatus(info) {
-  var fallback = { provider: 'spotify', loggedIn: false, configured: false, oauthConfigured: false, oauthMissing: [], preview: false, nickname: 'Spotify', userId: '', accountId: '', avatar: '', product: '', membershipKnown: false, vipType: 0, vipLevel: 'none', isVip: false, isSvip: false, stale: false, reauthRequired: false, playbackKeyReady: false, playbackMode: 'recommend-match', tokenConfigured: false, tokenFileExists: false, credentialsFileExists: false, localConfigMissing: false, searchReady: false };
-  var loggedIn = !!(info && info.loggedIn);
-  var product = String(info && info.product || '').toLowerCase();
-  var isPremium = loggedIn && product === 'premium';
-  var capabilities = info && info.capabilities || {};
-  return Object.assign({}, fallback, info || {}, {
-    provider: 'spotify',
-    loggedIn: loggedIn,
-    configured: !!(info && (info.configured || loggedIn)),
-    oauthConfigured: !!(info && info.oauthConfigured),
-    oauthMissing: info && Array.isArray(info.oauthMissing) ? info.oauthMissing : [],
-    nickname: info && (info.nickname || info.displayName || info.display_name) || fallback.nickname,
-    userId: info && (info.userId || info.id) || '',
-    accountId: info && (info.accountId || info.account_id) || '',
-    avatar: info && info.avatar || '',
-    product: product,
-    membershipKnown: !!(info && (info.membershipKnown || product)),
-    vipType: isPremium ? 1 : 0,
-    vipLevel: isPremium ? 'vip' : 'none',
-    isVip: isPremium,
-    isSvip: false,
-    tokenConfigured: !!(info && info.tokenConfigured),
-    tokenFileExists: !!(info && info.tokenFileExists),
-    credentialsFileExists: !!(info && info.credentialsFileExists),
-    localConfigMissing: !!(info && info.localConfigMissing),
-    playbackKeyReady: loggedIn,
-    playbackMode: 'recommend-match',
-    searchReady: !!(capabilities.search || info && info.searchReady),
-    stale: !!(info && info.stale),
-    reauthRequired: !!(info && info.reauthRequired)
-  });
-}
-async function refreshSpotifyLoginStatus() {
-  try {
-    var info = await apiJson('/api/spotify/status?t=' + Date.now());
-    var prevLogged = !!spotifyLoginStatus.loggedIn;
-    spotifyLoginStatus = normalizeSpotifyLoginStatus(info);
-    auditProviderVipState('spotify', spotifyLoginStatus);
-    if (!spotifyLoginStatus.loggedIn) {
-      if (prevLogged || spotifyLoginWasLoggedIn) showToast(spotifyLoginStatus.stale ? 'Spotify 登录已失效' : 'Spotify 已退出');
-      spotifyPlaylists = [];
-      userPlaylists = userPlaylists.filter(function (pl) { return pl.provider !== 'spotify'; });
-      playlistCatalogRevision += 1;
-      homeDiscoverState.loaded = false;
-    } else if (!userPlaylists.some(function (pl) { return pl && pl.provider === 'spotify'; })) {
-      homeDiscoverState.loaded = false;
-      homeDiscoverState.loggedIn = true;
-      refreshUserPlaylists(true);
-      loadHomeDiscover(true);
-    }
-    spotifyLoginWasLoggedIn = !!spotifyLoginStatus.loggedIn;
-    if (!hasPlatformLogin(activeAccountProvider)) activeAccountProvider = firstLoggedProvider();
-    renderUserBtn();
-    return spotifyLoginStatus;
-  } catch (e) {
-    console.warn('Spotify login status failed:', e);
-    spotifyLoginStatus = normalizeSpotifyLoginStatus(null);
-    renderUserBtn();
-    return spotifyLoginStatus;
-  }
-}
-function startSpotifyLoginStatusAutoRefresh() {
-  if (spotifyLoginAutoRefreshTimer) clearInterval(spotifyLoginAutoRefreshTimer);
-  spotifyLoginAutoRefreshTimer = setInterval(function () {
-    refreshSpotifyLoginStatus().catch(function (e) { console.warn('Spotify login auto refresh failed:', e); });
-  }, 45000);
-}
 
 function renderUserBtn() {
   var btn = document.getElementById('user-btn');

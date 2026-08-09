@@ -482,8 +482,8 @@ function playlistCatalogProviderArray(provider) {
   if (provider === 'qq') return qqPlaylists;
   if (provider === 'kugou') return kugouPlaylists;
   if (provider === 'qishui') return qishuiPlaylists;
-  if (provider === 'spotify') return spotifyPlaylists;
   return [];
+
 }
 function setPlaylistCatalogProviderArray(provider, rows) {
   rows = Array.isArray(rows) ? rows : [];
@@ -491,21 +491,18 @@ function setPlaylistCatalogProviderArray(provider, rows) {
   else if (provider === 'qq') qqPlaylists = rows;
   else if (provider === 'kugou') kugouPlaylists = rows;
   else if (provider === 'qishui') qishuiPlaylists = rows;
-  else if (provider === 'spotify') spotifyPlaylists = rows;
 }
 function playlistCatalogProviderLoggedIn(provider) {
   if (provider === 'netease') return !!loginStatus.loggedIn;
   if (provider === 'qq') return !!qqLoginStatus.loggedIn;
   if (provider === 'kugou') return !!kugouLoginStatus.loggedIn;
   if (provider === 'qishui') return !!qishuiLoginStatus.loggedIn;
-  if (provider === 'spotify') return !!spotifyLoginStatus.loggedIn;
   return false;
 }
 function playlistCatalogPageUrl(provider, offset, limit) {
   offset = Math.max(0, Number(offset) || 0);
   limit = Math.max(1, Number(limit) || PLAYLIST_CATALOG_FIRST_PAGE_SIZE);
   if (provider === 'netease') return '/api/user/playlists?paged=1&limit=' + limit + '&offset=' + offset;
-  if (provider === 'spotify') return '/api/spotify/user/playlists?limit=' + Math.min(500, limit) + '&offset=' + offset;
   if (provider === 'qq') return '/api/qq/user/playlists';
   if (provider === 'kugou') return '/api/kugou/user/playlists';
   if (provider === 'qishui') return '/api/qishui/user/playlists';
@@ -527,7 +524,7 @@ function mergePlaylistCatalogRows(existing, incoming, provider) {
 }
 function rebuildUserPlaylistsFromCatalog(opts) {
   opts = opts || {};
-  userPlaylists = neteasePlaylists.concat(qqPlaylists, kugouPlaylists, qishuiPlaylists, spotifyPlaylists);
+  userPlaylists = neteasePlaylists.concat(qqPlaylists, kugouPlaylists, qishuiPlaylists);
   if (typeof applyUserPlaylistOrder === 'function') applyUserPlaylistOrder();
   playlistCatalogRevision += 1;
   renderUserPlaylistsList({ animate: !!opts.animate, reset: !!opts.reset, preserveScroll: opts.preserveScroll !== false });

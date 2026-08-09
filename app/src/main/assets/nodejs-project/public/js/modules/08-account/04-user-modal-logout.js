@@ -144,14 +144,12 @@ function resetAllProviderRendererLoginState() {
   qqLoginStatus = { provider: 'qq', loggedIn: false, preview: false, nickname: 'QQ 音乐', userId: '', avatar: '', vipType: 0, vipLevel: 'none', isVip: false, isSvip: false };
   kugouLoginStatus = { provider: 'kugou', loggedIn: false, preview: false, nickname: '酷狗音乐', userId: '', avatar: '', vipType: 0, vipLevel: 'none', isVip: false, isSvip: false, playbackKeyReady: false };
   qishuiLoginStatus = { provider: 'qishui', loggedIn: false, configured: false, oauthConfigured: false, oauthMissing: [], preview: false, nickname: '汽水音乐', userId: '', avatar: '', vipType: 0, vipLevel: 'none', isVip: false, isSvip: false, playbackKeyReady: false, playbackMode: 'recommend-match' };
-  spotifyLoginStatus = { provider: 'spotify', loggedIn: false, configured: false, oauthConfigured: false, oauthMissing: [], preview: false, nickname: 'Spotify', userId: '', avatar: '', product: '', vipType: 0, vipLevel: 'none', isVip: false, isSvip: false, playbackKeyReady: false, playbackMode: 'recommend-match', tokenConfigured: false, tokenFileExists: false, credentialsFileExists: false, localConfigMissing: false };
   loginStatusChecked = true;
   loginStatusCheckFailed = false;
   neteasePlaylists = [];
   qqPlaylists = [];
   kugouPlaylists = [];
   qishuiPlaylists = [];
-  spotifyPlaylists = [];
   userPlaylists = [];
   myPodcastCollections = [];
   myPodcastItems = {};
@@ -189,8 +187,7 @@ async function logoutAllAccountsAndResetEasterEgg() {
       apiJson('/api/logout'),
       apiJson('/api/qq/logout'),
       apiJson('/api/kugou/logout'),
-      apiJson('/api/qishui/logout'),
-      apiJson('/api/spotify/logout')
+      apiJson('/api/qishui/logout')
     ]);
     var result = await requestLoginEasterEggReplayReset();
     if (!result || !result.ok || result.unlocked || result.resetComplete === false) {
@@ -225,26 +222,6 @@ async function logoutAllAccountsAndResetEasterEgg() {
 }
 
 async function logoutActiveAccount() {
-  if (activeAccountProvider === 'spotify') {
-    try { await apiJson('/api/spotify/logout'); } catch (e) { }
-    try {
-      if (window.desktopWindow && typeof window.desktopWindow.clearSpotifyMusicLogin === 'function') {
-        await window.desktopWindow.clearSpotifyMusicLogin();
-      }
-    } catch (e) { }
-    spotifyLoginStatus = { provider: 'spotify', loggedIn: false, configured: false, oauthConfigured: false, oauthMissing: [], preview: false, nickname: 'Spotify', userId: '', avatar: '', product: '', vipType: 0, vipLevel: 'none', isVip: false, isSvip: false, playbackKeyReady: false, playbackMode: 'recommend-match', tokenConfigured: false, tokenFileExists: false, credentialsFileExists: false, localConfigMissing: false };
-    spotifyPlaylists = [];
-    userPlaylists = userPlaylists.filter(function (pl) { return pl.provider !== 'spotify'; });
-    playlistCatalogRevision += 1;
-    dualAccountMode = false;
-    activeAccountProvider = firstLoggedProvider();
-    renderUserBtn();
-    safeShelfRebuild('spotify-logout');
-    if (hasAnyPlatformLogin()) updateUserModalUi();
-    else closeUserModal();
-    showToast('已退出 Spotify');
-    return;
-  }
   if (activeAccountProvider === 'qishui') {
     try { await apiJson('/api/qishui/logout'); } catch (e) { }
     try {
@@ -317,7 +294,7 @@ async function doLogout() {
   neteasePlaylists = [];
   if (!hasPlatformLogin('netease') || loggedProviderCount() < 2) dualAccountMode = false;
   activeAccountProvider = firstLoggedProvider();
-  userPlaylists = qqPlaylists.concat(kugouPlaylists || [], qishuiPlaylists || [], spotifyPlaylists || []);
+  userPlaylists = qqPlaylists.concat(kugouPlaylists || [], qishuiPlaylists || []);
   playlistCatalogRevision += 1;
   myPodcastCollections = [];
   myPodcastItems = {};

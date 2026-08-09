@@ -188,13 +188,20 @@ public class MainActivity extends AppCompatActivity {
         modeSwitchButton = new Button(this);
         modeSwitchButton.setText("歌词舞台");
         modeSwitchButton.setTextColor(Color.WHITE);
-        modeSwitchButton.setTextSize(13);
+        modeSwitchButton.setTextSize(14);
+        modeSwitchButton.setAllCaps(false);
+        modeSwitchButton.setGravity(android.view.Gravity.CENTER);
         GradientDrawable bg = new GradientDrawable();
         bg.setColor(0x99000000);
-        bg.setCornerRadius(24);
+        bg.setCornerRadius(32);
         bg.setStroke(2, 0x55FFFFFF);
         modeSwitchButton.setBackground(bg);
-        modeSwitchButton.setPadding(28, 10, 28, 10);
+
+        float density = getResources().getDisplayMetrics().density;
+        int padH = (int) (20 * density + 0.5f);
+        int padV = (int) (13 * density + 0.5f);
+        modeSwitchButton.setPadding(padH, padV, padH, padV);
+
         modeSwitchButton.setOnClickListener(v -> {
             if (MODE_PLAYER.equals(currentMode)) {
                 switchMode(MODE_FOLIA);
@@ -207,8 +214,8 @@ public class MainActivity extends AppCompatActivity {
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.gravity = android.view.Gravity.TOP | android.view.Gravity.END;
-        lp.topMargin = 40;
-        lp.rightMargin = 24;
+        lp.topMargin = (int) (48 * density + 0.5f);
+        lp.rightMargin = (int) (18 * density + 0.5f);
         addContentView(modeSwitchButton, lp);
     }
 

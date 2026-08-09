@@ -157,9 +157,6 @@ function syncAlbumCollectionState(song) {
   if (config.provider === 'netease') {
     url = '/api/album/subscribe/check?ids=' + encodeURIComponent(config.id);
     responseField = 'subscribed';
-  } else if (config.provider === 'spotify') {
-    url = '/api/spotify/album/like/check?ids=' + encodeURIComponent(config.id);
-    responseField = 'liked';
   }
   if (!url) return;
   apiJson(url).then(function (result) {

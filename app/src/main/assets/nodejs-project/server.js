@@ -148,7 +148,6 @@ const LOGIN_EASTER_EGG_PROTECTED_ROUTES = new Set([
   '/api/kugou/login/cookie',
   '/api/qishui/login/qrcode',
   '/api/qishui/login/check',
-  '/api/spotify/config',
 ]);
 const UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
 const DEFAULT_COOKIE_FILE = path.join(__dirname, '.cookie');
@@ -4992,57 +4991,17 @@ const server = http.createServer(async (req, res) => {
   }
 
   if (pn === '/api/spotify/status') {
-    try {
-      sendJSON(res, await handleSpotifyStatus());
-    } catch (err) {
-      console.error('[SpotifyStatus]', err);
-      sendJSON(res, { provider: 'spotify', configured: false, loggedIn: false, error: err.message }, 500);
-    }
+    sendJSON(res, { provider: 'spotify', configured: false, loggedIn: false });
     return;
   }
 
   if (pn === '/api/spotify/config') {
-    try {
-      if (req.method !== 'POST') {
-        sendJSON(res, { provider: 'spotify', ok: false, error: 'METHOD_NOT_ALLOWED' }, 405);
-        return;
-      }
-      const body = await readRequestBody(req);
-      const saved = saveSpotifyConfig(body);
-      const status = await handleSpotifyStatus();
-      sendJSON(res, Object.assign({}, status, saved, {
-        ok: true,
-        configured: true,
-        oauthConfigured: true,
-        message: status.loggedIn
-          ? status.message
-          : 'Spotify Client ID 已保存，可打开官方 OAuth 授权。'
-      }));
-    } catch (err) {
-      console.error('[SpotifyConfig]', err);
-      const missing = err && err.missing || [];
-      sendJSON(res, {
-        provider: 'spotify',
-        ok: false,
-        configured: getSpotifyConfig().configured,
-        loggedIn: false,
-        error: err.code || err.message,
-        message: err.code === 'SPOTIFY_CLIENT_ID_REQUIRED' || err.message === 'SPOTIFY_CLIENT_ID_REQUIRED'
-          ? '请先粘贴 Spotify Client ID。'
-          : err.message,
-        missing,
-      }, err && err.code === 'SPOTIFY_CLIENT_ID_REQUIRED' ? 400 : 500);
-    }
+    sendJSON(res, { provider: 'spotify', ok: false, configured: false, error: 'SPOTIFY_LOGIN_REMOVED', message: 'Spotify 登录已从该版本移除。' }, 410);
     return;
   }
 
   if (pn === '/api/spotify/logout') {
-    try {
-      sendJSON(res, clearSpotifyToken());
-    } catch (err) {
-      console.error('[SpotifyLogout]', err);
-      sendJSON(res, { provider: 'spotify', ok: false, error: err.message }, 500);
-    }
+    sendJSON(res, { provider: 'spotify', ok: false, error: 'SPOTIFY_LOGIN_REMOVED', message: 'Spotify 登录已从该版本移除。' }, 410);
     return;
   }
 

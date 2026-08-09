@@ -1247,7 +1247,7 @@ function openHomePlatformRecommendations(preferredSource) {
       ? 'qishui'
       : (kugouLoginStatus && kugouLoginStatus.loggedIn
         ? 'kugou'
-        : (spotifyLoginStatus && (spotifyLoginStatus.loggedIn || spotifyLoginStatus.configured) ? 'spotify' : 'netease')));
+        : 'netease'));
   var source = /^(netease|qishui|qq|kugou|spotify)$/.test(String(preferredSource || '')) ? preferredSource : defaultSource;
   loadHomePlatformRecommendations(source, false);
   setTimeout(function () {
