@@ -1,0 +1,23 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+.cxx
+*.apk
+*.aab
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# 后端运行时数据（cookie、缓存、日志）
+app/src/main/assets/nodejs-project/.cookie
+app/src/main/assets/nodejs-project/.qq-cookie
+app/src/main/assets/nodejs-project/.kugou-cookie
+app/src/main/assets/nodejs-project/.qishui-cookie
+app/src/main/assets/nodejs-project/.qishui-qr-login.json
+app/src/main/assets/nodejs-project/data/
