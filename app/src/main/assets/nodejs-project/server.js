@@ -1714,6 +1714,45 @@ function mapDailyRecommendationSongs(raw) {
     .filter(song => song && song.id && song.name);
 }
 
+function formatRelativeTime(ts) {
+  if (!ts) return '';
+  const diff = Date.now() - Number(ts);
+  if (diff < 60 * 1000) return '刚刚';
+  if (diff < 60 * 60 * 1000) return Math.max(1, Math.floor(diff / 60000)) + ' 分钟前';
+  if (diff < 24 * 60 * 60 * 1000) return Math.max(1, Math.floor(diff / 3600000)) + ' 小时前';
+  if (diff < 7 * 24 * 60 * 60 * 1000) return Math.max(1, Math.floor(diff / 86400000)) + ' 天前';
+  const d = new Date(ts);
+  return (d.getMonth() + 1) + '月' + d.getDate() + '日';
+}
+
+async function buildDiscoverHomeReviews(dailySongs, cookie) {
+  if (!Array.isArray(dailySongs) || !dailySongs.length) return [];
+  const targets = dailySongs.slice(0, 5);
+  const tasks = targets.map(song =>
+    comment_music({ id: song.id, limit: 1, offset: 0, cookie, timestamp: Date.now() })
+      .then(r => {
+        const body = r.body || r || {};
+        const hotList = body.hotComments && Array.isArray(body.hotComments) ? body.hotComments : [];
+        const normalList = body.comments && Array.isArray(body.comments) ? body.comments : [];
+        const hot = hotList[0] || normalList[0];
+        if (!hot || !hot.content) return null;
+        const user = hot.user || {};
+        return {
+          content: String(hot.content || '').slice(0, 140),
+          likes: Number(hot.likedCount || 0),
+          user: { name: user.nickname || '匿名用户', avatar: user.avatarUrl || '' },
+          song: { id: song.id, name: song.name, artist: song.artist || '', cover: song.cover || '' },
+          time: formatRelativeTime(Number(hot.time || 0)),
+        };
+      })
+      .catch(() => null)
+  );
+  const settled = await Promise.allSettled(tasks);
+  return settled
+    .map(s => s.status === 'fulfilled' ? s.value : null)
+    .filter(Boolean);
+}
+
 async function handleDiscoverHome() {
   const info = await getLoginInfo();
   const loggedIn = !!(info && info.loggedIn);
@@ -1726,6 +1765,7 @@ async function handleDiscoverHome() {
       dailySongsComplete: true,
       playlists: [],
       podcasts: [],
+      reviews: [],
       mode: 'starter',
       updatedAt: Date.now(),
     };
@@ -1760,6 +1800,13 @@ async function handleDiscoverHome() {
     dailySongs = mapDailyRecommendationSongs(raw);
   }
 
+  let reviews = [];
+  try {
+    reviews = await buildDiscoverHomeReviews(dailySongs, userCookie);
+  } catch (err) {
+    console.warn('[DiscoverReviews]', err.message);
+  }
+
   return {
     loggedIn,
     user: loggedIn ? { userId: info.userId, nickname: info.nickname || '', avatar: info.avatar || '' } : null,
@@ -1768,6 +1815,7 @@ async function handleDiscoverHome() {
     dailySongsComplete: true,
     playlists: privatePlaylists.concat(publicPlaylists).slice(0, 10),
     podcasts: [],
+    reviews,
     updatedAt: Date.now(),
   };
 }

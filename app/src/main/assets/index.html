@@ -336,7 +336,39 @@ body.empty-home-active .home-visual{animation:home-visual-drift 8.8s ease-in-out
 .home-card-art{position:absolute;z-index:1;right:13px;bottom:13px;width:108px;height:108px;border-radius:24px;background:linear-gradient(135deg,color-mix(in srgb,var(--tone-a) 78%,#14141a),color-mix(in srgb,var(--tone-b) 68%,#09090d));background-size:cover;background-position:center;box-shadow:0 18px 50px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.16);transform:rotate(3deg);overflow:hidden}
 .home-card-art:not(.has-cover)::before{content:'';position:absolute;inset:18px;border-radius:50%;background:repeating-radial-gradient(circle,rgba(255,255,255,.16) 0 1px,transparent 1px 8px),conic-gradient(from 180deg,var(--tone-a),var(--tone-b),var(--tone-c),var(--tone-a));box-shadow:inset 0 0 0 14px rgba(5,5,8,.44),0 12px 28px rgba(0,0,0,.26)}
 .home-card-art::after{content:'';position:absolute;inset:0;background:linear-gradient(145deg,rgba(255,255,255,.12),transparent 42%,rgba(0,0,0,.28));pointer-events:none}
-.home-rail{align-self:stretch;min-height:0;display:grid;grid-template-rows:auto 1fr;gap:12px}
+.home-rail{align-self:stretch;min-height:0;display:grid;grid-template-rows:auto auto auto 1fr;gap:12px}
+.home-insight-dock{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(240px,.88fr);gap:12px;min-height:0}
+.home-insight-card{position:relative;min-width:0;min-height:118px;overflow:hidden;border:1px solid color-mix(in srgb,var(--home-accent) 10%,rgba(255,255,255,.085));border-radius:22px;background:linear-gradient(142deg,rgba(20,24,31,.60),rgba(7,9,13,.72));box-shadow:0 20px 62px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.075);color:#fff;backdrop-filter:blur(24px) saturate(1.14);-webkit-backdrop-filter:blur(24px) saturate(1.14)}
+.home-insight-card::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(340px 160px at 4% 0,rgba(var(--home-accent-rgb),.13),transparent 68%),linear-gradient(112deg,rgba(255,255,255,.045),transparent 33%,rgba(157,184,207,.045));opacity:.92}
+.home-insight-card>*{position:relative;z-index:1}
+.home-listen-card{padding:16px 18px}
+.home-insight-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.home-insight-kicker{font-size:9.5px;font-weight:800;letter-spacing:.18em;color:rgba(var(--home-accent-rgb),.82);white-space:nowrap}
+.home-insight-link{padding:4px 0;border:0;background:transparent;color:rgba(255,255,255,.42);font:700 10px inherit;cursor:pointer;font-family:inherit}
+.home-insight-link:hover{color:#fff}
+.home-listen-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.home-listen-metric{min-width:0}
+.home-listen-metric+.home-listen-metric{padding-left:12px;border-left:1px solid rgba(255,255,255,.085)}
+.home-listen-value{display:block;overflow:hidden;font-size:19px;font-weight:780;line-height:1.05;color:rgba(255,255,255,.96);white-space:nowrap;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.home-listen-label{display:block;overflow:hidden;margin-top:6px;font-size:10px;color:rgba(255,255,255,.43);white-space:nowrap;text-overflow:ellipsis}
+.home-next-card{width:100%;padding:14px 16px;display:grid;grid-template-columns:74px minmax(0,1fr) 26px;align-items:center;gap:12px;text-align:left;font-family:inherit;cursor:pointer;transition:transform .22s,border-color .22s,background .22s,box-shadow .22s}
+.home-next-card:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--home-accent) 38%,rgba(255,255,255,.18));background:linear-gradient(142deg,rgba(28,34,43,.72),rgba(7,9,14,.80));box-shadow:0 25px 72px rgba(0,0,0,.31),0 0 30px rgba(var(--home-accent-rgb),.075),inset 0 1px 0 rgba(255,255,255,.10)}
+.home-next-cover{width:74px;height:74px;border-radius:18px;background:linear-gradient(135deg,rgba(var(--home-accent-rgb),.30),rgba(157,184,207,.20));background-size:cover;background-position:center;box-shadow:0 14px 32px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.16);display:block}
+.home-next-copy{min-width:0;display:flex;flex-direction:column;gap:5px}
+.home-next-title{overflow:hidden;font-size:13.5px;font-weight:720;color:rgba(255,255,255,.94);white-space:nowrap;text-overflow:ellipsis}
+.home-next-sub{overflow:hidden;font-size:10.5px;color:rgba(255,255,255,.42);white-space:nowrap;text-overflow:ellipsis}
+.home-next-arrow{color:rgba(255,255,255,.34);font-size:22px;line-height:1;text-align:center}
+.home-for-you{min-width:0;min-height:0;overflow:hidden;border:1px solid color-mix(in srgb,var(--home-accent) 10%,rgba(255,255,255,.085));border-radius:22px;background:linear-gradient(142deg,rgba(20,24,31,.55),rgba(7,9,13,.68));box-shadow:0 18px 54px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(22px) saturate(1.12);-webkit-backdrop-filter:blur(22px) saturate(1.12);padding:14px 16px}
+.home-for-you-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+.home-for-you-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;min-height:0}
+.home-for-you-song{min-width:0;display:grid;grid-template-columns:46px minmax(0,1fr) 22px;align-items:center;gap:9px;padding:7px;border:1px solid transparent;border-radius:14px;background:rgba(255,255,255,.030);color:#fff;text-align:left;font-family:inherit;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+.home-for-you-song:hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--home-accent) 34%,rgba(255,255,255,.16));background:rgba(255,255,255,.058)}
+.home-for-you-cover{width:46px;height:46px;border-radius:11px;background:linear-gradient(135deg,rgba(var(--home-accent-rgb),.30),rgba(157,184,207,.18));background-size:cover;background-position:center;box-shadow:0 10px 22px rgba(0,0,0,.26),inset 0 1px 0 rgba(255,255,255,.14);display:block}
+.home-for-you-copy{min-width:0;display:flex;flex-direction:column;gap:3px}
+.home-for-you-name{overflow:hidden;font-size:12px;font-weight:680;color:rgba(255,255,255,.92);white-space:nowrap;text-overflow:ellipsis}
+.home-for-you-artist{overflow:hidden;font-size:10px;color:rgba(255,255,255,.40);white-space:nowrap;text-overflow:ellipsis}
+.home-for-you-play{color:rgba(var(--home-accent-rgb),.72);font-size:13px;line-height:1;text-align:center}
+.home-for-you-empty{grid-column:1 / -1;padding:10px 2px;font-size:11px;color:rgba(255,255,255,.38);text-align:center}
 .home-tile-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;min-height:0}
 .home-tile{--tone-a:#00f5d4;--tone-b:#2442ff;--tone-c:#f8f4ee;position:relative;min-width:0;min-height:166px;border:1px solid color-mix(in srgb,var(--home-accent) 9%,rgba(255,255,255,.075));border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.060),rgba(255,255,255,.025));box-shadow:0 16px 50px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.052);backdrop-filter:blur(20px) saturate(1.10);-webkit-backdrop-filter:blur(20px) saturate(1.10);padding:10px;color:#fff;text-align:left;font-family:inherit;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;overflow:hidden}
 .home-tile[data-home-tone="search"],.home-tile[data-home-tone="playlist"]{--tone-a:#9db8cf;--tone-b:#00f5d4;--tone-c:#2442ff}
@@ -352,14 +384,14 @@ body.empty-home-active .home-visual{animation:home-visual-drift 8.8s ease-in-out
 .home-skeleton{position:relative;overflow:hidden}
 .home-skeleton::before{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent,rgba(255,255,255,.08),transparent);transform:translateX(-100%);animation:home-shimmer 1.5s ease-in-out infinite}
 @keyframes home-shimmer{100%{transform:translateX(100%)}}
-@media (max-width:1120px){#empty-home{width:calc(100vw - 48px)}.empty-home-shell{grid-template-columns:minmax(300px,.88fr) minmax(440px,1.12fr);gap:12px}.home-hero{padding:24px}.home-hero-inner{grid-template-columns:minmax(0,1.16fr) minmax(128px,.52fr);column-gap:14px}.home-title{font-size:clamp(30px,4vw,48px);max-width:340px}.home-sub{font-size:12.5px;line-height:1.5;max-width:314px}.home-visual{height:198px;max-width:236px}.home-mosaic{height:142px;min-height:126px;margin-top:14px}.home-grid{gap:10px}.home-card{min-height:126px;padding:14px;border-radius:20px}.home-card-label{margin-bottom:6px}.home-card-title{font-size:16.5px;max-width:66%}.home-card-sub{margin-top:6px;font-size:10.8px;line-height:1.34;max-width:64%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.home-card-art{right:11px;bottom:11px;width:80px;height:80px;border-radius:18px}.home-card-art:not(.has-cover)::before{inset:14px;box-shadow:inset 0 0 0 11px rgba(5,5,8,.44),0 10px 24px rgba(0,0,0,.24)}.home-card::after{right:88px;bottom:14px;width:30px;height:56px}.home-rail{gap:8px}.home-tile{min-height:128px}.home-tile-cover{height:66px}}
+@media (max-width:1120px){#empty-home{width:calc(100vw - 48px)}.empty-home-shell{grid-template-columns:minmax(300px,.88fr) minmax(440px,1.12fr);gap:12px}.home-hero{padding:24px}.home-hero-inner{grid-template-columns:minmax(0,1.16fr) minmax(128px,.52fr);column-gap:14px}.home-title{font-size:clamp(30px,4vw,48px);max-width:340px}.home-sub{font-size:12.5px;line-height:1.5;max-width:314px}.home-visual{height:198px;max-width:236px}.home-mosaic{height:142px;min-height:126px;margin-top:14px}.home-grid{gap:10px}.home-card{min-height:126px;padding:14px;border-radius:20px}.home-card-label{margin-bottom:6px}.home-card-title{font-size:16.5px;max-width:66%}.home-card-sub{margin-top:6px;font-size:10.8px;line-height:1.34;max-width:64%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.home-card-art{right:11px;bottom:11px;width:80px;height:80px;border-radius:18px}.home-card-art:not(.has-cover)::before{inset:14px;box-shadow:inset 0 0 0 11px rgba(5,5,8,.44),0 10px 24px rgba(0,0,0,.24)}.home-card::after{right:88px;bottom:14px;width:30px;height:56px}.home-rail{gap:8px}.home-insight-dock{grid-template-columns:minmax(0,1.1fr) minmax(210px,.9fr);gap:10px}.home-insight-card{min-height:108px}.home-listen-card{padding:14px 15px}.home-listen-metrics{margin-top:12px}.home-listen-value{font-size:17px}.home-next-cover{width:66px;height:66px}.home-next-card{grid-template-columns:66px minmax(0,1fr) 24px}.home-for-you{padding:12px 14px}.home-for-you-song{grid-template-columns:40px minmax(0,1fr) 20px}.home-for-you-cover{width:40px;height:40px}.home-tile{min-height:128px}.home-tile-cover{height:66px}}
 @media (max-height:760px){#empty-home{top:132px;bottom:44px}.empty-home-shell{min-height:0}.home-hero{min-height:0;padding:22px}.home-hero-inner{grid-template-columns:minmax(0,1.22fr) minmax(136px,.54fr);column-gap:14px}.home-title{font-size:clamp(31px,3.75vw,48px);max-width:360px}.home-sub{font-size:12.5px;line-height:1.55;max-width:330px}.home-quick-row{margin-top:16px}.home-visual{height:206px;max-width:246px}.home-mosaic{height:132px;min-height:120px;margin-top:14px}.home-card{min-height:134px;padding:14px}.home-card-title{font-size:17px}.home-card-art{width:92px;height:92px;border-radius:21px}.home-tile{min-height:132px}.home-tile-cover{height:72px}}
 @media (max-height:700px){#empty-home{top:126px;bottom:34px}.home-hero{padding:20px}.home-title{font-size:clamp(28px,3.55vw,42px)}.home-sub{font-size:12px;line-height:1.42}.home-weather-meta{margin-top:12px}.home-quick-row{margin-top:12px}.home-visual{height:174px;max-width:216px}.home-mosaic{height:112px;min-height:104px}.home-card{min-height:112px;padding:12px}.home-card-title{font-size:15.5px}.home-card-sub{font-size:10.5px;line-height:1.28;-webkit-line-clamp:2}.home-card-art{width:70px;height:70px;border-radius:16px}.home-card::after{right:78px;height:48px}.home-tile{min-height:112px;padding:9px}.home-tile-cover{height:54px;margin-bottom:8px}.home-section-head{min-height:30px}}
 @media (max-width:840px){.empty-home-shell{grid-template-columns:minmax(250px,.86fr) minmax(360px,1.14fr)}.home-hero-inner{grid-template-columns:minmax(0,1fr)}.home-visual{display:none}.home-mosaic{height:124px;min-height:108px}.home-card{min-height:108px}.home-card-title{font-size:15px;max-width:68%}.home-card-sub{font-size:10.3px;max-width:62%}.home-card-art{width:66px;height:66px;border-radius:15px}.home-card::after{right:72px;width:24px;height:44px}.home-tile-title{font-size:11.5px}}
-@media (max-width:760px){#empty-home{top:150px;bottom:56px;width:calc(100vw - 40px)}.empty-home-shell{grid-template-columns:1fr;grid-template-rows:auto auto 1fr;overflow:auto;padding-bottom:4px}.home-hero{grid-row:auto;min-height:344px}.home-mosaic{height:172px;min-height:150px}.home-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-tile-row{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:760px){#empty-home{top:150px;bottom:56px;width:calc(100vw - 40px)}.empty-home-shell{grid-template-columns:1fr;grid-template-rows:auto auto auto auto 1fr;overflow:auto;padding-bottom:4px}.home-hero{grid-row:auto;min-height:344px}.home-mosaic{height:172px;min-height:150px}.home-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.home-insight-dock{grid-template-columns:minmax(0,1fr) minmax(200px,.9fr)}.home-for-you-list{grid-template-columns:repeat(3,minmax(0,1fr))}.home-tile-row{grid-template-columns:repeat(3,minmax(0,1fr))}}
 body.empty-home-active.controls-visible #empty-home{bottom:128px}
 @media (max-height:760px){body.empty-home-active.controls-visible #empty-home{bottom:112px}}
-@media (max-width:620px){#empty-home{top:146px;bottom:44px;width:calc(100vw - 24px)}.home-hero{padding:20px;border-radius:22px}.home-hero-inner{display:flex;flex-direction:column}.home-visual{display:none}.home-mosaic{display:none}.home-grid{grid-template-columns:1fr}.home-tile-row{grid-template-columns:repeat(2,minmax(0,1fr))}.home-tile-cover{height:auto;aspect-ratio:1}.home-tile-sub{display:block}.home-card-art{width:88px;height:88px}.home-card-title,.home-card-sub{max-width:68%}}
+@media (max-width:620px){#empty-home{top:146px;bottom:44px;width:calc(100vw - 24px)}.home-hero{padding:20px;border-radius:22px}.home-hero-inner{display:flex;flex-direction:column}.home-visual{display:none}.home-mosaic{display:none}.home-grid{grid-template-columns:1fr}.home-insight-dock{grid-template-columns:1fr}.home-for-you-list{grid-template-columns:1fr}.home-tile-row{grid-template-columns:repeat(2,minmax(0,1fr))}.home-tile-cover{height:auto;aspect-ratio:1}.home-tile-sub{display:block}.home-card-art{width:88px;height:88px}.home-card-title,.home-card-sub{max-width:68%}}
 .home-visual.generated{height:74px!important;max-width:300px!important;align-self:center!important}
 @media (max-height:760px){.home-visual.generated{height:64px!important;max-width:260px!important}}
 
@@ -2266,7 +2298,7 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
         <div class="home-card-sub" id="home-private-sub">从你的推荐和歌单里开播</div>
         <div class="home-card-art" id="home-private-art"></div>
       </button>
-      <button class="home-card" data-home-tone="mix" data-home-card="continue" type="button" onclick="playHomeRecent()">
+      <button class="home-card" data-home-tone="mix" data-home-card="continue" type="button" onclick="resumeHomePlayback()">
         <div class="home-card-label">Continue</div>
         <div class="home-card-title" id="home-continue-title">继续听</div>
         <div class="home-card-sub" id="home-continue-sub">最近播放会出现在这里</div>
@@ -2287,6 +2319,35 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
     </div>
 
     <div class="home-rail">
+      <div id="home-insight-dock" class="home-insight-dock" aria-label="今日聆听和音乐发现">
+        <section class="home-insight-card home-listen-card" aria-labelledby="home-listen-heading">
+          <div class="home-insight-head">
+            <div id="home-listen-heading" class="home-insight-kicker">LISTENING TODAY · 今日聆听</div>
+            <button class="home-insight-link" type="button" onclick="openHomeInsight()">查看偏好</button>
+          </div>
+          <div class="home-listen-metrics">
+            <div class="home-listen-metric"><strong id="home-today-time" class="home-listen-value">0 分钟</strong><span class="home-listen-label">聆听时长</span></div>
+            <div class="home-listen-metric"><strong id="home-today-count" class="home-listen-value">0 首</strong><span class="home-listen-label">今日歌曲</span></div>
+            <div class="home-listen-metric"><strong id="home-today-artist" class="home-listen-value">等待记录</strong><span id="home-today-streak" class="home-listen-label">开始播放后生成</span></div>
+          </div>
+        </section>
+        <button id="home-next-card" class="home-insight-card home-next-card" type="button" onclick="playHomeNextFromDock()" aria-label="播放下一首">
+          <span id="home-next-cover" class="home-next-cover" aria-hidden="true"></span>
+          <span class="home-next-copy">
+            <span class="home-insight-kicker">NEXT UP · 接下来播放</span>
+            <span id="home-next-title" class="home-next-title">队列里还没有歌曲</span>
+            <span id="home-next-sub" class="home-next-sub">点击打开音乐库</span>
+          </span>
+          <span class="home-next-arrow" aria-hidden="true">›</span>
+        </button>
+      </div>
+      <section class="home-for-you" aria-label="为你挑选">
+        <div class="home-for-you-head">
+          <span class="home-insight-kicker">FOR YOU · 为你挑选</span>
+          <button class="home-insight-link" type="button" onclick="playHomeForYouList()">播放全部</button>
+        </div>
+        <div id="home-for-you-list" class="home-for-you-list"></div>
+      </section>
       <div class="home-section-head">
         <div class="home-section-title" id="home-rail-title">为你准备</div>
         <div class="home-section-note" id="home-rail-note">正在整理推荐</div>
@@ -15763,6 +15824,204 @@ function topListenArtist() {
   list.sort(function(a, b){ return (b.plays - a.plays) || (b.listenMs - a.listenMs) || (b.lastPlayedAt - a.lastPlayedAt); });
   return list[0] || null;
 }
+function homeTodayDayKey(timestamp) {
+  var date = new Date(Number(timestamp) || Date.now());
+  return date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0') + '-' + String(date.getDate()).padStart(2, '0');
+}
+function homeTodayListenMetrics() {
+  var now = Date.now();
+  var today = new Date(now);
+  today.setHours(0, 0, 0, 0);
+  var todayStart = today.getTime();
+  var history = listenStatsState && Array.isArray(listenStatsState.history) ? listenStatsState.history : [];
+  var records = history.filter(function (record) {
+    return record && Number(record.playedAt) >= todayStart;
+  });
+  var keys = Object.create(null);
+  var artists = Object.create(null);
+  var listenMs = 0;
+  records.forEach(function (record) {
+    var key = String(record.key || record.id || (record.name || '') + '|' + (record.artist || ''));
+    if (key) keys[key] = true;
+    listenMs += Math.max(0, Number(record.listenMs) || 0);
+    String(record.artist || '').split(/\s*\/\s*|\s*,\s*|、|&/).forEach(function (name) {
+      name = name.trim();
+      if (!name) return;
+      artists[name] = (artists[name] || 0) + Math.max(1, Number(record.listenMs) || 1);
+    });
+  });
+  if (listenSession && Number(listenSession.startedAt) >= todayStart) {
+    listenMs += Math.max(0, Number(listenSession.listenMs) || 0);
+    if (listenSession.key) keys[listenSession.key] = true;
+  }
+  var topArtist = Object.keys(artists).sort(function (a, b) { return artists[b] - artists[a]; })[0] || '';
+  var dayMap = Object.create(null);
+  history.forEach(function (record) {
+    if (record && record.playedAt) dayMap[homeTodayDayKey(record.playedAt)] = true;
+  });
+  if (records.length || listenSession) dayMap[homeTodayDayKey(now)] = true;
+  var streak = 0;
+  var cursor = new Date(todayStart);
+  if (!dayMap[homeTodayDayKey(cursor.getTime())]) cursor.setDate(cursor.getDate() - 1);
+  while (dayMap[homeTodayDayKey(cursor.getTime())]) {
+    streak += 1;
+    cursor.setDate(cursor.getDate() - 1);
+  }
+  return {
+    listenMs: listenMs,
+    songCount: Object.keys(keys).length,
+    topArtist: topArtist,
+    streak: streak,
+  };
+}
+function homeTodayListenDurationText(milliseconds) {
+  var minutes = Math.floor(Math.max(0, Number(milliseconds) || 0) / 60000);
+  if (minutes < 60) return minutes + ' 分钟';
+  var hours = Math.floor(minutes / 60);
+  var rest = minutes % 60;
+  return hours + ' 小时' + (rest ? rest + ' 分' : '');
+}
+function homeNextQueueInfo() {
+  if (playQueue && playQueue.length) {
+    var index = currentIdx >= 0 ? (currentIdx + 1) % playQueue.length : 0;
+    return { song: playQueue[index], index: index, queued: true };
+  }
+  var discoverSong = homeDiscoverState && homeDiscoverState.songs && homeDiscoverState.songs[0] || null;
+  var recentRecord = homeListenSummary().recent;
+  var recentSong = recentRecord ? songFromListenRecord(recentRecord) : null;
+  return { song: discoverSong || recentSong || null, index: 0, queued: false };
+}
+function renderHomeTodayDock() {
+  var dock = document.getElementById('home-insight-dock');
+  if (!dock) return;
+  var metrics = homeTodayListenMetrics();
+  var timeEl = document.getElementById('home-today-time');
+  var countEl = document.getElementById('home-today-count');
+  var artistEl = document.getElementById('home-today-artist');
+  var streakEl = document.getElementById('home-today-streak');
+  if (timeEl) timeEl.textContent = homeTodayListenDurationText(metrics.listenMs);
+  if (countEl) countEl.textContent = metrics.songCount + ' 首';
+  if (artistEl) artistEl.textContent = metrics.topArtist || '等待记录';
+  if (streakEl) streakEl.textContent = metrics.streak ? ('连续聆听 ' + metrics.streak + ' 天') : '开始播放后生成';
+  var next = homeNextQueueInfo();
+  var song = next.song;
+  var titleEl = document.getElementById('home-next-title');
+  var subEl = document.getElementById('home-next-sub');
+  var coverEl = document.getElementById('home-next-cover');
+  var card = document.getElementById('home-next-card');
+  if (titleEl) titleEl.textContent = song ? (song.name || song.title || '未知歌曲') : '队列里还没有歌曲';
+  if (subEl) subEl.textContent = song ? (songSourceLabel(song) || '点击播放') : '点击打开音乐库';
+  var coverUrl = song ? songCoverSrc(song, 220) : '';
+  if (coverEl) {
+    coverEl.style.backgroundImage = coverUrl ? 'url("' + cssImageUrl(coverUrl) + '")' : '';
+    coverEl.classList.toggle('has-cover', !!coverUrl);
+  }
+  if (card) card.setAttribute('aria-label', song ? ('播放下一首：' + (song.name || song.title || '未知歌曲')) : '打开音乐库');
+}
+function playHomeNextFromDock() {
+  var next = homeNextQueueInfo();
+  if (next.song && next.queued) {
+    homeForcedOpen = false;
+    homeSuppressed = false;
+    setHomeControlsLocked(false);
+    forcePlaybackControlsInteractive();
+    playQueueAt(next.index, { manual: true, context: { type: 'home-next', playlistName: '接下来播放' } })
+      .catch(function (error) { console.warn('[HomeNext]', error); });
+    return;
+  }
+  if (next.song) {
+    playQueue = [cloneSong(next.song)];
+    currentIdx = 0;
+    safeRenderQueuePanel('home-today-next');
+    safeShelfRebuild('home-today-next', true);
+    forcePlaybackControlsInteractive();
+    playQueueAt(0, { manual: true, context: { type: 'home-next', playlistName: '首页推荐' } })
+      .catch(function (error) { console.warn('[HomeNextStart]', error); });
+    return;
+  }
+  openHomeLibrary();
+}
+function homeForYouDayNumber() {
+  var now = new Date();
+  return Math.floor(new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime() / 86400000);
+}
+function homeForYouSongs() {
+  var candidates = [];
+  var seen = Object.create(null);
+  function addSongs(songs) {
+    (Array.isArray(songs) ? songs : []).forEach(function (song) {
+      if (!song) return;
+      var key = '';
+      try { key = queueItemKey(song); } catch (_error) { }
+      if (!key) key = song.id || song.mid || song.songmid || song.mediaMid || song.localPath || song.url || ((song.name || song.title || '') + '|' + (song.artist || ''));
+      if (!key || seen[key]) return;
+      seen[key] = true;
+      candidates.push(song);
+    });
+  }
+  addSongs(homeDiscoverState && homeDiscoverState.songs);
+  addSongs(playQueue);
+  if (Array.isArray(userPlaylists)) {
+    userPlaylists.forEach(function (item) { addSongs(item && item.songs); });
+  }
+  addSongs(playlist);
+  if (currentLocalSong) addSongs([currentLocalSong]);
+  if (candidates.length <= 3) return candidates.slice();
+  var day = homeForYouDayNumber();
+  var step = Math.max(1, Math.floor(candidates.length / 3));
+  var picked = [];
+  var pickedKeys = Object.create(null);
+  for (var index = 0; index < candidates.length && picked.length < 3; index += 1) {
+    var candidate = candidates[(day * 17 + index * step + index * 7) % candidates.length];
+    var candidateKey = '';
+    try { candidateKey = queueItemKey(candidate); } catch (_error) { }
+    if (!candidateKey) candidateKey = candidate && (candidate.id || candidate.name || candidate.title || '');
+    if (!candidateKey || pickedKeys[candidateKey]) continue;
+    pickedKeys[candidateKey] = true;
+    picked.push(candidate);
+  }
+  return picked;
+}
+function renderHomeForYou() {
+  var list = document.getElementById('home-for-you-list');
+  if (!list) return;
+  var songs = homeForYouSongs();
+  if (!songs.length) {
+    list.innerHTML = '<div class="home-for-you-empty">播放几首歌后会生成你的专属推荐</div>';
+    return;
+  }
+  list.innerHTML = songs.map(function (song, index) {
+    var coverUrl = songCoverSrc(song, 120);
+    var coverStyle = coverUrl ? ' style="background-image:url(&quot;' + escHtml(cssImageUrl(coverUrl)) + '&quot;)"' : '';
+    return '<button class="home-for-you-song" type="button" onclick="playHomeForYouAt(' + index + ')">' +
+      '<span class="home-for-you-cover"' + coverStyle + '></span>' +
+      '<span class="home-for-you-copy"><span class="home-for-you-name">' + escHtml(song.name || song.title || '未知歌曲') + '</span>' +
+      '<span class="home-for-you-artist">' + escHtml(song.artist || songSourceLabel(song) || 'Mineradio') + '</span></span>' +
+      '<span class="home-for-you-play">›</span></button>';
+  }).join('');
+  list._homeForYouSongs = songs;
+}
+function playHomeForYouAt(index) {
+  var list = document.getElementById('home-for-you-list');
+  var songs = list && list._homeForYouSongs || homeForYouSongs();
+  if (!songs.length) {
+    openHomeLibrary();
+    return;
+  }
+  homeForcedOpen = false;
+  homeSuppressed = false;
+  setHomeControlsLocked(false);
+  playQueue = songs.map(cloneSong);
+  currentIdx = Math.max(0, Math.min(playQueue.length - 1, Number(index) || 0));
+  safeRenderQueuePanel('home-for-you', { scrollCurrent: true });
+  safeShelfRebuild('home-for-you', true);
+  forcePlaybackControlsInteractive();
+  playQueueAt(currentIdx, { manual: true, context: { type: 'home-for-you', playlistName: '为你挑选' } })
+    .catch(function (error) { console.warn('[HomeForYou]', error); });
+}
+function playHomeForYouList() {
+  playHomeForYouAt(0);
+}
 function homeListenSummary() {
   var recent = (listenStatsState.history || [])[0] || null;
   var topSong = mostPlayedSong();
@@ -15949,6 +16208,8 @@ function renderHomeDiscover() {
     setHomeArt('home-library-art', cardSongC && cardSongC.cover || summary.topSong && summary.topSong.cover || summary.recent && summary.recent.cover || podcastItem && podcastItem.cover, 280);
   }
   renderHomeTiles();
+  renderHomeTodayDock();
+  renderHomeForYou();
   renderHomeReviews();
 }
 var homeMockReviews = [
@@ -16695,6 +16956,30 @@ function songFromListenRecord(record) {
     artist: record.artist || '',
     cover: record.cover || '',
   };
+}
+async function resumeHomePlayback() {
+  homeForcedOpen = false;
+  homeSuppressed = false;
+  setHomeControlsLocked(false);
+  if (playQueue && playQueue.length && currentIdx >= 0 && playQueue[currentIdx]) {
+    forcePlaybackControlsInteractive();
+    updateEmptyHomeVisibility();
+    if (playing || (audio && !audio.paused)) return;
+    if (typeof togglePlay === 'function') {
+      Promise.resolve(togglePlay()).catch(function (error) { console.warn('[HomeResume]', error); });
+    }
+    return;
+  }
+  var recent = homeListenSummary().recent;
+  if (recent) {
+    try {
+      await playHomeRecent(recent);
+      return;
+    } catch (error) {
+      console.warn('[HomeRecent]', error);
+    }
+  }
+  await playHomeDaily();
 }
 async function playHomeRecent(record) {
   record = record || homeListenSummary().recent;
@@ -26809,6 +27094,10 @@ function syncDesktopOverlayState() {
 setInterval(function(){
   if (fx && (fx.desktopLyrics || fx.wallpaperMode)) syncDesktopOverlayState();
 }, 320);
+
+setInterval(function(){
+  if (emptyHomeActive && audio && !audio.paused) renderHomeTodayDock();
+}, 15000);
 
 // 全屏
 var desktopFullscreenActive = false;
