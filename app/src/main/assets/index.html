@@ -1916,6 +1916,11 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
     bottom: 3px;
     border-radius: 18px;
   }
+  body.diy-mode #bottom-bar,
+  body.diy-mode #bottom-bar.stage-mode {
+    left: 50%;
+    width: calc(100vw - 12px);
+  }
   #controls,
   body.simple-mode #controls,
   body.diy-mode #controls {
@@ -2043,6 +2048,42 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
   }
 }
 
+/* ---------- 横屏 DIY 模式：视觉控制台收纳到右上角 ---------- */
+@media (orientation: landscape) and (max-height: 500px) {
+  body.diy-mode #fx-fab {
+    right: 14px;
+    bottom: auto;
+    top: 12px;
+    width: 44px;
+    height: 44px;
+  }
+  body.diy-mode #fx-fab svg {
+    width: 18px;
+    height: 18px;
+  }
+  body.diy-mode #fx-fab-hide-btn {
+    right: 62px;
+    bottom: auto;
+    top: 20px;
+  }
+  body.diy-mode #fx-panel {
+    right: -460px;
+    bottom: 10px;
+    top: 12px;
+    width: min(400px, calc(100vw - 16px));
+    max-height: calc(100vh - 20px);
+    padding: 14px 14px 16px;
+    border-radius: 18px;
+  }
+  body.diy-mode #fx-panel.show,
+  body.diy-mode #fx-panel.peek {
+    right: 8px;
+  }
+  body.diy-mode.controls-visible #fx-fab {
+    top: 12px;
+  }
+}
+
 /* ---------- 横屏主页 ---------- */
 @media (orientation: landscape) and (max-height: 500px) {
   #empty-home {
@@ -2099,8 +2140,60 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
     min-height: 84px;
     padding: 7px;
   }
+  .home-rail {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .home-insight-dock {
+    grid-template-columns: minmax(0, 1fr) minmax(170px, .9fr);
+    gap: 8px;
+  }
+  .home-insight-card {
+    min-height: 0;
+  }
+  .home-listen-card {
+    padding: 10px 12px;
+  }
+  .home-listen-metrics {
+    margin-top: 8px;
+  }
+  .home-listen-value {
+    font-size: 14px;
+  }
+  .home-next-cover {
+    width: 48px;
+    height: 48px;
+  }
+  .home-next-card {
+    grid-template-columns: 48px minmax(0, 1fr) 20px;
+    padding: 8px 12px;
+  }
+  .home-next-title {
+    font-size: 12px;
+  }
+  .home-next-sub {
+    font-size: 9.5px;
+  }
+  .home-for-you {
+    padding: 10px 12px;
+  }
+  .home-for-you-song {
+    grid-template-columns: 36px minmax(0, 1fr) 18px;
+    gap: 7px;
+    padding: 5px;
+  }
+  .home-for-you-cover {
+    width: 36px;
+    height: 36px;
+  }
+  .home-for-you-name {
+    font-size: 11px;
+  }
+  .home-for-you-artist {
+    font-size: 9px;
+  }
   .home-tile-cover {
-    height: 44px;
+    height: 40px;
     margin-bottom: 4px;
   }
 }
