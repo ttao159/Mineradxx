@@ -110,9 +110,6 @@ body.idle-guide-on #idle-guide-canvas{opacity:1!important}
 body.home-wallpaper-preview #idle-guide-canvas{opacity:0!important;visibility:hidden!important}
 body.idle-guide-interactive #canvas-container{cursor:grab}
 body.idle-guide-dragging #canvas-container{cursor:grabbing}
-#free-camera-hint{position:fixed;z-index:22;left:24px;bottom:92px;max-width:min(420px,calc(100vw - 48px));padding:10px 12px;border-radius:12px;border:1px solid rgba(255,255,255,.10);background:rgba(5,6,8,.78);box-shadow:0 18px 52px rgba(0,0,0,.42),inset 0 1px 0 rgba(255,255,255,.08);backdrop-filter:blur(18px) saturate(1.08);-webkit-backdrop-filter:blur(18px) saturate(1.08);color:rgba(255,255,255,.72);font-size:11px;line-height:1.45;opacity:0;transform:translateY(8px);pointer-events:none;transition:opacity .2s,transform .2s}
-#free-camera-hint.show{opacity:1;transform:translateY(0)}
-#free-camera-hint b{color:#fff;font-weight:780}
 
 /* ---------- 启动页 ---------- */
 #splash{position:fixed;inset:0;z-index:300;background:#010304;display:flex;align-items:center;justify-content:center;pointer-events:auto;opacity:1;overflow:hidden;transition:opacity 1180ms cubic-bezier(.16,1,.3,1),transform 1180ms cubic-bezier(.16,1,.3,1);box-shadow:inset 0 0 180px rgba(0,0,0,.88)}
@@ -624,6 +621,9 @@ body.home-controls-locked #bottom-bar{opacity:0!important;pointer-events:none!im
 .ctrl-btn:hover{color:#fff;background:rgba(255,255,255,.045);transform:translateY(-1px);text-shadow:0 0 10px rgba(0,245,212,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.045)}
 .ctrl-btn:active{transform:translateY(0) scale(.96)}
 .ctrl-btn.active{color:rgba(210,244,241,.90);text-shadow:0 0 12px rgba(0,245,212,.16)}
+.ctrl-btn.on{color:rgba(210,244,241,.90);text-shadow:0 0 12px rgba(0,245,212,.16)}
+.rotate-toggle-btn #rotate-icon{transition:transform .34s cubic-bezier(.16,1,.3,1)}
+.rotate-toggle-btn.on #rotate-icon{transform:rotate(90deg)}
 .ctrl-btn.liked{color:#ff7a90;text-shadow:0 0 18px rgba(255,122,144,.36)}
 .ctrl-btn.busy{opacity:.55;pointer-events:none}
 #play-mode-btn[data-mode="loop"]{color:rgba(255,255,255,.70)}
@@ -1293,41 +1293,6 @@ body.desktop-shell.diy-mode #bottom-bar.stage-mode{left:50%;width:min(1080px,cal
 .fx-fold-body{padding:12px}
 .fx-advanced-body{margin-top:0}
 .fx-fold,.fx-advanced{background:rgba(255,255,255,.024)}
-
-.hotkey-modal{position:fixed;inset:0;z-index:1450;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.48);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
-.hotkey-modal.show{display:flex}
-.hotkey-dialog{width:min(760px,calc(100vw - 36px));max-height:min(720px,calc(100vh - 44px));overflow:auto;border-radius:18px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(180deg,rgba(14,15,20,.96),rgba(5,6,8,.96));box-shadow:0 32px 110px rgba(0,0,0,.62),inset 0 1px 0 rgba(255,255,255,.08);padding:18px;color:#fff}
-.hotkey-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.08)}
-.hotkey-title{font-size:16px;font-weight:800;letter-spacing:.04em}
-.hotkey-sub{margin-top:5px;font-size:11.5px;line-height:1.5;color:rgba(255,255,255,.48)}
-.hotkey-close{width:30px;height:30px;border-radius:10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);color:rgba(255,255,255,.66);font-size:18px;line-height:1;cursor:pointer}
-.hotkey-close:hover{background:rgba(255,255,255,.09);color:#fff}
-.hotkey-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:14px 0}
-.hotkey-tabs{display:flex;gap:8px}
-.hotkey-tabs button{height:30px;border-radius:10px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.035);color:rgba(255,255,255,.58);font:760 12px/1 var(--font-sans);cursor:pointer;padding:0 13px}
-.hotkey-tabs button.active{border-color:rgba(var(--fc-accent-rgb),.35);background:rgba(var(--fc-accent-rgb),.12);color:#fff}
-.hotkey-note{font-size:11px;color:rgba(255,255,255,.42);text-align:right}
-.hotkey-section{display:none}
-.hotkey-section.active{display:block}
-.hotkey-group{margin-top:12px}
-.hotkey-group-title{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(var(--fc-accent-rgb),.78);margin:0 0 8px}
-.hotkey-row{display:grid;grid-template-columns:minmax(112px,1fr) 180px 86px minmax(126px,1.15fr);gap:9px;align-items:center;min-height:46px;margin:6px 0;padding:9px;border-radius:12px;border:1px solid rgba(255,255,255,.065);background:rgba(255,255,255,.028)}
-.hotkey-name{min-width:0;font-size:12.5px;font-weight:760;color:rgba(255,255,255,.88);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hotkey-key{height:30px;border-radius:9px;border:1px solid rgba(255,255,255,.11);background:rgba(0,0,0,.22);color:#fff;font:760 11.5px/1 var(--font-sans);cursor:pointer;padding:0 10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hotkey-key:hover,.hotkey-key.capturing{border-color:rgba(var(--fc-accent-rgb),.42);background:rgba(var(--fc-accent-rgb),.10)}
-.hotkey-reset{height:30px;border-radius:9px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);color:rgba(255,255,255,.55);font:700 11px/1 var(--font-sans);cursor:pointer}
-.hotkey-reset:hover{background:rgba(255,255,255,.08);color:#fff}
-.hotkey-status{min-width:0;font-size:11px;color:rgba(255,255,255,.46);display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.hotkey-status.ok{color:rgba(126,226,168,.78)}
-.hotkey-status.conflict{color:rgba(255,206,112,.86)}
-.hotkey-status .source-icon{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,206,112,.12);color:#ffce70;font-size:11px;flex:0 0 auto}
-.hotkey-capture-tip{display:none;margin-top:10px;padding:9px 11px;border-radius:12px;border:1px solid rgba(var(--fc-accent-rgb),.22);background:rgba(var(--fc-accent-rgb),.075);font-size:12px;color:rgba(255,255,255,.74)}
-.hotkey-modal.capturing .hotkey-capture-tip{display:block}
-@media (max-width:720px){
-  .hotkey-row{grid-template-columns:1fr;gap:7px}
-  .hotkey-toolbar{align-items:flex-start;flex-direction:column}
-  .hotkey-note{text-align:left}
-}
 
 /* ============================================================ */
 /*  歌单/队列面板                                                 */
@@ -2914,6 +2879,7 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
     <button id="controls-hide-btn" class="ctrl-btn active" onclick="toggleControlsAutoHide()" title="控制条自动隐藏"><svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 8h14"/><path d="M8 12h8"/><path d="M10 16h4"/></svg></button>
     <button id="immersive-btn" class="ctrl-btn" onclick="toggleImmersiveMode()" title="全沉浸式" aria-label="全沉浸式" aria-pressed="false"><svg width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path d="M4 9V5a1 1 0 0 1 1-1h4"/><path d="M15 4h4a1 1 0 0 1 1 1v4"/><path d="M20 15v4a1 1 0 0 1-1 1h-4"/><path d="M9 20H5a1 1 0 0 1-1-1v-4"/><circle cx="12" cy="12" r="2.2"/></svg></button>
     <button class="ctrl-btn fullscreen-toggle-btn" onclick="toggleFullscreen()" title="全屏 (F)"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 7V3h4"/><path d="M21 7V3h-4"/><path d="M3 17v4h4"/><path d="M21 17v4h-4"/></svg></button>
+    <button id="rotate-btn" class="ctrl-btn rotate-toggle-btn" onclick="toggleOrientation()" title="横屏 / 竖屏切换" aria-label="横屏 / 竖屏切换"><svg id="rotate-icon" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.9" viewBox="0 0 24 24"><path d="M16 3h4a1 1 0 0 1 1 1v4"/><path d="M21 12a9 9 0 0 1-15.9 6.3"/><path d="M3 12a9 9 0 0 1 15.9-6.3L21 8"/><path d="M3 8h4v4"/></svg></button>
     <div id="time-display">0:00 / 0:00</div>
     </div>
   </div>
@@ -2922,7 +2888,7 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
 <input type="file" id="file-input" accept=".mp3,.flac,.wav,.ogg,.m4a,.jpg,.jpeg,.png,.webp" multiple style="display:none">
 <input type="file" id="background-image-input" accept=".jpg,.jpeg,.png,.webp,.mp4,.webm,.mov,image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" style="display:none">
 <div id="drop-overlay"><div class="drop-text">拖放音乐或封面</div></div>
-<div id="free-camera-hint"><b>自由镜头</b> R 固定/退出 · WASD 移动 · 鼠标转向 · Shift 加速 · Space/Ctrl 升降 · Q/E 轻微旋转 · 滚轮景深 · K 回正</div>
+
 <div id="loading-overlay"><div class="spinner"></div></div>
 
 <canvas id="login-guide-canvas" aria-hidden="true"></canvas>
@@ -3189,22 +3155,10 @@ var USER_CAPSULE_AUTO_HIDE_STORE_KEY = 'mineradio-user-capsule-auto-hide-v1';
 var FX_FAB_AUTO_HIDE_STORE_KEY = 'mineradio-fx-fab-auto-hide-v1';
 var CONTROLS_AUTO_HIDE_STORE_KEY = 'mineradio-controls-auto-hide-v1';
 var FREE_CAMERA_STORE_KEY = 'mineradio-free-camera-v1';
-var HOTKEY_SETTINGS_STORE_KEY = 'mineradio-hotkey-settings-v1';
 var VISUAL_GUIDE_SEEN_STORE_KEY = 'mineradio-visual-guide-seen-v2';
 var LOCAL_BEATMAP_STORE_KEY = 'mineradio-local-beatmaps-v1';
 var LOCAL_BEAT_PREF_STORE_KEY = 'mineradio-local-beatmap-prefs-v1';
 var LOCAL_BEAT_COMBOS = ['', 'downbeat', 'push', 'drop', 'rebound', 'accent'];
-var HOTKEY_ACTIONS = [
-  { key:'togglePlay', label:'播放 / 暂停', category:'播放', local:'Space', global:'Ctrl+Alt+Space' },
-  { key:'prevTrack', label:'上一首', category:'播放', local:'ArrowLeft', global:'Ctrl+Alt+ArrowLeft' },
-  { key:'nextTrack', label:'下一首', category:'播放', local:'ArrowRight', global:'Ctrl+Alt+ArrowRight' },
-  { key:'volumeUp', label:'音量增加', category:'音量', local:'ArrowUp', global:'Ctrl+Alt+ArrowUp' },
-  { key:'volumeDown', label:'音量降低', category:'音量', local:'ArrowDown', global:'Ctrl+Alt+ArrowDown' },
-  { key:'toggleFullscreen', label:'全屏', category:'窗口', local:'KeyF', global:'Ctrl+Alt+KeyF' },
-  { key:'toggleDesktopLyrics', label:'桌面歌词', category:'歌词', local:'Alt+KeyL', global:'Ctrl+Alt+KeyL' }
-];
-var hotkeyCaptureState = null;
-var hotkeyGlobalStatus = {};
 var diyPlayerMode = readDiyModePreference();
 var customCoverMap = readCustomCoverMap();
 var customLyricMap = readCustomLyricMap();
@@ -3429,10 +3383,8 @@ function layoutFullscreenDiyZone() {
 }
 function shouldSuppressFullscreenDiyPeek() {
   var fxPanel = document.getElementById('fx-panel');
-  var hotkeyModal = document.getElementById('hotkey-modal');
   var fxPanelOpen = !!(fxPanel && (fxPanel.classList.contains('peek') || fxPanel.classList.contains('show')));
-  var hotkeyOpen = !!(hotkeyModal && hotkeyModal.classList.contains('show'));
-  return !!(visualGuideActive || fxPanelOpen || hotkeyOpen);
+  return !!(visualGuideActive || fxPanelOpen);
 }
 function updateFullscreenDiyPeekFromPointer(x, y) {
   var isFullscreen = !!(desktopRuntimeState.fullscreen || desktopFullscreenActive || document.fullscreenElement || document.body.classList.contains('desktop-fullscreen'));
@@ -3861,7 +3813,6 @@ var playlistPanelPinned = readBooleanPreference(PLAYLIST_PANEL_PIN_STORE_KEY, fa
 var userCapsuleAutoHide = readBooleanPreference(USER_CAPSULE_AUTO_HIDE_STORE_KEY, false);
 var fxFabAutoHide = readBooleanPreference(FX_FAB_AUTO_HIDE_STORE_KEY, false);
 var fxFabAutoHideRevealArmed = true;
-var hotkeySettings = readHotkeySettings();
 var immersiveMode = false;
 var immersiveState = {
   shelfMode: null,
@@ -4406,10 +4357,6 @@ function applyFreeCameraToCamera() {
   camPunch *= 0.86;
   return true;
 }
-function updateFreeCameraHint() {
-  var el = document.getElementById('free-camera-hint');
-  if (el) el.classList.toggle('show', !!(freeCamera && freeCamera.active));
-}
 function resetFreeCameraToDefault() {
   if (!freeCamera) return;
   if (freeCameraDeferredSaveTimer) {
@@ -4441,7 +4388,6 @@ function resetFreeCameraToDefault() {
   freeCamera.keys = {};
   if (freeCamera.velocity) freeCamera.velocity.set(0, 0, 0);
   try { if (document.pointerLockElement === renderer.domElement) document.exitPointerLock(); } catch (e) {}
-  updateFreeCameraHint();
   showToast('自由镜头正在平滑回正');
 }
 function toggleFreeCamera() {
@@ -4453,7 +4399,6 @@ function toggleFreeCamera() {
     if (freeCamera.velocity) freeCamera.velocity.set(0, 0, 0);
     try { if (document.pointerLockElement === renderer.domElement) document.exitPointerLock(); } catch (e) {}
     saveFreeCameraState();
-    updateFreeCameraHint();
     showToast('自由镜头已固定');
     return;
   }
@@ -4468,14 +4413,12 @@ function toggleFreeCamera() {
     try { renderer.domElement.focus && renderer.domElement.focus(); } catch (ignore) {}
   }
   saveFreeCameraState();
-  updateFreeCameraHint();
   try {
     var lockResult = renderer.domElement.requestPointerLock && renderer.domElement.requestPointerLock();
     if (lockResult && lockResult.catch) lockResult.catch(function(){ freeCameraPointer.seen = false; });
   } catch (e) {
     freeCameraPointer.seen = false;
   }
-  showToast('自由镜头: WASD 移动 · 鼠标转向 · K 回正');
 }
 function updateFreeCamera(dt) {
   if (!freeCamera) return;
@@ -4497,7 +4440,6 @@ function updateFreeCamera(dt) {
       freeCamera.active = false;
       freeCamera.locked = false;
       saveFreeCameraState();
-      updateFreeCameraHint();
       recenterCamera();
       showToast('自由镜头已回正');
     }
@@ -15473,72 +15415,6 @@ renderer.domElement.addEventListener('wheel', function(e){
 function isFreeCameraControlCode(code) {
   return /^(KeyW|KeyA|KeyS|KeyD|KeyQ|KeyE|Space|ShiftLeft|ShiftRight|ControlLeft|ControlRight)$/.test(code);
 }
-function consumeFreeCameraKeyEvent(e, isDown) {
-  if (isTypingTarget(e.target)) return false;
-  if (isDown && e.code === 'KeyR') {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    if (e.repeat) return true;
-    toggleFreeCamera();
-    return true;
-  }
-  if (!freeCamera || !freeCamera.active) return false;
-  if (isDown && e.code === 'KeyK') {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    resetFreeCameraToDefault();
-    return true;
-  }
-  if (!isFreeCameraControlCode(e.code)) return false;
-  e.preventDefault();
-  e.stopImmediatePropagation();
-  freeCamera.keys = freeCamera.keys || {};
-  freeCamera.keys[e.code] = !!isDown;
-  markRenderInteraction('free-camera-key', 900);
-  return true;
-}
-document.addEventListener('keydown', function(e){
-  consumeFreeCameraKeyEvent(e, true);
-}, true);
-document.addEventListener('keyup', function(e){
-  consumeFreeCameraKeyEvent(e, false);
-}, true);
-document.addEventListener('keydown', function(e){
-  if (isTypingTarget(e.target)) return;
-  markRenderInteraction('keyboard', 700);
-  if (e.code === 'KeyK') {
-    e.preventDefault();
-    if (freeCamera && (freeCamera.active || freeCamera.locked)) resetFreeCameraToDefault();
-    else {
-      recenterCamera();
-      showToast('镜头已回正');
-    }
-    return;
-  }
-  if (e.code === 'KeyR') {
-    if (e.repeat) return;
-    e.preventDefault();
-    toggleFreeCamera();
-    return;
-  }
-  if (freeCamera && freeCamera.active) {
-    if (/^(KeyW|KeyA|KeyS|KeyD|KeyQ|KeyE|Space|ShiftLeft|ShiftRight|ControlLeft|ControlRight)$/.test(e.code)) {
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      freeCamera.keys[e.code] = true;
-      return;
-    }
-  }
-  if (!shelfManager) return;
-  if (e.code === 'BracketRight' || e.code === 'PageDown') shelfManager.next();
-  else if (e.code === 'BracketLeft' || e.code === 'PageUp') shelfManager.prev();
-});
-document.addEventListener('keyup', function(e){
-  if (!freeCamera || !freeCamera.keys) return;
-  if (/^(KeyW|KeyA|KeyS|KeyD|KeyQ|KeyE|Space|ShiftLeft|ShiftRight|ControlLeft|ControlRight)$/.test(e.code)) {
-    freeCamera.keys[e.code] = false;
-  }
-});
 window.addEventListener('blur', function(){
   if (freeCamera && freeCamera.keys) freeCamera.keys = {};
 });
@@ -22620,345 +22496,10 @@ function relabelFxPanelControls() {
   setFxSliderLabel('fx-bgfade', '背景压暗');
 }
 
-function getHotkeyDefaults() {
-  var defaults = { local: {}, global: {} };
-  HOTKEY_ACTIONS.forEach(function(action){
-    defaults.local[action.key] = action.local || '';
-    defaults.global[action.key] = action.global || '';
-  });
-  return defaults;
-}
-function readHotkeySettings() {
-  var defaults = getHotkeyDefaults();
-  try {
-    var raw = JSON.parse(localStorage.getItem(HOTKEY_SETTINGS_STORE_KEY) || '{}') || {};
-    return {
-      local: Object.assign({}, defaults.local, raw.local || {}),
-      global: Object.assign({}, defaults.global, raw.global || {})
-    };
-  } catch (e) {
-    return defaults;
-  }
-}
-function saveHotkeySettings() {
-  try { localStorage.setItem(HOTKEY_SETTINGS_STORE_KEY, JSON.stringify(hotkeySettings || getHotkeyDefaults())); } catch (e) {}
-}
-function hotkeyActionMeta(actionKey) {
-  for (var i = 0; i < HOTKEY_ACTIONS.length; i++) {
-    if (HOTKEY_ACTIONS[i].key === actionKey) return HOTKEY_ACTIONS[i];
-  }
-  return null;
-}
-function isModifierKeyCode(code) {
-  return /^(ControlLeft|ControlRight|ShiftLeft|ShiftRight|AltLeft|AltRight|MetaLeft|MetaRight)$/i.test(String(code || ''));
-}
-function normalizeHotkeyEvent(e) {
-  if (!e || isModifierKeyCode(e.code)) return '';
-  var mods = [];
-  if (e.ctrlKey) mods.push('Ctrl');
-  if (e.altKey) mods.push('Alt');
-  if (e.shiftKey) mods.push('Shift');
-  if (e.metaKey) mods.push('Meta');
-  var code = e.code || '';
-  if (!code && e.key) code = String(e.key).length === 1 ? 'Key' + String(e.key).toUpperCase() : String(e.key);
-  if (!code) return '';
-  return mods.concat([code]).join('+');
-}
-function hotkeyDisplayPart(part) {
-  if (part === 'Ctrl') return 'Ctrl';
-  if (part === 'Alt') return 'Alt';
-  if (part === 'Shift') return 'Shift';
-  if (part === 'Meta') return 'Win';
-  if (part === 'Space') return 'Space';
-  if (part === 'ArrowLeft') return 'Left';
-  if (part === 'ArrowRight') return 'Right';
-  if (part === 'ArrowUp') return 'Up';
-  if (part === 'ArrowDown') return 'Down';
-  if (/^Key[A-Z]$/.test(part)) return part.slice(3);
-  if (/^Digit[0-9]$/.test(part)) return part.slice(5);
-  if (/^Numpad[0-9]$/.test(part)) return 'Num' + part.slice(6);
-  return part.replace(/^Equal$/, '=').replace(/^Minus$/, '-');
-}
-function formatHotkey(hotkey) {
-  hotkey = String(hotkey || '').trim();
-  if (!hotkey) return '未设置';
-  return hotkey.split('+').map(hotkeyDisplayPart).join(' + ');
-}
-function hotkeyToAccelerator(hotkey) {
-  var parts = String(hotkey || '').split('+').filter(Boolean);
-  if (!parts.length) return '';
-  return parts.map(function(part){
-    if (part === 'Ctrl') return 'Control';
-    if (part === 'Alt') return 'Alt';
-    if (part === 'Shift') return 'Shift';
-    if (part === 'Meta') return 'Super';
-    if (part === 'Space') return 'Space';
-    if (part === 'ArrowLeft') return 'Left';
-    if (part === 'ArrowRight') return 'Right';
-    if (part === 'ArrowUp') return 'Up';
-    if (part === 'ArrowDown') return 'Down';
-    if (/^Key[A-Z]$/.test(part)) return part.slice(3);
-    if (/^Digit[0-9]$/.test(part)) return part.slice(5);
-    return part;
-  }).join('+');
-}
-function hotkeyDuplicateMap(scope) {
-  var map = {};
-  var source = (hotkeySettings && hotkeySettings[scope]) || {};
-  Object.keys(source).forEach(function(action){
-    var key = String(source[action] || '').trim();
-    if (!key) return;
-    map[key] = (map[key] || 0) + 1;
-  });
-  return map;
-}
-function executeHotkeyAction(actionKey, source) {
-  if (actionKey === 'togglePlay') return togglePlay();
-  if (actionKey === 'prevTrack') return prevTrack();
-  if (actionKey === 'nextTrack') return nextTrack();
-  if (actionKey === 'volumeUp') return adjustVolumeByKeyboard(0.05);
-  if (actionKey === 'volumeDown') return adjustVolumeByKeyboard(-0.05);
-  if (actionKey === 'toggleFullscreen') return toggleFullscreen();
-  if (actionKey === 'toggleDesktopLyrics') return toggleFx('desktopLyrics');
-}
-function handleConfiguredLocalHotkey(e) {
-  if (!hotkeySettings || !hotkeySettings.local || isTypingTarget(e.target)) return false;
-  if (hotkeyCaptureState || document.getElementById('hotkey-modal') && document.getElementById('hotkey-modal').classList.contains('show')) return false;
-  if (freeCamera && freeCamera.active && /^(KeyW|KeyA|KeyS|KeyD|KeyQ|KeyE|Space|ShiftLeft|ShiftRight|ControlLeft|ControlRight)$/.test(e.code)) return false;
-  var combo = normalizeHotkeyEvent(e);
-  if (!combo) return false;
-  var duplicate = hotkeyDuplicateMap('local');
-  for (var i = 0; i < HOTKEY_ACTIONS.length; i++) {
-    var action = HOTKEY_ACTIONS[i];
-    if (hotkeySettings.local[action.key] !== combo) continue;
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.repeat && !/^volume/.test(action.key)) return true;
-    if (duplicate[combo] > 1) return true;
-    executeHotkeyAction(action.key, 'local');
-    return true;
-  }
-  return false;
-}
-function shouldSuppressDefaultConfiguredHotkey(e) {
-  if (!hotkeySettings || !hotkeySettings.local) return false;
-  var combo = normalizeHotkeyEvent(e);
-  if (!combo) return false;
-  for (var i = 0; i < HOTKEY_ACTIONS.length; i++) {
-    var action = HOTKEY_ACTIONS[i];
-    if (action.local === combo && hotkeySettings.local[action.key] !== combo) return true;
-  }
-  return false;
-}
-function ensureHotkeySettingsButton() {
-  var panel = document.getElementById('fx-panel');
-  var head = panel && panel.querySelector('.fx-head');
-  if (!head || document.getElementById('hotkey-settings-btn')) return;
-  if (head.firstElementChild) head.firstElementChild.classList.add('fx-head-main');
-  var actions = document.createElement('div');
-  actions.className = 'fx-head-actions';
-  var btn = document.createElement('button');
-  btn.id = 'hotkey-settings-btn';
-  btn.type = 'button';
-  btn.className = 'fx-mini-btn ghost';
-  btn.textContent = '热键';
-  btn.addEventListener('click', function(e){ e.preventDefault(); e.stopPropagation(); openHotkeySettings(); });
-  actions.appendChild(btn);
-  head.appendChild(actions);
-}
-function ensureHotkeyModal() {
-  var modal = document.getElementById('hotkey-modal');
-  if (modal) return modal;
-  modal = document.createElement('div');
-  modal.id = 'hotkey-modal';
-  modal.className = 'hotkey-modal';
-  modal.innerHTML =
-    '<div class="hotkey-dialog" role="dialog" aria-modal="true" aria-label="热键设置">' +
-      '<div class="hotkey-head">' +
-        '<div><div class="hotkey-title">热键设置</div><div class="hotkey-sub">局内热键只在 Mineradio 窗口内生效；全局热键会向系统注册，并检测是否被占用。</div></div>' +
-        '<button class="hotkey-close" type="button" data-hotkey-close aria-label="关闭">×</button>' +
-      '</div>' +
-      '<div class="hotkey-toolbar">' +
-        '<div class="hotkey-tabs"><button type="button" data-hotkey-scope="local" class="active">局内热键</button><button type="button" data-hotkey-scope="global">全局热键</button></div>' +
-        '<div class="hotkey-note">按 Backspace / Delete 可清空当前功能热键</div>' +
-      '</div>' +
-      '<div id="hotkey-local-section" class="hotkey-section active"></div>' +
-      '<div id="hotkey-global-section" class="hotkey-section"></div>' +
-      '<div class="hotkey-capture-tip" id="hotkey-capture-tip">正在录入组合键，按 Esc 取消。</div>' +
-    '</div>';
-  document.body.appendChild(modal);
-  modal.addEventListener('click', function(e){
-    if (e.target === modal || e.target.closest('[data-hotkey-close]')) closeHotkeySettings();
-    var scopeBtn = e.target.closest('[data-hotkey-scope]');
-    if (scopeBtn) setHotkeyModalScope(scopeBtn.getAttribute('data-hotkey-scope'));
-    var bindBtn = e.target.closest('[data-hotkey-bind]');
-    if (bindBtn) startHotkeyCapture(bindBtn.getAttribute('data-hotkey-action'), bindBtn.getAttribute('data-hotkey-bind'));
-    var resetBtn = e.target.closest('[data-hotkey-reset]');
-    if (resetBtn) resetHotkeyBinding(resetBtn.getAttribute('data-hotkey-action'), resetBtn.getAttribute('data-hotkey-reset'));
-  });
-  return modal;
-}
-function hotkeyStatusMarkup(scope, actionKey, binding, duplicate) {
-  if (!binding) return '<span class="hotkey-status">未设置</span>';
-  if (duplicate && duplicate[binding] > 1) return '<span class="hotkey-status conflict"><span class="source-icon">!</span>Mineradio 内部重复</span>';
-  if (scope === 'local') return '<span class="hotkey-status ok">可用</span>';
-  var status = hotkeyGlobalStatus[actionKey];
-  if (!status) return '<span class="hotkey-status">待检测</span>';
-  if (status.ok) return '<span class="hotkey-status ok">可用</span>';
-  var source = status.conflict && status.conflict.sourceName || '系统 / 其他软件';
-  return '<span class="hotkey-status conflict"><span class="source-icon">!</span>' + escHtml(source) + '</span>';
-}
-function renderHotkeyScope(scope) {
-  var wrap = document.getElementById(scope === 'global' ? 'hotkey-global-section' : 'hotkey-local-section');
-  if (!wrap) return;
-  var duplicate = hotkeyDuplicateMap(scope);
-  var html = '';
-  var groups = {};
-  HOTKEY_ACTIONS.forEach(function(action){
-    (groups[action.category] = groups[action.category] || []).push(action);
-  });
-  Object.keys(groups).forEach(function(category){
-    html += '<div class="hotkey-group"><div class="hotkey-group-title">' + escHtml(category) + '</div>';
-    groups[category].forEach(function(action){
-      var binding = (hotkeySettings[scope] && hotkeySettings[scope][action.key]) || '';
-      html += '<div class="hotkey-row">' +
-        '<div class="hotkey-name">' + escHtml(action.label) + '</div>' +
-        '<button class="hotkey-key' + (hotkeyCaptureState && hotkeyCaptureState.scope === scope && hotkeyCaptureState.action === action.key ? ' capturing' : '') + '" type="button" data-hotkey-bind="' + scope + '" data-hotkey-action="' + action.key + '">' + escHtml(hotkeyCaptureState && hotkeyCaptureState.scope === scope && hotkeyCaptureState.action === action.key ? '按下组合键...' : formatHotkey(binding)) + '</button>' +
-        '<button class="hotkey-reset" type="button" data-hotkey-reset="' + scope + '" data-hotkey-action="' + action.key + '">默认</button>' +
-        hotkeyStatusMarkup(scope, action.key, binding, duplicate) +
-      '</div>';
-    });
-    html += '</div>';
-  });
-  wrap.innerHTML = html;
-}
-function renderHotkeySettings() {
-  var modal = ensureHotkeyModal();
-  var active = modal.getAttribute('data-scope') || 'local';
-  modal.classList.toggle('capturing', !!hotkeyCaptureState);
-  modal.querySelectorAll('[data-hotkey-scope]').forEach(function(btn){
-    btn.classList.toggle('active', btn.getAttribute('data-hotkey-scope') === active);
-  });
-  var local = document.getElementById('hotkey-local-section');
-  var global = document.getElementById('hotkey-global-section');
-  if (local) local.classList.toggle('active', active === 'local');
-  if (global) global.classList.toggle('active', active === 'global');
-  renderHotkeyScope('local');
-  renderHotkeyScope('global');
-}
-function setHotkeyModalScope(scope) {
-  var modal = ensureHotkeyModal();
-  modal.setAttribute('data-scope', scope === 'global' ? 'global' : 'local');
-  renderHotkeySettings();
-}
-function openHotkeySettings() {
-  var modal = ensureHotkeyModal();
-  modal.classList.add('show');
-  modal.setAttribute('data-scope', modal.getAttribute('data-scope') || 'local');
-  renderHotkeySettings();
-  registerGlobalHotkeys();
-}
-function closeHotkeySettings() {
-  hotkeyCaptureState = null;
-  var modal = document.getElementById('hotkey-modal');
-  if (modal) modal.classList.remove('show', 'capturing');
-}
-function startHotkeyCapture(action, scope) {
-  hotkeyCaptureState = { action: action, scope: scope === 'global' ? 'global' : 'local' };
-  var modal = ensureHotkeyModal();
-  modal.setAttribute('data-scope', hotkeyCaptureState.scope);
-  renderHotkeySettings();
-}
-function setHotkeyBinding(action, scope, value) {
-  if (!hotkeySettings) hotkeySettings = getHotkeyDefaults();
-  if (!hotkeySettings[scope]) hotkeySettings[scope] = {};
-  hotkeySettings[scope][action] = value || '';
-  saveHotkeySettings();
-  renderHotkeySettings();
-  if (scope === 'global') registerGlobalHotkeys();
-}
-function resetHotkeyBinding(action, scope) {
-  var meta = hotkeyActionMeta(action);
-  if (!meta) return;
-  setHotkeyBinding(action, scope, scope === 'global' ? meta.global : meta.local);
-}
-function registerGlobalHotkeys() {
-  var api = getDesktopWindowApi && getDesktopWindowApi();
-  if (!api || typeof api.configureGlobalHotkeys !== 'function') {
-    hotkeyGlobalStatus = {};
-    renderHotkeySettings();
-    return Promise.resolve();
-  }
-  var duplicate = hotkeyDuplicateMap('global');
-  var bindings = [];
-  HOTKEY_ACTIONS.forEach(function(action){
-    var key = hotkeySettings.global && hotkeySettings.global[action.key];
-    if (!key || duplicate[key] > 1) return;
-    var accelerator = hotkeyToAccelerator(key);
-    if (accelerator) bindings.push({ action: action.key, accelerator: accelerator });
-  });
-  return api.configureGlobalHotkeys(bindings).then(function(res){
-    var next = {};
-    (res && res.results || []).forEach(function(item){
-      next[item.action] = item;
-    });
-    hotkeyGlobalStatus = next;
-    renderHotkeySettings();
-  }).catch(function(){
-    hotkeyGlobalStatus = {};
-    renderHotkeySettings();
-  });
-}
-var globalHotkeyListenerBound = false;
-function bindHotkeySettings() {
-  ensureHotkeySettingsButton();
-  ensureHotkeyModal();
-  if (!globalHotkeyListenerBound) {
-    var api = getDesktopWindowApi && getDesktopWindowApi();
-    if (api && typeof api.onGlobalHotkey === 'function') {
-      globalHotkeyListenerBound = true;
-      api.onGlobalHotkey(function(payload){
-        if (!payload || !payload.action) return;
-        executeHotkeyAction(payload.action, 'global');
-      });
-    }
-  }
-  registerGlobalHotkeys();
-}
-document.addEventListener('keydown', function(e){
-  var hotkeyModal = document.getElementById('hotkey-modal');
-  if (!hotkeyCaptureState) {
-    if (hotkeyModal && hotkeyModal.classList.contains('show') && e.code === 'Escape') {
-      e.preventDefault();
-      e.stopPropagation();
-      closeHotkeySettings();
-    }
-    return;
-  }
-  e.preventDefault();
-  e.stopPropagation();
-  if (e.code === 'Escape') {
-    hotkeyCaptureState = null;
-    renderHotkeySettings();
-    return;
-  }
-  if (e.code === 'Backspace' || e.code === 'Delete') {
-    var clearTarget = hotkeyCaptureState;
-    hotkeyCaptureState = null;
-    setHotkeyBinding(clearTarget.action, clearTarget.scope, '');
-    return;
-  }
-  var combo = normalizeHotkeyEvent(e);
-  if (!combo) return;
-  var target = hotkeyCaptureState;
-  hotkeyCaptureState = null;
-  setHotkeyBinding(target.action, target.scope, combo);
-}, true);
 function bindFxPanel() {
   liftFxFloatingPopups();
   organizeFxPanel();
   relabelFxPanelControls();
-  bindHotkeySettings();
   buildPresetGrid();
   renderUserFxArchives();
   buildLyricColorControls();
@@ -25984,68 +25525,10 @@ function scheduleMainRendererViewportRefresh(reason) {
 }
 window.addEventListener('resize', function(){
   scheduleMainRendererViewportRefresh('resize');
+  if (typeof syncRotateButton === 'function') syncRotateButton();
   if (desktopRuntimeState.fullscreen || desktopFullscreenActive || document.fullscreenElement || document.body.classList.contains('desktop-fullscreen')) layoutFullscreenDiyZone();
 });
-document.addEventListener('keydown', function(e){
-  if (isTypingTarget(e.target)) return;
-  if (handleConfiguredLocalHotkey(e)) return;
-  if (shouldSuppressDefaultConfiguredHotkey(e)) return;
-  if (e.code === 'Space') {
-    if (freeCamera && freeCamera.active) { e.preventDefault(); return; }
-    e.preventDefault(); togglePlay();
-  }
-  else if (e.code === 'Home') { e.preventDefault(); goHome(); }
-  else if (e.code === 'ArrowUp') { e.preventDefault(); adjustVolumeByKeyboard(0.05); }
-  else if (e.code === 'ArrowDown') { e.preventDefault(); adjustVolumeByKeyboard(-0.05); }
-  else if (e.code === 'ArrowRight') nextTrack();
-  else if (e.code === 'ArrowLeft')  prevTrack();
-  else if (e.code === 'Escape')     {
-    if (immersiveMode) {
-      e.preventDefault();
-      setImmersiveMode(false);
-      return;
-    }
-    if (window.desktopWindow && window.desktopWindow.isDesktop && desktopFullscreenActive && !document.fullscreenElement && window.desktopWindow.exitFullscreenWindowed) {
-      e.preventDefault();
-      window.desktopWindow.exitFullscreenWindowed();
-      return;
-    }
-    if (document.fullscreenElement) {
-      e.preventDefault();
-      document.exitFullscreen();
-      return;
-    }
-    var localBeatModal = document.getElementById('local-beat-modal');
-    if (localBeatModal && localBeatModal.classList.contains('show')) {
-      e.preventDefault();
-      if (localBeatAnalysis.active) cancelLocalBeatAnalysis();
-      else closeLocalBeatModal();
-      return;
-    }
-    var customLyricModal = document.getElementById('custom-lyric-modal');
-    if (customLyricModal && customLyricModal.classList.contains('show')) {
-      e.preventDefault();
-      closeCustomLyricModal();
-      return;
-    }
-    var trackDetailModal = document.getElementById('track-detail-modal');
-    if (trackDetailModal && trackDetailModal.classList.contains('show')) {
-      e.preventDefault();
-      closeTrackDetailModal();
-      return;
-    }
-    if (miniQueueOpen) { closeMiniQueue(); return; }
-    if (shelfManager && shelfManager.hasOpenContent()) { safeShelfCloseContent('escape-key'); return; }
-    closeLoginModal(); closeUserModal(); toggleFxPanel(false); togglePlaylistPanel(false);
-  }
-  else if (e.code === 'KeyL') { if (!immersiveMode) toggleLyricsPanel(); }
-  else if (e.code === 'KeyP') {
-    if (!immersiveMode && diyPlayerMode) toggleFxPanel();
-    else if (!immersiveMode) showToast('开启 DIY 玩家模式后可打开视觉控制台');
-  }
-  else if (e.code === 'KeyI') toggleImmersiveMode();
-  else if (e.code === 'KeyF') toggleFullscreen();
-});
+// 热键已全部移除
 
 // ============================================================
 //  UI 半隐藏 v8 — 三个面板的触发/隐藏体验完全统一
@@ -27197,6 +26680,37 @@ var desktopFullscreenActive = false;
 var documentFullscreenActive = false;
 var desktopWindowState = {};
 
+function toggleOrientation() {
+  if (window.AndroidBridge && typeof window.AndroidBridge.setOrientation === 'function') {
+    var current = 'portrait';
+    try {
+      if (typeof window.AndroidBridge.getOrientation === 'function') {
+        current = window.AndroidBridge.getOrientation() || current;
+      } else {
+        current = window.innerHeight >= window.innerWidth ? 'portrait' : 'landscape';
+      }
+    } catch (e) {}
+    var next = current === 'landscape' ? 'portrait' : 'landscape';
+    window.AndroidBridge.setOrientation(next);
+    if (typeof showToast === 'function') {
+      showToast(next === 'landscape' ? '已切换为横屏' : '已切换为竖屏');
+    }
+    return;
+  }
+  if (typeof showToast === 'function') showToast('请在 Android 端使用屏幕方向切换');
+}
+function syncRotateButton() {
+  var btn = document.getElementById('rotate-btn');
+  if (!btn) return;
+  var landscape = false;
+  if (window.AndroidBridge && typeof window.AndroidBridge.getOrientation === 'function') {
+    try { landscape = window.AndroidBridge.getOrientation() === 'landscape'; } catch (e) {}
+  } else {
+    landscape = window.innerWidth > window.innerHeight;
+  }
+  btn.classList.toggle('on', landscape);
+  btn.title = landscape ? '切换为竖屏' : '切换为横屏';
+}
 function toggleFullscreen() {
   var api = window.desktopWindow;
   if (api && api.isDesktop && typeof api.toggleFullscreen === 'function') {
@@ -27319,6 +26833,7 @@ function toggleFullscreen() {
 // ============================================================
 applyDiyMode(diyPlayerMode, { save: false });
 bindFxPanel();
+syncRotateButton();
 applySavedLyricPaletteState();
 bindQualityControl();
 bindVolumeControls();

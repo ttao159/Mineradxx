@@ -2,6 +2,7 @@ package com.mineradio.android;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
@@ -82,6 +83,26 @@ public class MainActivity extends AppCompatActivity {
         @JavascriptInterface
         public void showToast(String msg) {
             Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
+        }
+
+        @JavascriptInterface
+        public void setOrientation(String orientation) {
+            runOnUiThread(() -> {
+                try {
+                    int target = "landscape".equals(orientation)
+                            ? ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
+                            : ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
+                    setRequestedOrientation(target);
+                } catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "无法切换屏幕方向", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public String getOrientation() {
+            return getResources().getConfiguration().orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
+                    ? "landscape" : "portrait";
         }
     }
 
