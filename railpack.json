@@ -6,6 +6,10 @@
   },
   "steps": {
     "install": {
+      "inputs": [
+        { "step": "packages:mise" },
+        { "local": true }
+      ],
       "commands": ["if [ -d app/src/main/assets/nodejs-project ]; then cd app/src/main/assets/nodejs-project; fi && npm install"]
     }
   },
