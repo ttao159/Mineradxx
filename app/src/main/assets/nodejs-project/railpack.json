@@ -6,10 +6,10 @@
   },
   "steps": {
     "install": {
-      "commands": ["npm install"]
+      "commands": ["if [ -d app/src/main/assets/nodejs-project ]; then cd app/src/main/assets/nodejs-project; fi && npm install"]
     }
   },
   "deploy": {
-    "startCommand": "node server.js"
+    "startCommand": "if [ -d app/src/main/assets/nodejs-project ]; then cd app/src/main/assets/nodejs-project; fi && node server.js"
   }
 }
