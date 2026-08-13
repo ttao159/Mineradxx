@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     // 部署后替换为你的真实域名，例如 "https://xxx.up.railway.app"
     // 注意：不要带结尾的 "/"
     // ====================================================================
-    private static final String API_BASE_URL = "https://YOUR-RAILWAY-URL.up.railway.app";
+    private static final String API_BASE_URL = "https://mineradxx-production.up.railway.app";
 
     // 双模式：Mineradio 完整播放器 / Folia 歌词舞台
     private static final String MODE_PLAYER = "player";
