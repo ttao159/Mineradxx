@@ -31,6 +31,15 @@ Entries discovered by the Agent during task execution should follow this format:
 
 ## Entries
 
+[版本号管理]
+- Date: 2026-08-14
+- Context: 用户明确指示：每次更新后版本号也要更新
+- Instructions:
+  - 每次代码更新后需递增版本号并一并提交推送
+  - Android 版本：`app/build.gradle` 的 `versionCode`（+1）与 `versionName`
+  - 应用/后端版本：`app/src/main/assets/nodejs-project/package.json` 与 `package-lock.json` 的 `version`（顶部与 `packages[""]` 两处需同步）
+  - 后端 `/api/app/version` 读取 package.json 的 version，前端更新检测面板展示该版本号
+
 [推送与远程仓库]
 - Date: 2026-08-14
 - Context: Discovered by Agent while pushing backend changes to origin
