@@ -8,8 +8,12 @@
                          "NeteaseCloudMusicApi":  "^4.32.0",
                          "qrcode":  "^1.5.4"
                      },
+    "overrides":  {
+                      "music-metadata":  "11.14.0"
+                  },
     "scripts":  {
-                    "start":  "node server.js"
+                    "start":  "node server.js",
+                    "test":  "node --test"
                 },
     "engines":  {
                     "node":  "\u003e=18"

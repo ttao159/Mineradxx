@@ -36,6 +36,16 @@ jobs:
           cd app/src/main/assets/nodejs-project
           npm install --production
 
+      - name: Run backend unit tests
+        run: |
+          cd app/src/main/assets/nodejs-project
+          npm test
+
+      - name: Audit backend dependencies
+        run: |
+          cd app/src/main/assets/nodejs-project
+          npm audit --audit-level=high
+
       - name: Build Release APK
         run: |
           chmod +x gradlew
