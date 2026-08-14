@@ -366,6 +366,27 @@ body.empty-home-active .home-visual{animation:home-visual-drift 8.8s ease-in-out
 .home-for-you-artist{overflow:hidden;font-size:10px;color:rgba(255,255,255,.40);white-space:nowrap;text-overflow:ellipsis}
 .home-for-you-play{color:rgba(var(--home-accent-rgb),.72);font-size:13px;line-height:1;text-align:center}
 .home-for-you-empty{grid-column:1 / -1;padding:10px 2px;font-size:11px;color:rgba(255,255,255,.38);text-align:center}
+.home-ranking{border:1px solid color-mix(in srgb,var(--home-accent) 10%,rgba(255,255,255,.085));border-radius:22px;background:linear-gradient(142deg,rgba(20,24,31,.55),rgba(7,9,13,.68));box-shadow:0 18px 54px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.07);backdrop-filter:blur(22px) saturate(1.12);-webkit-backdrop-filter:blur(22px) saturate(1.12);padding:14px 16px;min-width:0;min-height:0;overflow:hidden}
+.home-ranking-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.home-ranking-tabs{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.home-ranking-tab{border:1px solid transparent;border-radius:999px;background:rgba(255,255,255,.045);color:rgba(255,255,255,.55);font-size:10.5px;font-family:inherit;cursor:pointer;padding:4px 10px;line-height:1;transition:background .2s,color .2s,border-color .2s}
+.home-ranking-tab:hover{color:rgba(255,255,255,.85)}
+.home-ranking-tab.active{background:color-mix(in srgb,var(--home-accent) 18%,rgba(255,255,255,.04));color:#fff;border-color:color-mix(in srgb,var(--home-accent) 34%,rgba(255,255,255,.16))}
+.home-ranking-status{font-size:10.5px;color:rgba(255,255,255,.42);margin-bottom:9px}
+.home-ranking-status.is-error{color:color-mix(in srgb,#ff6b6b 78%,rgba(255,255,255,.5))}
+.home-ranking-list{display:flex;flex-direction:column;gap:6px;max-height:318px;overflow:auto;scrollbar-width:thin}
+.home-ranking-row{display:grid;grid-template-columns:24px 40px minmax(0,1fr) 24px;align-items:center;gap:9px;padding:6px 7px;border:1px solid transparent;border-radius:12px;background:rgba(255,255,255,.030);color:#fff;text-align:left;font-family:inherit;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+.home-ranking-row:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--home-accent) 30%,rgba(255,255,255,.16));background:rgba(255,255,255,.055)}
+.home-ranking-num{font-size:12px;font-weight:720;color:rgba(255,255,255,.38);text-align:center;font-variant-numeric:tabular-nums}
+.home-ranking-num.is-top{color:color-mix(in srgb,var(--home-accent) 85%,#fff)}
+.home-ranking-cover{width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,rgba(var(--home-accent-rgb),.30),rgba(157,184,207,.18));background-size:cover;background-position:center;box-shadow:0 8px 18px rgba(0,0,0,.22)}
+.home-ranking-copy{min-width:0;display:flex;flex-direction:column;gap:2px}
+.home-ranking-name{overflow:hidden;font-size:11.5px;font-weight:680;color:rgba(255,255,255,.92);white-space:nowrap;text-overflow:ellipsis}
+.home-ranking-artist{overflow:hidden;font-size:10px;color:rgba(255,255,255,.40);white-space:nowrap;text-overflow:ellipsis}
+.home-ranking-play{color:rgba(var(--home-accent-rgb),.72);font-size:13px;line-height:1;text-align:center}
+.home-ranking-empty{grid-column:1 / -1;padding:12px 4px;font-size:11px;color:rgba(255,255,255,.38);text-align:center}
+.home-ranking-row.is-skeleton .home-ranking-num,.home-ranking-row.is-skeleton .home-ranking-cover,.home-ranking-row.is-skeleton .home-ranking-name,.home-ranking-row.is-skeleton .home-ranking-artist{position:relative;overflow:hidden;background:rgba(255,255,255,.07);color:transparent!important;border-radius:6px}
+.home-ranking-row.is-skeleton .home-ranking-num::after,.home-ranking-row.is-skeleton .home-ranking-cover::after,.home-ranking-row.is-skeleton .home-ranking-name::after{content:'';position:absolute;inset:0;background:linear-gradient(110deg,transparent,rgba(255,255,255,.10),transparent);transform:translateX(-100%);animation:home-shimmer 1.5s ease-in-out infinite}
 .home-tile-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;min-height:0}
 .home-tile{--tone-a:#00f5d4;--tone-b:#2442ff;--tone-c:#f8f4ee;position:relative;min-width:0;min-height:166px;border:1px solid color-mix(in srgb,var(--home-accent) 9%,rgba(255,255,255,.075));border-radius:20px;background:linear-gradient(145deg,rgba(255,255,255,.060),rgba(255,255,255,.025));box-shadow:0 16px 50px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.052);backdrop-filter:blur(20px) saturate(1.10);-webkit-backdrop-filter:blur(20px) saturate(1.10);padding:10px;color:#fff;text-align:left;font-family:inherit;cursor:pointer;transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;overflow:hidden}
 .home-tile[data-home-tone="search"],.home-tile[data-home-tone="playlist"]{--tone-a:#9db8cf;--tone-b:#00f5d4;--tone-c:#2442ff}
@@ -2405,6 +2426,22 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
           <button class="home-insight-link" type="button" onclick="playHomeForYouList()">播放全部</button>
         </div>
         <div id="home-for-you-list" class="home-for-you-list"></div>
+      </section>
+      <section class="home-ranking" aria-label="平台热歌榜">
+        <div class="home-ranking-head">
+          <span class="home-insight-kicker">CHART · 平台热歌榜</span>
+          <button class="home-insight-link" type="button" onclick="refreshHomePlatformRankings()">刷新</button>
+        </div>
+        <div class="home-ranking-tabs" id="home-ranking-tabs" role="tablist" aria-label="选择榜单平台">
+          <button class="home-ranking-tab active" type="button" role="tab" data-home-ranking-provider="all" aria-selected="true" onclick="loadHomePlatformRankings('all')">综合</button>
+          <button class="home-ranking-tab" type="button" role="tab" data-home-ranking-provider="netease" aria-selected="false" onclick="loadHomePlatformRankings('netease')">网易云</button>
+          <button class="home-ranking-tab" type="button" role="tab" data-home-ranking-provider="qq" aria-selected="false" onclick="loadHomePlatformRankings('qq')">QQ</button>
+          <button class="home-ranking-tab" type="button" role="tab" data-home-ranking-provider="kugou" aria-selected="false" onclick="loadHomePlatformRankings('kugou')">酷狗</button>
+          <button class="home-ranking-tab" type="button" role="tab" data-home-ranking-provider="kuwo" aria-selected="false" onclick="loadHomePlatformRankings('kuwo')">酷我</button>
+          <button class="home-ranking-tab" type="button" role="tab" data-home-ranking-provider="migu" aria-selected="false" onclick="loadHomePlatformRankings('migu')">咪咕</button>
+        </div>
+        <div class="home-ranking-status" id="home-ranking-status">正在同步公开榜单</div>
+        <div class="home-ranking-list" id="home-ranking-list" role="list"></div>
       </section>
       <div class="home-section-head">
         <div class="home-section-title" id="home-rail-title">为你准备</div>
@@ -16179,7 +16216,117 @@ function renderHomeDiscover() {
   renderHomeTiles();
   renderHomeTodayDock();
   renderHomeForYou();
+  renderHomePlatformRankings();
   renderHomeReviews();
+}
+var homePlatformRankingProviders = ['all', 'netease', 'qq', 'kugou', 'kuwo', 'migu'];
+var homePlatformRankingState = { provider: 'all', songs: [], loading: false, loaded: false, error: '', chartTitle: '', cached: false, token: 0 };
+function homePlatformRankingMeta(provider) {
+  var meta = {
+    all: { label: '综合', short: 'ALL' },
+    netease: { label: '网易云', short: 'NE' },
+    qq: { label: 'QQ 音乐', short: 'QQ' },
+    kugou: { label: '酷狗', short: 'KG' },
+    kuwo: { label: '酷我', short: 'KW' },
+    migu: { label: '咪咕', short: 'MG' }
+  };
+  return meta[provider] || { label: '平台', short: 'MR' };
+}
+function homePlatformRankingSkeleton() {
+  var html = '';
+  for (var i = 0; i < 6; i++) {
+    html += '<div class="home-ranking-row is-skeleton" role="listitem"><span class="home-ranking-num"></span><span class="home-ranking-cover"></span><span class="home-ranking-copy"><span class="home-ranking-name"></span><span class="home-ranking-artist"></span></span><span class="home-ranking-play"></span></div>';
+  }
+  return html;
+}
+function renderHomePlatformRankings() {
+  var list = document.getElementById('home-ranking-list');
+  var status = document.getElementById('home-ranking-status');
+  var tabs = document.getElementById('home-ranking-tabs');
+  if (!list || !status) return;
+  if (tabs) {
+    Array.prototype.forEach.call(tabs.querySelectorAll('[data-home-ranking-provider]'), function (tab) {
+      var selected = tab.getAttribute('data-home-ranking-provider') === homePlatformRankingState.provider;
+      tab.classList.toggle('active', selected);
+      tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+    });
+  }
+  var songs = homePlatformRankingState.songs;
+  status.classList.toggle('is-error', !!(homePlatformRankingState.error && !songs.length));
+  if (homePlatformRankingState.loading && !songs.length) {
+    status.textContent = '正在同步公开榜单';
+    list.innerHTML = homePlatformRankingSkeleton();
+    return;
+  }
+  if (homePlatformRankingState.error && !songs.length) {
+    status.textContent = homePlatformRankingState.error;
+    list.innerHTML = '<div class="home-ranking-empty">这个榜单暂时没有回来，可以切换其他平台或稍后刷新。</div>';
+    return;
+  }
+  var meta = homePlatformRankingMeta(homePlatformRankingState.provider);
+  var chartTitle = homePlatformRankingState.chartTitle || meta.label + '热歌榜';
+  status.textContent = chartTitle + ' · ' + songs.length + ' 首 · ' + (homePlatformRankingState.cached ? '已使用近期榜单' : '刚刚更新');
+  list.innerHTML = songs.map(function (song, index) {
+    var cover = songCoverSrc(song, 120);
+    var coverStyle = cover ? ' style="background-image:url(&quot;' + escHtml(cssImageUrl(cover)) + '&quot;)"' : '';
+    var album = song.album || song.albumName || '';
+    var artist = song.artist || song.singer || '未知歌手';
+    var rank = Math.max(1, Number(song.rank) || index + 1);
+    return '<button class="home-ranking-row" type="button" role="listitem" onclick="playHomePlatformRanking(' + index + ')">' +
+      '<span class="home-ranking-num' + (rank <= 3 ? ' is-top' : '') + '">' + String(rank).padStart(2, '0') + '</span>' +
+      '<span class="home-ranking-cover"' + coverStyle + '></span>' +
+      '<span class="home-ranking-copy"><span class="home-ranking-name">' + escHtml(song.name || '未知歌曲') + '</span>' +
+      '<span class="home-ranking-artist">' + escHtml(artist + (album ? ' · ' + album : '')) + '</span></span>' +
+      '<span class="home-ranking-play">›</span></button>';
+  }).join('');
+}
+async function loadHomePlatformRankings(provider, force) {
+  provider = homePlatformRankingProviders.indexOf(provider) >= 0 ? provider : 'all';
+  if (homePlatformRankingState.loading && !force) return;
+  if (homePlatformRankingState.loaded && provider === homePlatformRankingState.provider && !force) return;
+  var token = ++homePlatformRankingState.token;
+  homePlatformRankingState.provider = provider;
+  homePlatformRankingState.loading = true;
+  homePlatformRankingState.error = '';
+  homePlatformRankingState.songs = [];
+  renderHomePlatformRankings();
+  try {
+    var endpoint = '/api/platform-rankings?provider=' + encodeURIComponent(provider) + '&limit=30' + (force ? '&refresh=1' : '');
+    var result = await apiJson(endpoint, { timeoutMs: 65000 });
+    if (token !== homePlatformRankingState.token) return;
+    if (!result || result.ok === false || !Array.isArray(result.songs)) throw new Error(result && result.error || '榜单暂不可用');
+    homePlatformRankingState.songs = result.songs;
+    homePlatformRankingState.chartTitle = result.chartTitle || '';
+    homePlatformRankingState.cached = !!result.cached;
+    homePlatformRankingState.loaded = true;
+    homePlatformRankingState.error = result.songs.length ? '' : '当前平台暂时没有公开榜单';
+  } catch (error) {
+    if (token !== homePlatformRankingState.token) return;
+    homePlatformRankingState.error = '当前榜单同步失败，请切换平台或稍后重试';
+    console.warn('[PlatformRankings]', error);
+  } finally {
+    if (token === homePlatformRankingState.token) {
+      homePlatformRankingState.loading = false;
+      renderHomePlatformRankings();
+    }
+  }
+}
+function refreshHomePlatformRankings() {
+  loadHomePlatformRankings(homePlatformRankingState.provider, true);
+}
+function playHomePlatformRanking(index) {
+  var songs = homePlatformRankingState.songs;
+  if (!songs.length) return;
+  homeForcedOpen = false;
+  homeSuppressed = false;
+  setHomeControlsLocked(false);
+  playQueue = songs.map(cloneSong);
+  currentIdx = Math.max(0, Math.min(playQueue.length - 1, Number(index) || 0));
+  safeRenderQueuePanel('platform-ranking', { scrollCurrent: true });
+  safeShelfRebuild('platform-ranking', true);
+  forcePlaybackControlsInteractive();
+  playQueueAt(currentIdx, { manual: true, context: { type: 'platform-ranking', playlistName: homePlatformRankingMeta(homePlatformRankingState.provider).label + '榜单' } })
+    .catch(function (error) { console.warn('[PlatformRankingPlay]', error); });
 }
 var homeMockReviews = [
   { content: '每次听到这首歌的前奏都会不自觉地停下来，副歌的和声简直神来之笔，旋律与歌词之间的呼应达到了流行音乐少有的高度。', likes: 3247, user: { name: '聆乐者', avatar: '' }, song: { name: '晴天', artist: '周杰伦' }, time: '6 小时前' },
@@ -16638,6 +16785,9 @@ function updateEmptyHomeVisibility(opts) {
   if (show) {
     setPeek(document.getElementById('search-area'), true, 'search');
     renderHomeDiscover();
+    if (!homePlatformRankingState.loaded && !homePlatformRankingState.loading) {
+      loadHomePlatformRankings('all');
+    }
     scheduleHomeWeatherLoad(opts.forceLoad ? 1400 : 2400);
     if (!hasAnyPlatformLogin()) {
       homeDiscoverState.loading = false;
