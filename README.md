@@ -106,9 +106,12 @@ app/src/main/
       spotify-api.js   Spotify
       qq-vip-api.js    QQ 音乐 VIP
       qishui-api.js    汽水音乐
-      qishui-auth-v6.js 汽水扫码登录（Electron 降级）
+      qishui-auth-v6.js 汽水签名引擎（扫码登录依赖 Electron，纯 Node 降级）
+      qishui-qr-login.js 汽水扫码登录桥接
+      dj-analyzer.js   播客/电台节拍分析
       cuefield/         Cue 曲目解析
       qishui-audio-decryptor/ 汽水音频解密
+      tests/           后端单元测试
       package.json
   java/.../MainActivity.java  WebView 容器 + 双模式路由 + API base 注入
   java/.../NodeService.java   Node 后端存根（默认禁用，API 走远程）
