@@ -902,7 +902,6 @@ body.login-guide-active #login-guide-canvas{opacity:1}
 .login-platform-tabs button.netease.active,.user-platform-tabs button.netease.active{background:rgba(217,91,103,.16);color:#ffd7dc}
 .login-platform-tabs button.qq.active,.user-platform-tabs button.qq.active{background:rgba(191,214,107,.16);color:#f3ffd1}
 .user-platform-tabs button.qishui.active{background:rgba(69,214,143,.16);color:#c4ffe2}
-.user-platform-tabs button.both.active{background:rgba(244,210,138,.14);color:#fff0bf}
 .qr-shell{position:relative;width:200px;height:200px;margin:0 auto 16px;border-radius:16px}
 .qr-shell::before{content:'';position:absolute;left:12px;right:12px;height:2px;top:12px;border-radius:999px;background:linear-gradient(90deg,transparent,rgba(244,210,138,.9),transparent);box-shadow:0 0 14px 2px rgba(244,210,138,.45);opacity:0;animation:qr-scan 2.8s ease-in-out infinite;pointer-events:none;z-index:2}
 .qr-shell:not(.web-login-preview)::before{opacity:1}
@@ -957,19 +956,22 @@ body.login-guide-active #login-guide-canvas{opacity:1}
 /* === 登录工作流节点图 === */
 .dual-login-modal{max-height:calc(100vh - 24px);overflow-y:auto;overflow-x:hidden;scrollbar-width:thin}
 .login-panel-head{position:absolute;z-index:4;top:12px;right:12px;display:flex;align-items:center;justify-content:flex-end;gap:8px;margin:0;padding:0}
-.login-panel-head>div{display:block;text-align:right;margin-right:4px}
+.login-panel-head>div{display:none}
 .login-panel-head b{display:block;font-size:13.5px;color:rgba(255,255,255,.92);letter-spacing:.08em}
 .login-panel-head small{display:block;margin-top:3px;font-size:10px;color:rgba(255,255,255,.36)}
 .login-panel-close{width:29px;height:29px;border-radius:50%;border:1px solid rgba(255,255,255,.085);background:rgba(255,255,255,.04);color:rgba(255,255,255,.58);font-size:18px;font-family:inherit;cursor:pointer;transition:background .18s,color .18s,transform .18s}
 .login-panel-close:hover{background:rgba(255,255,255,.095);color:#fff;transform:translateY(-1px)}
+.login-reset-all-btn{min-width:78px;height:29px;padding:0 11px;border:1px solid rgba(255,118,118,.24);border-radius:9px;background:rgba(92,25,31,.28);color:rgba(255,226,226,.78);font:700 11px/1 'Microsoft YaHei',sans-serif;letter-spacing:.05em;cursor:pointer;transition:color .18s,background .18s,border-color .18s,transform .18s,opacity .18s}
+.login-reset-all-btn:hover:not(:disabled),.login-reset-all-btn:focus-visible{border-color:rgba(255,145,145,.5);background:rgba(128,34,42,.48);color:#fff;transform:translateY(-1px)}
+.login-reset-all-btn:disabled{opacity:.56;cursor:wait}
 .workflow-link-layer{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
 .workflow-link-layer .workflow-link{fill:none;stroke:rgba(var(--fc-accent-rgb),.46);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 7px rgba(var(--fc-accent-rgb),.24))}
 .workflow-link-layer .workflow-link.temp{stroke:rgba(255,255,255,.76);stroke-dasharray:6 5;filter:drop-shadow(0 0 10px rgba(255,255,255,.28))}
 .workflow-link-layer .workflow-link.pending{stroke:rgba(244,210,138,.50);stroke-dasharray:5 6;filter:drop-shadow(0 0 7px rgba(244,210,138,.18))}
 .workflow-link-layer .workflow-link.selected{stroke:rgba(var(--fc-accent-rgb),.82);stroke-width:2}
 @keyframes workflowDash{to{stroke-dashoffset:-22}}
-.login-node-graph{position:relative;display:grid;width:max-content;max-width:100%;grid-template-columns:226px 168px;grid-template-areas:"providers hub";gap:52px;align-items:center;justify-content:center;margin:0 auto;padding:10px 26px 4px;border-radius:14px;border:0;background:transparent;overflow:visible}
-.login-node-graph::before{content:"";position:absolute;top:9px;bottom:9px;left:calc(50% + 4px);width:1px;border-radius:999px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.16) 18%,rgba(var(--fc-accent-rgb),.30) 50%,rgba(255,255,255,.12) 82%,transparent);box-shadow:0 0 24px rgba(var(--fc-accent-rgb),.18);opacity:.58;pointer-events:none;z-index:0}
+.login-node-graph{position:relative;display:grid;width:max-content;max-width:100%;grid-template-columns:248px 168px;grid-template-areas:"providers hub";gap:112px;align-items:center;justify-content:center;margin:0 auto;padding:10px 4px 4px;border-radius:14px;border:0;background:transparent;overflow:visible}
+.login-node-graph::before{content:"";position:absolute;top:9px;bottom:9px;left:calc(50% + 8px);width:1px;border-radius:999px;background:linear-gradient(180deg,transparent,rgba(255,255,255,.16) 18%,rgba(var(--fc-accent-rgb),.30) 50%,rgba(255,255,255,.12) 82%,transparent);box-shadow:0 0 24px rgba(var(--fc-accent-rgb),.18);opacity:.58;pointer-events:none;z-index:0}
 .login-node-graph>*:not(.workflow-link-layer){position:relative;z-index:1}
 .login-node-hub,.login-mode-node,.login-node-providers button{position:relative;min-width:0;display:grid;align-items:center;border-radius:12px;border:1px solid rgba(255,255,255,.07);background:rgba(255,255,255,.028);color:rgba(255,255,255,.78);box-shadow:inset 0 1px 0 rgba(255,255,255,.05);overflow:visible}
 .login-node-hub{grid-area:hub;grid-template-columns:37px minmax(0,1fr);grid-template-rows:auto 1fr;gap:9px 10px;min-height:128px;padding:13px;text-align:left;align-content:center;border-color:rgba(255,255,255,.10);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.018) 58%,rgba(var(--fc-accent-rgb),.030));box-shadow:0 16px 34px rgba(0,0,0,.18),0 0 22px rgba(var(--fc-accent-rgb),.035),inset 0 1px 0 rgba(255,255,255,.065)}
@@ -977,8 +979,8 @@ body.login-guide-active #login-guide-canvas{opacity:1}
 .login-node-orb,.provider-logo{width:31px;height:31px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:950;letter-spacing:.04em;color:#fff;background:rgba(var(--fc-accent-rgb),.14);box-shadow:0 0 14px rgba(var(--fc-accent-rgb),.13),inset 0 0 0 1px rgba(255,255,255,.08)}
 .login-node-hub b,.login-mode-node b,.login-node-providers button b{min-width:0;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px;color:rgba(255,255,255,.92)}
 .login-node-hub small,.login-mode-node small,.login-node-providers button small{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:2px;font-size:9.5px;color:rgba(255,255,255,.42)}
-.login-node-providers.login-platform-tabs{grid-area:providers;display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin:0;padding:0;border:0;border-radius:0;background:transparent}
-.login-node-providers.login-platform-tabs button{height:auto;min-height:44px;grid-template-columns:35px minmax(0,1fr) auto;grid-template-rows:auto;justify-items:start;align-content:center;gap:0 9px;padding:6px 16px 6px 5px;border-radius:13px;border-color:rgba(255,255,255,.05);background:linear-gradient(90deg,rgba(255,255,255,.042),rgba(255,255,255,.014));cursor:pointer;letter-spacing:0;flex:none;transition:transform .18s,border-color .18s,background .18s,box-shadow .18s}
+.login-node-providers.login-platform-tabs{grid-area:providers;display:grid;grid-template-columns:minmax(0,1fr);gap:9px;margin:0;padding:0;border:0;border-radius:0;background:transparent}
+.login-node-providers.login-platform-tabs button{height:auto;min-height:46px;grid-template-columns:35px minmax(0,1fr) auto;grid-template-rows:auto;justify-items:start;align-content:center;gap:0 8px;padding:7px 14px 7px 5px;border-radius:13px;border-color:rgba(255,255,255,.05);background:linear-gradient(90deg,rgba(255,255,255,.042),rgba(255,255,255,.014));cursor:pointer;letter-spacing:0;flex:none;transition:transform .18s,border-color .18s,background .18s,box-shadow .18s}
 .login-node-providers.login-platform-tabs button .provider-logo{grid-row:auto}
 .login-node-providers.login-platform-tabs button small{display:block;grid-column:2;grid-row:2}
 .login-node-providers.login-platform-tabs button b{grid-column:2;grid-row:1}
@@ -3170,6 +3172,7 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
   <div class="modal dual-login-modal">
     <div class="login-panel-head">
       <div><b>登录接入</b><small>点选平台接入 MR</small></div>
+      <button id="login-reset-all-btn" class="login-reset-all-btn" type="button" onclick="logoutAllAccounts()" title="清除所有平台登录">退出登录</button>
       <button class="login-panel-close" type="button" onclick="closeLoginModal()" aria-label="关闭">×</button>
     </div>
     <div id="login-node-graph" class="login-node-graph" data-provider="netease">
@@ -3210,7 +3213,6 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
       </div>
       <div class="btn-row login-auth-actions">
         <button class="modal-btn" onclick="skipLoginAndFocusSearch()">先搜索一首歌</button>
-        <button id="login-both-btn" class="modal-btn" onclick="requestDualLoginMode()">我两个都要</button>
         <button id="qq-cookie-toggle-btn" class="modal-btn" type="button" onclick="toggleQQCookiePanel()">手动导入</button>
         <button id="refresh-qr-btn" class="modal-btn primary" onclick="refreshQr()">刷新二维码</button>
       </div>
@@ -3230,14 +3232,13 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
       <button id="user-provider-netease" class="netease active" type="button" onclick="setActiveAccountProvider('netease')">网易云</button>
       <button id="user-provider-qq" class="qq" type="button" onclick="setActiveAccountProvider('qq')">QQ 音乐</button>
       <button id="user-provider-qishui" class="qishui" type="button" onclick="setActiveAccountProvider('qishui')">汽水</button>
-      <button id="user-provider-both" class="both" type="button" onclick="enableDualAccountView()">我两个都要</button>
     </div>
     <div class="account-modal-actions">
       <button id="account-add-netease" class="modal-btn" onclick="openProviderLogin('netease')">补登网易云</button>
       <button id="account-add-qq" class="modal-btn" onclick="openProviderLogin('qq')">补登 QQ 音乐</button>
       <button id="account-add-qishui" class="modal-btn" onclick="openProviderLogin('qishui')">登录汽水音乐</button>
     </div>
-    <div id="account-hint" class="account-hint">可切换右上角展示的平台；“我两个都要”会并排展示网易云与 QQ。</div>
+    <div id="account-hint" class="account-hint">可切换右上角展示的平台。</div>
     <div class="btn-row">
       <button class="modal-btn" onclick="closeUserModal()">关闭</button>
       <button id="account-logout-btn" class="modal-btn primary" onclick="logoutActiveAccount()">退出当前平台</button>
@@ -26348,17 +26349,15 @@ function updateUserModalUi() {
       vipEl.style.color = hasProviderVip('qq', st) ? 'rgba(0,245,212,0.82)' : 'rgba(0,245,212,0.58)';
     }
   }
-  ['netease','qq','qishui','both'].forEach(function(key){
+  ['netease','qq','qishui'].forEach(function(key){
     var btn = document.getElementById('user-provider-' + key);
-    if (btn) btn.classList.toggle('active', key === 'both' ? dualAccountMode : (!dualAccountMode && activeAccountProvider === key));
+    if (btn) btn.classList.toggle('active', !dualAccountMode && activeAccountProvider === key);
   });
   if (addNetease) addNetease.style.display = hasPlatformLogin('netease') ? 'none' : '';
   if (addQQ) addQQ.textContent = hasPlatformLogin('qq') ? '查看 QQ 音乐' : '补登 QQ 音乐';
   if (addQishui) addQishui.textContent = hasPlatformLogin('qishui') ? '查看汽水音乐' : '登录汽水音乐';
   if (logoutBtn) logoutBtn.textContent = activeAccountProvider === 'qq' ? '退出 QQ 音乐' : (activeAccountProvider === 'qishui' ? '退出汽水音乐' : '退出网易云');
-  if (hint) hint.textContent = dualAccountMode
-    ? '右上角已切换为双平台并排展示。'
-    : '可切换右上角展示的平台；“我两个都要”会并排放两个登录状态。';
+  if (hint) hint.textContent = '可切换右上角展示的平台。';
 }
 function showUserModal() {
   if (!hasAnyPlatformLogin()) return showLoginModal();
@@ -26376,27 +26375,6 @@ function setActiveAccountProvider(provider) {
   dualAccountMode = false;
   renderUserBtn();
   updateUserModalUi();
-}
-function enableDualAccountView() {
-  if (!hasPlatformLogin('netease') && !hasPlatformLogin('qq')) {
-    openProviderLogin('netease');
-    return;
-  }
-  if (!hasPlatformLogin('netease')) {
-    openProviderLogin('netease');
-    return;
-  }
-  if (!hasPlatformLogin('qq')) {
-    openProviderLogin('qq');
-    return;
-  }
-  dualAccountMode = true;
-  renderUserBtn();
-  updateUserModalUi();
-  showToast('已启用双平台账号展示');
-}
-function requestDualLoginMode() {
-  enableDualAccountView();
 }
 function openProviderLogin(provider) {
   provider = normalizeLoginProviderKey(provider);
@@ -26459,6 +26437,39 @@ async function doLogout() {
   safeShelfRebuild('logout');
   closeUserModal();
   showToast('已退出登录');
+}
+async function logoutAllAccounts() {
+  try {
+    await Promise.allSettled([
+      apiJson('/api/logout'),
+      apiJson('/api/qq/logout'),
+      apiJson('/api/qishui/logout')
+    ]);
+  } catch (e) {}
+  try {
+    if (window.desktopWindow) {
+      if (typeof window.desktopWindow.clearNeteaseMusicLogin === 'function') await window.desktopWindow.clearNeteaseMusicLogin();
+      if (typeof window.desktopWindow.clearQQMusicLogin === 'function') await window.desktopWindow.clearQQMusicLogin();
+    }
+  } catch (e) {}
+  loginStatus = { loggedIn: false };
+  qqLoginStatus = { provider: 'qq', loggedIn: false, preview: false, nickname: 'QQ 音乐', userId: '', avatar: '', vipType: 0 };
+  qishuiLoginStatus = normalizeQishuiLoginStatus(null);
+  qqPlaylists = [];
+  qishuiPlaylists = [];
+  userPlaylists = [];
+  dualAccountMode = false;
+  activeAccountProvider = firstLoggedProvider();
+  myPodcastCollections = [];
+  myPodcastItems = {};
+  likedSongMap = {};
+  closeCollectModal();
+  updateLikeButtons();
+  safeRenderQueuePanel('logout', { scrollCurrent: miniQueueOpen });
+  renderUserBtn();
+  safeShelfRebuild('logout');
+  closeUserModal();
+  showToast('已退出全部平台登录');
 }
 var startupLoginGuideShown = false;
 var loginGuideAnimating = false;
