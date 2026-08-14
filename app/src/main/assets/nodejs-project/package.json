@@ -1,6 +1,6 @@
 {
     "name":  "mineradio-server",
-    "version":  "2.4.0",
+    "version":  "2.5.0",
     "private":  true,
     "main":  "server.js",
     "description": "Mineradio 完整后端（网易云/QQ/酷狗/Spotify/汽水音乐 API 服务），供 Android 与远程部署使用",
