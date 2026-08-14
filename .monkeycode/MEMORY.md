@@ -60,3 +60,13 @@ Entries discovered by the Agent during task execution should follow this format:
   - 单元测试：`npm test`（node --test，用例位于 `tests/*.test.js`）
   - 依赖审计：`npm audit --audit-level=high`，需保持 0 漏洞
   - 本地冒烟：`PORT=8080 node server.js`（HOST 默认 0.0.0.0），生产为 Railway 远端
+
+[Android APK 构建]
+- Date: 2026-08-14
+- Context: Discovered by Agent while assembling the Android debug APK
+- Category: Build Methods
+- Instructions:
+  - 构建命令：`cd /workspace && export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64 && ./gradlew assembleDebug --console=plain`
+  - APK 输出：`app/build/outputs/apk/debug/app-debug.apk`
+  - 前端单体文件：`app/src/main/assets/index.html`；改完须同步到 `app/src/main/assets/nodejs-project/public/index.html` 并校验两份 md5 一致
+  - 构建为 CPU/内存密集型任务，用 background terminal 执行（设 timeout 与 cpu 限制），勿用前台 bash 直接跑
