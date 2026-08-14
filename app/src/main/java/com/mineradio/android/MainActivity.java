@@ -170,10 +170,11 @@ public class MainActivity extends AppCompatActivity {
 
         webView.addJavascriptInterface(new AndroidBridge(), "AndroidBridge");
 
-        // 在页面任何脚本执行前注入后端地址（Folia 歌词舞台运行时在模块加载时读取 __NCM_API_BASE）
+        // 在页面任何脚本执行前注入运行环境（含 fetch 拦截器与 desktopWindow stub），
+        // 避免 onPageFinished 注入过晚导致早期登录请求（尤其 POST）在 Java 代理层丢失 body。
         WebViewCompat.addDocumentStartJavaScript(
                 webView,
-                "window.__NCM_API_BASE = '" + API_BASE_URL + "';",
+                buildBootScript(),
                 Collections.singleton("https://mineradio.local"));
 
         final WebViewAssetLoader assetLoader = new WebViewAssetLoader.Builder()
@@ -227,6 +228,7 @@ public class MainActivity extends AppCompatActivity {
     private void setupModeSwitchButton() {
         modeSwitchButton = new Button(this);
         modeSwitchButton.setText("歌词舞台");
+        modeSwitchButton.setContentDescription("切换到歌词舞台");
         modeSwitchButton.setTextColor(Color.WHITE);
         modeSwitchButton.setTextSize(14);
         modeSwitchButton.setAllCaps(false);
@@ -263,6 +265,7 @@ public class MainActivity extends AppCompatActivity {
         currentMode = mode;
         if (modeSwitchButton != null) {
             modeSwitchButton.setText(MODE_FOLIA.equals(mode) ? "返回播放器" : "歌词舞台");
+            modeSwitchButton.setContentDescription(MODE_FOLIA.equals(mode) ? "返回播放器模式" : "切换到歌词舞台");
         }
         if (webView == null) return;
         int port = (nodeService != null) ? nodeService.getPort() : 0;
@@ -354,67 +357,75 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void injectDesktopStubs() {
+    // 构建可在文档起始注入的运行环境脚本（幂等）。
+    // 播放器模式注入 desktopWindow stub + fetch 拦截器；Folia 模式只注入 __NCM_API_BASE。
+    private String buildBootScript() {
         String apiBase = API_BASE_URL;
-        String js = "javascript:(function() {" +
-            "if (window.desktopWindow) return;" +
-            "window.desktopWindow = { apiBase: '" + apiBase + "'," +
-            "  isDesktop: true," +
-            "  minimize: function(){return Promise.resolve();}," +
-            "  toggleMaximize: function(){return Promise.resolve();}," +
-            "  toggleFullscreen: function(){" +
-            "    if(document.documentElement.requestFullscreen&&!document.fullscreenElement)" +
-            "      document.documentElement.requestFullscreen();" +
-            "    else if(document.exitFullscreen) document.exitFullscreen();" +
-            "    return Promise.resolve();" +
-            "  }," +
-            "  exitFullscreenWindowed: function(){" +
-            "    if(document.fullscreenElement) document.exitFullscreen();" +
-            "    return Promise.resolve();" +
-            "  }," +
-            "  getState: function(){return Promise.resolve({isMaximized:false,isMinimized:false,isFullscreen:!!document.fullscreenElement});}," +
-            "  close: function(){/* no-op */return Promise.resolve();}," +
-            "  clearNeteaseMusicLogin:function(){return Promise.resolve();}," +
-            "  clearQQMusicLogin:function(){return Promise.resolve();}," +
-            "  openUpdateInstaller:function(){return Promise.resolve();}," +
-            "  restartApp:function(){return Promise.resolve();}," +
-            "  configureGlobalHotkeys:function(){return Promise.resolve();}," +
-            "  exportJsonFile:function(){return Promise.resolve();}," +
-            "  importJsonFile:function(){return Promise.resolve();}," +
-            "  setDesktopLyricsEnabled:function(){return Promise.resolve();}," +
-            "  updateDesktopLyrics:function(){return Promise.resolve();}," +
-            "  setWallpaperMode:function(){return Promise.resolve();}," +
-            "  updateWallpaperMode:function(){return Promise.resolve();}," +
-            "  onGlobalHotkey:function(){return function(){};}," +
-            "  onDesktopLyricsLockState:function(){return function(){};}," +
-            "  onDesktopLyricsEnabledState:function(){return function(){};}," +
-            "  onStateChange:function(){return function(){};}," +
-            "};" +
-            "document.documentElement.classList.add('simple-mode-preload');" +
-            "document.body.classList.add('android-shell');" +
-
-            "var _origFetch = window.fetch;" +
-            "window.__apiBase = '" + apiBase + "';" +
-            "window.__apiBaseConfigured = " + (API_BASE_URL.contains("YOUR-RAILWAY") ? "false" : "true") + ";" +
-            "window.fetch = function(url, opts) {" +
-            "  if (typeof url === 'string' && url.startsWith('/api/')) {" +
-            "    if (!window.__apiBaseConfigured) {" +
-            "      if (window.AndroidBridge) window.AndroidBridge.showToast('后端未配置，请修改 MainActivity 中的 API_BASE_URL');" +
+        boolean configured = !API_BASE_URL.contains("YOUR-RAILWAY");
+        return "(function(){" +
+            "window.__NCM_API_BASE='" + apiBase + "';" +
+            "if(location.pathname.indexOf('/folia/')===0)return;" +
+            "window.__apiBase='" + apiBase + "';" +
+            "window.__apiBaseConfigured=" + (configured ? "true" : "false") + ";" +
+            "if(!window.desktopWindow){window.desktopWindow={" +
+            "apiBase:'" + apiBase + "',isDesktop:true," +
+            "minimize:function(){return Promise.resolve();}," +
+            "toggleMaximize:function(){return Promise.resolve();}," +
+            "toggleFullscreen:function(){if(document.documentElement.requestFullscreen&&!document.fullscreenElement)document.documentElement.requestFullscreen();else if(document.exitFullscreen)document.exitFullscreen();return Promise.resolve();}," +
+            "exitFullscreenWindowed:function(){if(document.fullscreenElement)document.exitFullscreen();return Promise.resolve();}," +
+            "getState:function(){return Promise.resolve({isMaximized:false,isMinimized:false,isFullscreen:!!document.fullscreenElement});}," +
+            "close:function(){return Promise.resolve();}," +
+            "clearNeteaseMusicLogin:function(){return Promise.resolve();}," +
+            "clearQQMusicLogin:function(){return Promise.resolve();}," +
+            "openUpdateInstaller:function(){return Promise.resolve();}," +
+            "restartApp:function(){return Promise.resolve();}," +
+            "configureGlobalHotkeys:function(){return Promise.resolve();}," +
+            "exportJsonFile:function(){return Promise.resolve();}," +
+            "importJsonFile:function(){return Promise.resolve();}," +
+            "setDesktopLyricsEnabled:function(){return Promise.resolve();}," +
+            "updateDesktopLyrics:function(){return Promise.resolve();}," +
+            "setWallpaperMode:function(){return Promise.resolve();}," +
+            "updateWallpaperMode:function(){return Promise.resolve();}," +
+            "onGlobalHotkey:function(){return function(){};}," +
+            "onDesktopLyricsLockState:function(){return function(){};}," +
+            "onDesktopLyricsEnabledState:function(){return function(){};}," +
+            "onStateChange:function(){return function(){};}" +
+            "};}" +
+            "if(!window.__apiBaseHooked){window.__apiBaseHooked=true;" +
+            "var _origFetch=window.fetch;" +
+            "window.fetch=function(url,opts){" +
+            "  if(typeof url==='string'&&url.indexOf('/api/')===0){" +
+            "    if(!window.__apiBaseConfigured){" +
+            "      if(window.AndroidBridge)window.AndroidBridge.showToast('后端未配置，请修改 MainActivity 中的 API_BASE_URL');" +
             "      return Promise.resolve({json:function(){return Promise.resolve({error:'backend not available',loggedIn:false,playlists:[],tracks:[],songs:[]});}});" +
             "    }" +
-            "    url = window.__apiBase + url;" +
+            "    url=window.__apiBase+url;" +
             "  }" +
-            "  return _origFetch.call(window, url, opts);" +
-            "};" +
-        "})();";
-        webView.evaluateJavascript(js, null);
+            "  return _origFetch.call(window,url,opts);" +
+            "};}" +
+            "if(document.documentElement)document.documentElement.classList.add('simple-mode-preload');" +
+            "function _addAndroidShell(){if(document.body)document.body.classList.add('android-shell');else document.addEventListener('DOMContentLoaded',function(){if(document.body)document.body.classList.add('android-shell');});}" +
+            "_addAndroidShell();" +
+            "})();";
+    }
+
+    // onPageFinished 兜底注入（幂等）：当 DocumentStart 脚本因 WebView 版本未生效时补救。
+    private void injectDesktopStubs() {
+        webView.evaluateJavascript(buildBootScript(), null);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && webView != null && webView.canGoBack()) {
-            webView.evaluateJavascript("window.history.back();", null);
-            return true;
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 歌词舞台模式下，返回键先切回播放器，避免直接退出应用
+            if (MODE_FOLIA.equals(currentMode)) {
+                loadMode(MODE_PLAYER);
+                return true;
+            }
+            if (webView != null && webView.canGoBack()) {
+                webView.evaluateJavascript("window.history.back();", null);
+                return true;
+            }
         }
         return super.onKeyDown(keyCode, event);
     }
