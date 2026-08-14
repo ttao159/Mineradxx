@@ -22,6 +22,17 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.webkit.WebViewAssetLoader;
+import androidx.webkit.WebViewCompat;
+
+import java.io.ByteArrayInputStream;
+import java.io.FilterInputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -159,6 +170,12 @@ public class MainActivity extends AppCompatActivity {
 
         webView.addJavascriptInterface(new AndroidBridge(), "AndroidBridge");
 
+        // 在页面任何脚本执行前注入后端地址（Folia 歌词舞台运行时在模块加载时读取 __NCM_API_BASE）
+        WebViewCompat.addDocumentStartJavaScript(
+                webView,
+                "window.__NCM_API_BASE = '" + API_BASE_URL + "';",
+                Collections.singleton("https://mineradio.local"));
+
         final WebViewAssetLoader assetLoader = new WebViewAssetLoader.Builder()
                 .addPathHandler("/", new WebViewAssetLoader.AssetsPathHandler(this))
                 .addPathHandler("/assets/", new WebViewAssetLoader.AssetsPathHandler(this))
@@ -172,15 +189,17 @@ public class MainActivity extends AppCompatActivity {
                 Uri uri = request.getUrl();
                 WebResourceResponse response = assetLoader.shouldInterceptRequest(uri);
                 if (response != null) return response;
+                // 原生资源请求（如 <audio src>、<img src>）不经过 window.fetch，
+                // 其相对 /api/ 路径需在 Java 层代理到远程后端。
+                WebResourceResponse api = proxyApiRequest(uri, request);
+                if (api != null) return api;
                 return super.shouldInterceptRequest(view, request);
             }
 
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
-                if (url.contains("/folia/")) {
-                    injectFoliaBridge();
-                } else {
+                if (!url.contains("/folia/")) {
                     injectDesktopStubs();
                 }
             }
@@ -234,9 +253,9 @@ public class MainActivity extends AppCompatActivity {
         FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = android.view.Gravity.TOP | android.view.Gravity.END;
-        lp.topMargin = (int) (48 * density + 0.5f);
-        lp.rightMargin = (int) (18 * density + 0.5f);
+        lp.gravity = android.view.Gravity.TOP | android.view.Gravity.START;
+        lp.topMargin = (int) (20 * density + 0.5f);
+        lp.leftMargin = (int) (16 * density + 0.5f);
         addContentView(modeSwitchButton, lp);
     }
 
@@ -262,18 +281,77 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // ====================================================================
-    // Folia 歌词舞台桥：注入 window.__NCM_API_BASE（Folia 运行时优先读取）。
-    // 注意：故意不注入 window.electron——Folia 通过 window.electron 是否存在
-    // 判断 Electron 运行时，注入会导致其走 localhost:port 而非 __NCM_API_BASE。
-    // Folia 对 window.electron 的全部调用都是可选链（?.），无桩时自然跳过。
+    // /api/ 代理：原生资源请求（<audio src>、<img src>、<video> 等）不经过
+    // window.fetch，无法被 JS 拦截器重写。这里把 mineradio.local 虚拟域下的
+    // 相对 /api/ 请求转发到远程后端，保证音频、封面等能正常加载。
     // ====================================================================
-    private void injectFoliaBridge() {
-        String js = "javascript:(function() {" +
-            "if (window.__FOLIA_BRIDGE_INJECTED__) return;" +
-            "window.__FOLIA_BRIDGE_INJECTED__ = true;" +
-            "window.__NCM_API_BASE = '" + API_BASE_URL + "';" +
-        "})();";
-        webView.evaluateJavascript(js, null);
+    private WebResourceResponse proxyApiRequest(Uri uri, WebResourceRequest request) {
+        String url = uri.toString();
+        String path = null;
+        if (url.startsWith("https://mineradio.local/")) {
+            path = url.substring("https://mineradio.local".length());
+        } else if (url.startsWith("http://127.0.0.1")) {
+            int idx = url.indexOf('/', "http://127.0.0.1".length());
+            path = idx >= 0 ? url.substring(idx) : "/";
+        }
+        if (path == null || !path.startsWith("/api/")) return null;
+
+        HttpURLConnection conn = null;
+        try {
+            String target = API_BASE_URL + path;
+            conn = (HttpURLConnection) new URL(target).openConnection();
+            conn.setConnectTimeout(15000);
+            conn.setReadTimeout(30000);
+            conn.setInstanceFollowRedirects(true);
+            String method = request.getMethod();
+            conn.setRequestMethod(method == null || method.isEmpty() ? "GET" : method);
+            for (Map.Entry<String, String> e : request.getRequestHeaders().entrySet()) {
+                String k = e.getKey();
+                if (k == null) continue;
+                String lk = k.toLowerCase(Locale.ROOT);
+                if (lk.equals("host") || lk.equals("connection") || lk.equals("accept-encoding")
+                        || lk.equals("content-length") || lk.equals("keep-alive")) continue;
+                conn.setRequestProperty(k, e.getValue());
+            }
+            conn.setRequestProperty("Accept-Encoding", "identity");
+
+            int status = conn.getResponseCode();
+            String contentType = conn.getContentType();
+            String mime = "application/octet-stream";
+            if (contentType != null) {
+                int sc = contentType.indexOf(';');
+                String base = (sc > 0 ? contentType.substring(0, sc) : contentType).trim();
+                if (!base.isEmpty()) mime = base;
+            }
+            Map<String, String> headers = new HashMap<>();
+            copyHeader(conn, headers, "Content-Range");
+            copyHeader(conn, headers, "Accept-Ranges");
+            copyHeader(conn, headers, "Content-Length");
+
+            InputStream raw = (status >= 400) ? conn.getErrorStream() : conn.getInputStream();
+            if (raw == null) raw = new ByteArrayInputStream(new byte[0]);
+            InputStream body = new ProxyStream(raw, conn);
+            conn = null; // 所有权交给 body
+            return new WebResourceResponse(mime, "utf-8", status, "OK", headers, body);
+        } catch (Exception e) {
+            if (conn != null) conn.disconnect();
+            return new WebResourceResponse("text/plain", "utf-8", 502, "Bad Gateway", null,
+                    new ByteArrayInputStream("proxy error".getBytes()));
+        }
+    }
+
+    private void copyHeader(HttpURLConnection conn, Map<String, String> out, String name) {
+        String v = conn.getHeaderField(name);
+        if (v != null) out.put(name, v);
+    }
+
+    private static final class ProxyStream extends FilterInputStream {
+        private final HttpURLConnection conn;
+        ProxyStream(InputStream in, HttpURLConnection conn) { super(in); this.conn = conn; }
+        @Override
+        public void close() throws java.io.IOException {
+            try { super.close(); } finally { conn.disconnect(); }
+        }
     }
 
     private void injectDesktopStubs() {
@@ -296,17 +374,7 @@ public class MainActivity extends AppCompatActivity {
             "  }," +
             "  getState: function(){return Promise.resolve({isMaximized:false,isMinimized:false,isFullscreen:!!document.fullscreenElement});}," +
             "  close: function(){/* no-op */return Promise.resolve();}," +
-            "  openNeteaseMusicLogin:function(){" +
-            "    if(window.AndroidBridge)window.AndroidBridge.showToast('请先在网易云音乐网页端登录获取cookie');" +
-            "    if(window.AndroidBridge)window.AndroidBridge.openExternalBrowser('https://music.163.com/#/login');" +
-            "    return Promise.resolve({ok:true,cookie:''});" +
-            "  }," +
             "  clearNeteaseMusicLogin:function(){return Promise.resolve();}," +
-            "  openQQMusicLogin:function(){" +
-            "    if(window.AndroidBridge)window.AndroidBridge.showToast('请先在QQ音乐网页端登录获取cookie');" +
-            "    if(window.AndroidBridge)window.AndroidBridge.openExternalBrowser('https://y.qq.com/n/ryqq/profile');" +
-            "    return Promise.resolve({ok:true,cookie:''});" +
-            "  }," +
             "  clearQQMusicLogin:function(){return Promise.resolve();}," +
             "  openUpdateInstaller:function(){return Promise.resolve();}," +
             "  restartApp:function(){return Promise.resolve();}," +
