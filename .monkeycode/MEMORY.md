@@ -37,8 +37,10 @@ Entries discovered by the Agent during task execution should follow this format:
 - Category: Workflow & Collaboration
 - Instructions:
   - 远程：`origin` → `https://github.com/ttao159/Mineradxx`，分支 `main`
-  - 环境 git helper 只读，推送需内嵌凭证：`git -c credential.helper= push "https://<user>:<token>@github.com/ttao159/Mineradxx.git" main`
+  - 环境 git helper / `/root/.netrc` 内的 token（fine-grained，93 字符）只有读权限：fetch、upload-pack 返回 200，push（receive-pack）返回 403
+  - push 需用户提供有写权限的 classic PAT（`ghp_` 开头，40 字符），内嵌凭证：`git -c credential.helper= push "https://ttao159:<token>@github.com/ttao159/Mineradxx.git" main`
   - 注意 `-c credential.helper=` 必须放在 `git` 之后、`push` 之前；写成 `git push -c ...` 会报 `unknown switch 'c'`
+  - 用 URL 形式 push/fetch 不会更新 `origin/main` remote-tracking 引用，push 后需 `git fetch origin main` 同步本地引用
 
 [后端构建、测试与审计]
 - Date: 2026-08-14
