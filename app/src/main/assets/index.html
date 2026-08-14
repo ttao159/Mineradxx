@@ -374,12 +374,17 @@ body.empty-home-active .home-visual{animation:home-visual-drift 8.8s ease-in-out
 .home-ranking-tab.active{background:color-mix(in srgb,var(--home-accent) 18%,rgba(255,255,255,.04));color:#fff;border-color:color-mix(in srgb,var(--home-accent) 34%,rgba(255,255,255,.16))}
 .home-ranking-status{font-size:10.5px;color:rgba(255,255,255,.42);margin-bottom:9px}
 .home-ranking-status.is-error{color:color-mix(in srgb,#ff6b6b 78%,rgba(255,255,255,.5))}
-.home-ranking-list{display:flex;flex-direction:column;gap:6px;max-height:318px;overflow:auto;scrollbar-width:thin}
+.home-ranking-list{display:flex;flex-direction:column;gap:6px;max-height:318px;overflow:auto;scrollbar-width:thin;padding-right:2px}
+.home-ranking-list::-webkit-scrollbar{width:4px}
+.home-ranking-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.18);border-radius:4px}
+.home-ranking-list::-webkit-scrollbar-track{background:transparent}
 .home-ranking-row{display:grid;grid-template-columns:24px 40px minmax(0,1fr) 24px;align-items:center;gap:9px;padding:6px 7px;border:1px solid transparent;border-radius:12px;background:rgba(255,255,255,.030);color:#fff;text-align:left;font-family:inherit;cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
 .home-ranking-row:hover{transform:translateY(-1px);border-color:color-mix(in srgb,var(--home-accent) 30%,rgba(255,255,255,.16));background:rgba(255,255,255,.055)}
 .home-ranking-num{font-size:12px;font-weight:720;color:rgba(255,255,255,.38);text-align:center;font-variant-numeric:tabular-nums}
 .home-ranking-num.is-top{color:color-mix(in srgb,var(--home-accent) 85%,#fff)}
-.home-ranking-cover{width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,rgba(var(--home-accent-rgb),.30),rgba(157,184,207,.18));background-size:cover;background-position:center;box-shadow:0 8px 18px rgba(0,0,0,.22)}
+.home-ranking-cover{position:relative;width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,rgba(var(--home-accent-rgb),.30),rgba(157,184,207,.18));box-shadow:0 8px 18px rgba(0,0,0,.22);overflow:hidden}
+.home-ranking-cover-img{width:100%;height:100%;object-fit:cover;display:block}
+.home-ranking-cover.cover-broken .home-ranking-cover-img{display:none}
 .home-ranking-copy{min-width:0;display:flex;flex-direction:column;gap:2px}
 .home-ranking-name{overflow:hidden;font-size:11.5px;font-weight:680;color:rgba(255,255,255,.92);white-space:nowrap;text-overflow:ellipsis}
 .home-ranking-artist{overflow:hidden;font-size:10px;color:rgba(255,255,255,.40);white-space:nowrap;text-overflow:ellipsis}
@@ -16282,13 +16287,15 @@ function renderHomePlatformRankings() {
   status.textContent = chartTitle + ' · ' + songs.length + ' 首 · ' + (homePlatformRankingState.cached ? '已使用近期榜单' : '刚刚更新');
   list.innerHTML = songs.map(function (song, index) {
     var cover = songCoverSrc(song, 120);
-    var coverStyle = cover ? ' style="background-image:url(&quot;' + escHtml(cssImageUrl(cover)) + '&quot;)"' : '';
+    var coverHtml = cover
+      ? '<img class="home-ranking-cover-img" src="' + escHtml(cover) + '" alt="" loading="lazy" onerror="this.parentNode.classList.add(\'cover-broken\')">'
+      : '';
     var album = song.album || song.albumName || '';
     var artist = song.artist || song.singer || '未知歌手';
     var rank = Math.max(1, Number(song.rank) || index + 1);
     return '<button class="home-ranking-row" type="button" role="listitem" onclick="playHomePlatformRanking(' + index + ')">' +
       '<span class="home-ranking-num' + (rank <= 3 ? ' is-top' : '') + '">' + String(rank).padStart(2, '0') + '</span>' +
-      '<span class="home-ranking-cover"' + coverStyle + '></span>' +
+      '<span class="home-ranking-cover">' + coverHtml + '</span>' +
       '<span class="home-ranking-copy"><span class="home-ranking-name">' + escHtml(song.name || '未知歌曲') + '</span>' +
       '<span class="home-ranking-artist">' + escHtml(artist + (album ? ' · ' + album : '')) + '</span></span>' +
       '<span class="home-ranking-play">›</span></button>';
