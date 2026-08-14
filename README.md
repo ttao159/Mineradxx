@@ -40,7 +40,7 @@ Mineradio 是一款沉浸式音乐播放器，融合天气电台、歌词舞台�
 
 ## 下载 APK
 
-从本仓库 [Releases](https://github.com/YOUR-USERNAME/YOUR-REPO/releases/latest) 下载，或参考下方「自行构建」。
+从本仓库 [Releases](https://github.com/ttao159/Mineradxx/releases/latest) 下载，或参考下方「自行构建」。
 
 要求：Android 8.0+，建议 4GB 内存以上，需开启「允许安装未知来源应用」。
 
