@@ -33,9 +33,9 @@ Entries discovered by the Agent during task execution should follow this format:
 
 [版本号管理]
 - Date: 2026-08-14
-- Context: 用户明确指示：每次更新后版本号也要更新
+- Context: 用户明确指示：每次更新后版本号也要更新；后补充：bug 修复无需更新版本号
 - Instructions:
-  - 每次代码更新后需递增版本号并一并提交推送
+  - 新增功能/功能变更后需递增版本号并一并提交推送；纯 bug 修复、遗漏补齐不递增版本号
   - Android 版本：`app/build.gradle` 的 `versionCode`（+1）与 `versionName`
   - 应用/后端版本：`app/src/main/assets/nodejs-project/package.json` 与 `package-lock.json` 的 `version`（顶部与 `packages[""]` 两处需同步）
   - 后端 `/api/app/version` 读取 package.json 的 version，前端更新检测面板展示该版本号
