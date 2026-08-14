@@ -112,6 +112,8 @@ const {
 } = require('./qishui-api');
 const qishuiQrLogin = require('./qishui-qr-login');
 const { handleStandardNetease } = require('./netease-std');
+const { getPlatformRankings } = require('./platform-rankings');
+const { importPlaylistLink } = require('./platform-playlist-link-import');
 const {
   getSpotifyConfig,
   clearSpotifyToken,
@@ -4983,6 +4985,42 @@ const server = http.createServer(async (req, res) => {
     } catch (err) {
       console.error('[WeatherIpLocation]', err);
       sendJSON(res, { ok: false, error: err.message, location: null }, 500);
+    }
+    return;
+  }
+
+  // ---------- 平台热歌榜 ----------
+  if (pn === '/api/platform-rankings') {
+    try {
+      sendJSON(res, await getPlatformRankings(
+        url.searchParams.get('provider'),
+        url.searchParams.get('limit'),
+        url.searchParams.get('refresh') === '1'
+      ));
+    } catch (err) {
+      console.error('[PlatformRankings]', err);
+      sendJSON(res, {
+        ok: false,
+        provider: String(url.searchParams.get('provider') || 'all'),
+        songs: [],
+        providers: err.providers || [],
+        error: err.message || 'PLATFORM_RANKINGS_FAILED',
+      }, 502);
+    }
+    return;
+  }
+
+  // ---------- 歌单链接导入 ----------
+  if (pn === '/api/local-playlists/import-link') {
+    if (req.method !== 'POST') {
+      sendJSON(res, { ok: false, error: 'METHOD_NOT_ALLOWED' }, 405);
+      return;
+    }
+    try {
+      const body = await readRequestBody(req);
+      sendJSON(res, await importPlaylistLink(body.input, body.provider));
+    } catch (err) {
+      sendJSON(res, { ok: false, error: err.message || 'PLAYLIST_LINK_IMPORT_FAILED' }, 400);
     }
     return;
   }
