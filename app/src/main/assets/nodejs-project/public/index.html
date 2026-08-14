@@ -1065,6 +1065,104 @@ body.login-guide-active #login-guide-canvas{opacity:1}
 .custom-lyric-status.fail{color:#ff8f9d}
 .lyric-source-row{display:grid;grid-template-columns:1fr;gap:8px;margin:8px 0 12px}
 .lyric-source-seg button.has-custom::after{content:'';display:inline-block;width:5px;height:5px;margin-left:5px;border-radius:50%;background:rgba(126,226,168,.86);vertical-align:middle;box-shadow:0 0 10px rgba(126,226,168,.50)}
+.three-track-seg button.has-custom::after{content:'';display:inline-block;width:5px;height:5px;margin-left:5px;border-radius:50%;background:rgba(244,210,138,.90);vertical-align:middle;box-shadow:0 0 10px rgba(244,210,138,.55)}
+.three-track-modal{width:min(620px,94vw);max-width:min(620px,94vw);padding:24px 26px;text-align:left;max-height:92vh;overflow:auto}
+.three-track-modal h2{text-align:center;margin-bottom:12px}
+.three-track-label{display:block;margin:9px 0 4px;font-size:11px;color:rgba(255,255,255,.58);letter-spacing:.3px}
+.three-track-input{width:100%;height:min(110px,16vh);resize:vertical;border-radius:12px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.045);color:rgba(255,255,255,.92);padding:10px 12px;font-family:'Inter','PingFang SC','Microsoft YaHei',sans-serif;font-size:12px;line-height:1.6;outline:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.three-track-input:focus{border-color:rgba(244,210,138,.42);background:rgba(244,210,138,.055)}
+.three-track-input::placeholder{color:rgba(255,255,255,.24)}
+.three-track-overlay{position:fixed;left:50%;bottom:min(21vh,190px);transform:translateX(-50%);z-index:34;text-align:center;pointer-events:none;opacity:0;transition:opacity .32s ease;max-width:88vw}
+.three-track-overlay.show{opacity:1}
+.three-track-trans{font-size:15px;line-height:1.5;color:rgba(255,255,255,.94);text-shadow:0 1px 8px rgba(0,0,0,.55),0 0 20px rgba(0,0,0,.35)}
+.three-track-roma{margin-top:5px;font-size:11.5px;line-height:1.45;color:rgba(255,255,255,.55);text-shadow:0 1px 6px rgba(0,0,0,.5);font-style:italic}
+
+/* ---------- 音乐星图 ---------- */
+.home-ranking-head-actions{display:flex;align-items:center;gap:8px}
+.home-music-planet-entry{min-width:104px;height:32px;padding:0 12px;display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid rgba(255,255,255,.12);border-radius:8px;background:rgba(255,255,255,.035);color:rgba(255,255,255,.76);font:700 11px var(--font-sans);cursor:pointer;white-space:nowrap;transition:border-color .18s ease,background .18s ease,color .18s ease,transform .18s ease}
+.home-music-planet-entry:hover{transform:translateY(-1px);border-color:rgba(var(--fc-accent-rgb),.34);background:rgba(var(--fc-accent-rgb),.07);color:#fff}
+.home-music-planet-entry svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.55}
+.music-planet-mask{z-index:64;padding:20px;background:rgba(0,0,0,.88)}
+.music-planet-modal{width:min(1500px,calc(100vw - 40px));max-width:none;height:min(900px,calc(100vh - 40px));padding:0;display:grid;grid-template-rows:76px minmax(0,1fr);overflow:hidden;border:1px solid rgba(255,255,255,.11);border-radius:12px;background:#05070a;color:#fff;text-align:left;box-shadow:0 30px 100px rgba(0,0,0,.66),inset 0 1px 0 rgba(255,255,255,.055)}
+.music-planet-head{position:relative;z-index:8;min-width:0;padding:14px 18px 13px 22px;display:flex;align-items:center;justify-content:space-between;gap:18px;border-bottom:1px solid rgba(255,255,255,.085);background:rgba(8,10,14,.94)}
+.music-planet-heading{min-width:0}
+.music-planet-eyebrow{display:block;color:rgba(var(--fc-accent-rgb),.75);font:800 9px/1 var(--font-sans);letter-spacing:.16em}
+.music-planet-head h2{margin:6px 0 0;font-size:19px;font-weight:700;line-height:1.1;letter-spacing:0}
+.music-planet-head p{margin:5px 0 0;overflow:hidden;color:rgba(255,255,255,.44);font-size:10.5px;line-height:1.2;white-space:nowrap;text-overflow:ellipsis}
+.music-planet-head-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+.music-planet-icon-btn,.music-planet-drawer-close,.music-planet-row-action{padding:0;display:inline-grid;place-items:center;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.035);color:rgba(255,255,255,.72);cursor:pointer;transition:border-color .18s ease,background .18s ease,color .18s ease,transform .18s ease}
+.music-planet-icon-btn{width:36px;height:36px;border-radius:8px}
+.music-planet-icon-btn:hover,.music-planet-drawer-close:hover,.music-planet-row-action:hover{transform:translateY(-1px);border-color:rgba(var(--fc-accent-rgb),.36);background:rgba(var(--fc-accent-rgb),.08);color:#fff}
+.music-planet-icon-btn svg,.music-planet-drawer-close svg,.music-planet-row-action svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.music-planet-stage{position:relative;min-width:0;min-height:0;overflow:hidden;isolation:isolate;background:#030508}
+#music-planet-canvas{position:absolute;inset:0;z-index:1;width:100%;height:100%;display:block;outline:none;cursor:grab;touch-action:none}
+#music-planet-canvas:active{cursor:grabbing}
+#music-planet-canvas:focus-visible{box-shadow:inset 0 0 0 1px rgba(var(--fc-accent-rgb),.68)}
+.music-planet-stage-status{position:absolute;z-index:4;right:16px;bottom:14px;left:16px;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:16px;pointer-events:none;color:rgba(255,255,255,.42);font:700 9.5px/1.2 var(--font-sans)}
+.music-planet-stage-status span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+#music-planet-selection{text-align:right}
+.music-planet-node-label{position:absolute;z-index:5;max-width:min(260px,70vw);padding:7px 9px;border:1px solid rgba(255,255,255,.11);border-radius:7px;background:rgba(7,9,13,.9);color:rgba(255,255,255,.9);font:700 10px/1.35 var(--font-sans);box-shadow:0 10px 30px rgba(0,0,0,.36);pointer-events:none;opacity:0;transform:translate3d(-50%,calc(-100% - 12px),0);transition:opacity .12s ease}
+.music-planet-node-label.show{opacity:1}
+.music-planet-drawer{position:absolute;z-index:7;top:0;right:0;bottom:0;width:min(370px,42vw);padding:18px 16px 42px;display:grid;grid-template-rows:auto minmax(0,1fr);border-left:1px solid rgba(255,255,255,.105);background:rgba(7,9,13,.96);box-shadow:-24px 0 64px rgba(0,0,0,.42);opacity:0;pointer-events:none;transform:translate3d(100%,0,0);transition:transform .32s cubic-bezier(.16,1,.3,1),opacity .2s ease}
+.music-planet-drawer.show{opacity:1;pointer-events:auto;transform:translate3d(0,0,0)}
+.music-planet-drawer-head{min-width:0;padding:0 0 14px;display:grid;grid-template-columns:42px minmax(0,1fr) 32px;align-items:center;gap:11px;border-bottom:1px solid rgba(255,255,255,.085)}
+.music-planet-drawer-marker{position:relative;width:42px;height:42px;display:block}
+.music-planet-drawer-marker::before,.music-planet-drawer-marker::after{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.music-planet-drawer-marker::before{width:31px;height:1px;background:rgba(255,255,255,.2)}
+.music-planet-drawer-marker::after{width:7px;height:7px;border:2px solid var(--music-planet-marker,#89a7aa);border-radius:50%;background:#07090d;box-shadow:0 0 0 4px rgba(255,255,255,.045)}
+.music-planet-drawer-head>div{min-width:0}
+.music-planet-drawer-head strong,.music-planet-drawer-head small{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.music-planet-drawer-head strong{color:rgba(255,255,255,.95);font-size:16px;font-weight:700}
+.music-planet-drawer-head small{margin-top:5px;color:rgba(255,255,255,.42);font-size:10px}
+.music-planet-drawer-close{width:32px;height:32px;border-radius:7px}
+.music-planet-drawer-list{min-height:0;overflow:auto;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.16) transparent}
+.music-planet-drawer-list::-webkit-scrollbar{width:4px}
+.music-planet-drawer-list::-webkit-scrollbar-thumb{border-radius:999px;background:rgba(255,255,255,.16)}
+.music-planet-row{min-width:0;min-height:62px;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.07)}
+.music-planet-row-main{min-width:0;min-height:61px;padding:0;display:grid;grid-template-columns:46px minmax(0,1fr);align-items:center;gap:10px;border:0;background:transparent;color:inherit;text-align:left;cursor:pointer;outline:none}
+.music-planet-row-main:focus-visible{box-shadow:inset 0 0 0 1px rgba(var(--fc-accent-rgb),.58)}
+.music-planet-row-cover{width:42px;height:42px;border-radius:7px;background:var(--music-planet-cover,#252b35) center/cover no-repeat;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.music-planet-row-copy{min-width:0}
+.music-planet-row-copy strong,.music-planet-row-copy small{display:block;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.music-planet-row-copy strong{color:rgba(255,255,255,.9);font-size:11.5px;font-weight:680}
+.music-planet-row-copy small{margin-top:5px;color:rgba(255,255,255,.38);font-size:9.5px}
+.music-planet-row-actions{display:flex;align-items:center;gap:5px}
+.music-planet-row-action{width:28px;height:28px;border-radius:6px}
+.music-planet-row-action svg{width:14px;height:14px}
+.music-planet-fallback{position:absolute;inset:0;z-index:6;padding:28px;overflow:auto;background:#05070a}
+.music-planet-fallback[hidden]{display:none}
+.music-planet-fallback-empty{min-height:100%;display:grid;place-content:center;gap:8px;color:rgba(255,255,255,.46);text-align:center}
+.music-planet-fallback-empty strong{color:rgba(255,255,255,.9);font-size:18px}
+.music-planet-fallback-artists{width:min(760px,100%);margin:0 auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px}
+.music-planet-fallback-artist{min-width:0;min-height:56px;padding:0 4px;display:flex;align-items:center;justify-content:space-between;gap:12px;border:0;border-bottom:1px solid rgba(255,255,255,.08);background:transparent;color:rgba(255,255,255,.86);font:700 12px var(--font-sans);text-align:left;cursor:pointer}
+.music-planet-fallback-artist span{overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.music-planet-fallback-artist small{flex:0 0 auto;color:rgba(255,255,255,.4)}
+@media (max-width:760px){
+  .home-ranking-head-actions{gap:6px}
+  .home-music-planet-entry{min-width:34px;width:34px;padding:0}
+  .home-music-planet-entry span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .music-planet-mask{padding:0}
+  .music-planet-modal{width:100vw;height:100vh;border:0;border-radius:0;grid-template-rows:70px minmax(0,1fr)}
+  .music-planet-head{padding:11px 12px 10px 15px}
+  .music-planet-head p{max-width:210px}
+  .music-planet-stage-status{right:12px;bottom:11px;left:12px}
+  #music-planet-selection{display:none}
+  .music-planet-drawer{top:auto;left:0;width:100%;height:min(42vh,350px);padding:14px 14px 22px;border-top:1px solid rgba(255,255,255,.105);border-left:0;box-shadow:0 -24px 64px rgba(0,0,0,.5);transform:translate3d(0,100%,0)}
+  .music-planet-fallback{padding:18px 16px}
+  .music-planet-fallback-artists{grid-template-columns:1fr}
+}
+@media (max-width:420px){
+  .music-planet-heading{max-width:calc(100vw - 106px)}
+  .music-planet-head p{max-width:100%}
+  .music-planet-icon-btn{width:32px;height:32px}
+  .music-planet-row{grid-template-columns:minmax(0,1fr) auto}
+  .music-planet-row-main{grid-template-columns:42px minmax(0,1fr)}
+  .music-planet-row-actions{gap:4px}
+}
+@media (prefers-reduced-motion:reduce){
+  .music-planet-drawer,.music-planet-node-label,.music-planet-icon-btn,.music-planet-drawer-close,.music-planet-row-action,.home-music-planet-entry{transition:none!important}
+}
+
 
 /* ---------- 加载/拖放 ---------- */
 #loading-overlay{position:fixed;inset:0;z-index:40;pointer-events:none;display:none}
@@ -1326,6 +1424,7 @@ body.desktop-shell.diy-mode #bottom-bar.stage-mode{left:50%;width:min(1080px,cal
 .fx-fold-body .fx-section-label{margin-top:12px}
 .fx-fold-body .fx-section-label:first-child{margin-top:4px}
 .fx-fold .fx-slider label{font-size:10.5px;color:rgba(255,255,255,.58)}
+.fx-audio-note{font-size:10px;line-height:1.5;color:rgba(255,255,255,.38);margin:8px 2px 4px;padding:8px 10px;border-radius:9px;border:1px dashed rgba(255,255,255,.10);background:rgba(255,255,255,.018)}
 .fx-actions{display:flex;gap:8px;margin-top:14px}
 .fx-mini-btn{flex:1;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:rgba(255,255,255,.78);font-size:11.5px;cursor:pointer;font-family:inherit;letter-spacing:.3px}
 .fx-mini-btn:hover{background:rgba(255,255,255,.1);color:#fff}
@@ -2456,7 +2555,18 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
       <section class="home-ranking" aria-label="平台热歌榜">
         <div class="home-ranking-head">
           <span class="home-insight-kicker">CHART · 平台热歌榜</span>
-          <button class="home-insight-link" type="button" onclick="refreshHomePlatformRankings()">刷新</button>
+          <span class="home-ranking-head-actions">
+            <button id="home-music-planet-entry" class="home-music-planet-entry" type="button"
+              onclick="openMusicPlanet()" aria-haspopup="dialog" title="打开音乐星图">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="3.1" />
+                <ellipse cx="12" cy="12" rx="8.7" ry="4.2" transform="rotate(-20 12 12)" />
+                <circle cx="18.4" cy="7.8" r="1" fill="currentColor" stroke="none" />
+              </svg>
+              <span>音乐星图</span>
+            </button>
+            <button class="home-insight-link" type="button" onclick="refreshHomePlatformRankings()">刷新</button>
+          </span>
         </div>
         <div class="home-ranking-tabs" id="home-ranking-tabs" role="tablist" aria-label="选择榜单平台">
           <button class="home-ranking-tab active" type="button" role="tab" data-home-ranking-provider="all" aria-selected="true" onclick="loadHomePlatformRankings('all')">综合</button>
@@ -2604,6 +2714,10 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
           <button id="lyric-source-original" type="button" class="active" onclick="setLyricSourceMode('original')">原词</button>
           <button id="lyric-source-custom" type="button" onclick="setLyricSourceMode('custom')">自定义</button>
         </div>
+        <div class="fx-seg three-track-seg" id="three-track-seg">
+          <button id="three-track-edit-btn" type="button" onclick="openThreeTrackModal()">三轨编辑</button>
+          <button id="three-track-toggle-btn" type="button" onclick="toggleThreeTrackEnabled()">叠加</button>
+        </div>
       </div>
       <div class="fx-section-label">歌词字体</div>
       <div class="fx-font-grid expanded" id="lyric-font-grid">
@@ -2714,6 +2828,30 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
       <div class="fx-seg" id="cam-seg">
         <button data-cam="off" class="active">关闭</button>
         <button data-cam="gesture">手势触碰</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="fx-fold" id="fx-audio-fold">
+    <div class="fx-fold-head" onclick="document.getElementById('fx-audio-fold').classList.toggle('open')">
+      <span class="fx-fold-title"><strong>听感调节</strong><small>均衡器 / 增益 / 空间 / 速度 / 音高</small></span><span class="arrow">▶</span>
+    </div>
+    <div class="fx-fold-body">
+      <div class="fx-section-label">均衡器</div>
+      <div class="fx-slider"><label>低音 60Hz</label><input id="audiofx-bass" type="range" min="-12" max="12" step="0.5"><output id="audiofx-bass-out">0.0dB</output></div>
+      <div class="fx-slider"><label>中低 250Hz</label><input id="audiofx-midLow" type="range" min="-12" max="12" step="0.5"><output id="audiofx-midLow-out">0.0dB</output></div>
+      <div class="fx-slider"><label>中音 1kHz</label><input id="audiofx-mid" type="range" min="-12" max="12" step="0.5"><output id="audiofx-mid-out">0.0dB</output></div>
+      <div class="fx-slider"><label>中高 4kHz</label><input id="audiofx-midHigh" type="range" min="-12" max="12" step="0.5"><output id="audiofx-midHigh-out">0.0dB</output></div>
+      <div class="fx-slider"><label>高音 12kHz</label><input id="audiofx-treble" type="range" min="-12" max="12" step="0.5"><output id="audiofx-treble-out">0.0dB</output></div>
+      <div class="fx-section-label">增益与声场</div>
+      <div class="fx-slider"><label>前级增益</label><input id="audiofx-preamp" type="range" min="0.5" max="2" step="0.01"><output id="audiofx-preamp-out">0.0dB</output></div>
+      <div class="fx-slider"><label>空间听感</label><input id="audiofx-spatial" type="range" min="-1" max="1" step="0.01"><output id="audiofx-spatial-out">中 0.00</output></div>
+      <div class="fx-section-label">速度与音高</div>
+      <div class="fx-slider"><label>播放速度</label><input id="audiofx-speed" type="range" min="0.5" max="2" step="0.01"><output id="audiofx-speed-out">1.00x</output></div>
+      <div class="fx-slider"><label>音高偏移</label><input id="audiofx-pitch" type="range" min="-12" max="12" step="1"><output id="audiofx-pitch-out">+0 半音</output></div>
+      <div class="fx-audio-note">音高非 0 时变调会同步影响播放速度，这是浏览器对媒体元素变调的限制。</div>
+      <div class="fx-actions">
+        <button class="fx-mini-btn" type="button" onclick="resetAudioFX()">恢复默认</button>
       </div>
     </div>
   </div>
@@ -3107,6 +3245,84 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
   </div>
 </div>
 
+<div id="three-track-modal" class="modal-mask">
+  <div class="modal three-track-modal">
+    <h2>三轨歌词编辑器</h2>
+    <div class="custom-lyric-track">
+      <div id="three-track-title" class="custom-lyric-title">当前歌曲</div>
+      <div id="three-track-sub" class="custom-lyric-sub">分别粘贴原唱 / 翻译 / 罗马音 LRC</div>
+    </div>
+    <label class="three-track-label" for="three-track-lrc">原唱 LRC</label>
+    <textarea id="three-track-lrc" class="three-track-input" spellcheck="false" placeholder="[00:12.00] 第一行歌词&#10;[00:16.50] 第二行歌词"></textarea>
+    <label class="three-track-label" for="three-track-tlyric">翻译 LRC</label>
+    <textarea id="three-track-tlyric" class="three-track-input" spellcheck="false" placeholder="[00:12.00] 翻译第一行&#10;[00:16.50] 翻译第二行"></textarea>
+    <label class="three-track-label" for="three-track-romalrc">罗马音 LRC</label>
+    <textarea id="three-track-romalrc" class="three-track-input" spellcheck="false" placeholder="[00:12.00] da ichi gy&#333;&#10;[00:16.50] da ni gy&#333;"></textarea>
+    <div id="three-track-status" class="custom-lyric-status"></div>
+    <div class="btn-row">
+      <button class="modal-btn" onclick="deleteThreeTrackForCurrent()">删除</button>
+      <button class="modal-btn" onclick="closeThreeTrackModal()">关闭</button>
+      <button class="modal-btn primary" onclick="saveThreeTrackForCurrent()">保存使用</button>
+    </div>
+  </div>
+</div>
+
+<div id="three-track-overlay" class="three-track-overlay">
+  <div id="three-track-trans" class="three-track-trans"></div>
+  <div id="three-track-roma" class="three-track-roma"></div>
+</div>
+
+<div id="music-planet-mask" class="modal-mask music-planet-mask" role="dialog" aria-modal="true"
+  aria-hidden="true" aria-labelledby="music-planet-title" onclick="if(event.target===this)closeMusicPlanet()">
+  <section class="modal music-planet-modal">
+    <header class="music-planet-head">
+      <div class="music-planet-heading">
+        <span class="music-planet-eyebrow">MUSIC MAP</span>
+        <h2 id="music-planet-title">音乐星图</h2>
+        <p id="music-planet-summary" aria-live="polite">正在整理你的音乐轨迹</p>
+      </div>
+      <div class="music-planet-head-actions">
+        <button id="music-planet-reset" class="music-planet-icon-btn" type="button"
+          onclick="resetMusicPlanetView()" title="重置视角" aria-label="重置星图视角">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4.8 9.2A7.8 7.8 0 1 1 5.7 17" />
+            <path d="M4.8 4.8v4.4h4.4" />
+          </svg>
+        </button>
+        <button class="music-planet-icon-btn" type="button" onclick="closeMusicPlanet()"
+          title="关闭" aria-label="关闭音乐星图">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+    </header>
+    <div class="music-planet-stage">
+      <canvas id="music-planet-canvas" tabindex="0" aria-label="可旋转的声轨星座"></canvas>
+      <div id="music-planet-fallback" class="music-planet-fallback" hidden></div>
+      <div id="music-planet-node-label" class="music-planet-node-label" aria-hidden="true"></div>
+      <div class="music-planet-stage-status">
+        <span id="music-planet-counts">0 位歌手 · 0 首歌曲</span>
+        <span id="music-planet-selection">选择一位歌手展开歌曲</span>
+      </div>
+      <aside id="music-planet-drawer" class="music-planet-drawer" aria-hidden="true"
+        aria-labelledby="music-planet-drawer-name">
+        <div class="music-planet-drawer-head">
+          <span id="music-planet-drawer-marker" class="music-planet-drawer-marker" aria-hidden="true"></span>
+          <div>
+            <strong id="music-planet-drawer-name">歌手</strong>
+            <small id="music-planet-drawer-meta">关联歌曲</small>
+          </div>
+          <button class="music-planet-drawer-close" type="button" onclick="closeMusicPlanetDrawer()"
+            title="关闭歌手歌曲" aria-label="关闭歌手歌曲">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" /></svg>
+          </button>
+        </div>
+        <div id="music-planet-drawer-list" class="music-planet-drawer-list" role="list"></div>
+      </aside>
+    </div>
+  </section>
+</div>
+
+
 <div id="update-modal" class="modal-mask">
   <div class="modal update-modal">
     <div class="update-panel-inner">
@@ -3203,6 +3419,21 @@ var audioFadeTimer = null, audioElementFadeFrame = 0, audioFadeSerial = 0;
 var AUDIO_FADE_IN_MS = 460;
 var AUDIO_FADE_OUT_MS = 420;
 var AUDIO_SILENCE_GAIN = 0.0001;
+var AUDIO_FX_STORE_KEY = 'mineradio-audio-fx-v1';
+var audioFX = readAudioFX();
+var eqFilters = [], preampNode = null, spatialNode = null;
+var AUDIO_FX_EQ_BANDS = [
+  { key: 'bass',    type: 'lowshelf',  freq: 60,    label: '低音' },
+  { key: 'midLow',  type: 'peaking',   freq: 250,   label: '中低' },
+  { key: 'mid',     type: 'peaking',   freq: 1000,  label: '中音' },
+  { key: 'midHigh', type: 'peaking',   freq: 4000,  label: '中高' },
+  { key: 'treble',  type: 'highshelf', freq: 12000, label: '高音' }
+];
+var THREE_TRACK_LYRIC_STORE_KEY = 'mineradio-three-track-lyrics-v1';
+var THREE_TRACK_ENABLED_KEY = 'mineradio-three-track-enabled';
+var threeTrackLyricMap = readThreeTrackLyricMap();
+var threeTrackEnabled = readThreeTrackEnabled();
+var threeTrackActiveLines = null;
 var userPlaylists = [], qqPlaylists = [], myPodcastCollections = [], myPodcastItems = {}, playlistCoverCache = {};
 var CUSTOM_COVER_STORE_KEY = 'mineradio-custom-covers';
 var CUSTOM_LYRIC_STORE_KEY = 'mineradio-custom-lyrics-v1';
@@ -9437,6 +9668,7 @@ function showStageLine(text, redrawOnly) {
   var mesh = buildLyricMesh(text);
   stageLyrics.group.add(mesh);
   stageLyrics.current = mesh;
+  updateThreeTrackOverlay();
 }
 
 function refreshCurrentLyricStyle() {
@@ -17618,6 +17850,7 @@ function applyLyricsState(lines, hasNativeKaraoke, timingSource) {
   if (lyricsLines.length && lyricsLines[0].fallback) lyricsTimingSource = 'fallback';
   renderLyrics();
   updateCustomLyricControls();
+  applyThreeTrackForCurrent();
 }
 function applyOriginalLyricsState() {
   lyricSourceMode = 'original';
@@ -17715,6 +17948,7 @@ function updateCustomLyricControls() {
     customBtn.classList.toggle('has-custom', hasCustom);
     customBtn.title = hasCustom ? '打开并编辑自定义歌词' : '新增自定义歌词';
   }
+  updateThreeTrackControls();
 }
 function setCustomLyricStatus(text, tone) {
   var el = document.getElementById('custom-lyric-status');
@@ -17792,6 +18026,1112 @@ function deleteCustomLyricForCurrent() {
   if (input) input.value = '';
   setCustomLyricStatus('已删除，恢复原歌词', 'good');
   showToast('已恢复原歌词');
+}
+
+// ============================================================
+//  三轨歌词编辑器（原唱 / 翻译 / 罗马音）
+// ============================================================
+function readThreeTrackLyricMap() {
+  try {
+    var raw = JSON.parse(localStorage.getItem(THREE_TRACK_LYRIC_STORE_KEY) || '{}') || {};
+    var out = {};
+    Object.keys(raw).forEach(function(key){
+      var item = raw[key];
+      if (item && (String(item.lrc || '').trim() || String(item.tlyric || '').trim() || String(item.romalrc || '').trim())) {
+        out[key] = { lrc: item.lrc || '', tlyric: item.tlyric || '', romalrc: item.romalrc || '', updatedAt: item.updatedAt || 0 };
+      }
+    });
+    return out;
+  } catch (e) { return {}; }
+}
+function saveThreeTrackLyricMap() {
+  try { localStorage.setItem(THREE_TRACK_LYRIC_STORE_KEY, JSON.stringify(threeTrackLyricMap || {})); return true; }
+  catch (e) { console.warn('three-track lyric save failed:', e); return false; }
+}
+function readThreeTrackEnabled() {
+  try { return localStorage.getItem(THREE_TRACK_ENABLED_KEY) === '1'; }
+  catch (e) { return false; }
+}
+function setThreeTrackEnabled(on) {
+  threeTrackEnabled = !!on;
+  try { localStorage.setItem(THREE_TRACK_ENABLED_KEY, threeTrackEnabled ? '1' : '0'); } catch (e) {}
+  applyThreeTrackForCurrent();
+  updateThreeTrackControls();
+  showToast(threeTrackEnabled ? '已开启三轨歌词叠加' : '已关闭三轨歌词叠加');
+}
+function toggleThreeTrackEnabled() {
+  setThreeTrackEnabled(!threeTrackEnabled);
+}
+function updateThreeTrackControls() {
+  var toggle = document.getElementById('three-track-toggle-btn');
+  if (toggle) toggle.classList.toggle('active', !!threeTrackEnabled);
+  var edit = document.getElementById('three-track-edit-btn');
+  if (edit) {
+    var cur = threeTrackEntryForCurrent();
+    edit.classList.toggle('has-custom', !!(cur && cur.entry));
+  }
+}
+function parseLrcTimeMap(text) {
+  var map = {}, reg = /\[(\d{1,2}):(\d{1,2})(?:\.(\d{1,3}))?\]/g;
+  String(text || '').split(/\r?\n/).forEach(function(line){
+    var times = [], m;
+    reg.lastIndex = 0;
+    while ((m = reg.exec(line))) times.push(lyricTagTimeToSeconds(m[1], m[2], m[3]));
+    if (!times.length) return;
+    var txt = line.replace(reg, '').trim();
+    if (!txt) return;
+    times.forEach(function(t){ map[t.toFixed(3)] = txt; });
+  });
+  return map;
+}
+function mergeThreeTrackLines(lrcText, tlyricText, romalrcText) {
+  var main = parseLrcTimeMap(lrcText);
+  var trans = parseLrcTimeMap(tlyricText);
+  var roma = parseLrcTimeMap(romalrcText);
+  var times = Object.keys(main).map(Number).sort(function(a, b){ return a - b; });
+  return times.map(function(t){
+    var key = t.toFixed(3);
+    return { t: t, text: main[key] || '', trans: trans[key] || '', roma: roma[key] || '' };
+  });
+}
+function threeTrackEntryForCurrent() {
+  var song = currentLyricSong();
+  var key = songCustomLyricKey(song);
+  return key && threeTrackLyricMap[key] ? { key: key, song: song, entry: threeTrackLyricMap[key] } : null;
+}
+function applyThreeTrackForCurrent() {
+  threeTrackActiveLines = null;
+  var cur = threeTrackEntryForCurrent();
+  if (!threeTrackEnabled || !cur || !cur.entry) { updateThreeTrackOverlay(); return; }
+  var lines = mergeThreeTrackLines(cur.entry.lrc, cur.entry.tlyric, cur.entry.romalrc);
+  threeTrackActiveLines = lines.length ? lines : null;
+  updateThreeTrackOverlay();
+}
+function matchThreeTrackLine(lyricLine) {
+  if (!threeTrackActiveLines || !lyricLine) return null;
+  var best = null, bestDiff = Infinity;
+  for (var i = 0; i < threeTrackActiveLines.length; i++) {
+    var l = threeTrackActiveLines[i];
+    var diff = Math.abs((l.t || 0) - (lyricLine.t || 0));
+    if (diff < bestDiff) { bestDiff = diff; best = l; }
+  }
+  if (best && bestDiff <= 1.6) return best;
+  var target = String(lyricLine.text || '').trim();
+  for (var j = 0; j < threeTrackActiveLines.length; j++) {
+    if (target && String(threeTrackActiveLines[j].text || '').trim() === target) return threeTrackActiveLines[j];
+  }
+  return null;
+}
+function updateThreeTrackOverlay() {
+  var el = document.getElementById('three-track-overlay');
+  if (!el) return;
+  var trans = document.getElementById('three-track-trans');
+  var roma = document.getElementById('three-track-roma');
+  var line = null;
+  var idx = stageLyrics ? stageLyrics.currentIdx : -1;
+  if (idx >= 0 && lyricsLines[idx]) line = matchThreeTrackLine(lyricsLines[idx]);
+  var has = !!(line && (String(line.trans || '').trim() || String(line.roma || '').trim()));
+  el.classList.toggle('show', has);
+  if (!has) return;
+  if (trans) trans.textContent = String(line.trans || '').trim();
+  if (roma) roma.textContent = String(line.roma || '').trim();
+}
+function openThreeTrackModal() {
+  var cur = threeTrackEntryForCurrent();
+  if (!cur || !cur.song) {
+    showToast('先播放或选择一首歌');
+    return;
+  }
+  if (immersiveMode) setImmersiveMode(false);
+  var title = document.getElementById('three-track-title');
+  var sub = document.getElementById('three-track-sub');
+  var lrc = document.getElementById('three-track-lrc');
+  var tlyric = document.getElementById('three-track-tlyric');
+  var romalrc = document.getElementById('three-track-romalrc');
+  if (title) title.textContent = cur.song.name || '当前歌曲';
+  if (sub) sub.textContent = (cur.song.artist || '') + (cur.entry ? ' · 已保存三轨歌词' : ' · 分别粘贴原唱 / 翻译 / 罗马音 LRC');
+  if (lrc) lrc.value = cur.entry ? (cur.entry.lrc || '') : '';
+  if (tlyric) tlyric.value = cur.entry ? (cur.entry.tlyric || '') : '';
+  if (romalrc) romalrc.value = cur.entry ? (cur.entry.romalrc || '') : '';
+  setThreeTrackStatus(cur.entry ? '已读取本地三轨歌词' : '翻译与罗马音可留空；按时间轴与原唱自动对齐');
+  openGsapModal(document.getElementById('three-track-modal'));
+}
+function closeThreeTrackModal() {
+  closeGsapModal(document.getElementById('three-track-modal'));
+}
+function setThreeTrackStatus(text) {
+  var el = document.getElementById('three-track-status');
+  if (el) el.textContent = text || '';
+}
+function saveThreeTrackForCurrent() {
+  var cur = threeTrackEntryForCurrent();
+  if (!cur || !cur.key) {
+    showToast('先播放或选择一首歌');
+    return;
+  }
+  var lrc = document.getElementById('three-track-lrc');
+  var tlyric = document.getElementById('three-track-tlyric');
+  var romalrc = document.getElementById('three-track-romalrc');
+  var lrcText = lrc ? String(lrc.value || '').trim() : '';
+  var tlyricText = tlyric ? String(tlyric.value || '').trim() : '';
+  var romalrcText = romalrc ? String(romalrc.value || '').trim() : '';
+  if (!lrcText && !tlyricText && !romalrcText) {
+    setThreeTrackStatus('请至少输入一轨歌词');
+    return;
+  }
+  var lines = mergeThreeTrackLines(lrcText, tlyricText, romalrcText);
+  if (!lines.length) {
+    setThreeTrackStatus('没有识别到带时间轴的原唱歌词行');
+    return;
+  }
+  threeTrackLyricMap[cur.key] = { lrc: lrcText, tlyric: tlyricText, romalrc: romalrcText, updatedAt: Date.now() };
+  var saved = saveThreeTrackLyricMap();
+  if (!threeTrackEnabled) setThreeTrackEnabled(true);
+  else applyThreeTrackForCurrent();
+  setThreeTrackStatus(saved ? ('已保存 ' + lines.length + ' 行三轨歌词') : '已应用，但本地存储空间不足');
+  showToast('三轨歌词已保存');
+  setTimeout(function(){ closeThreeTrackModal(); }, 520);
+}
+function deleteThreeTrackForCurrent() {
+  var cur = threeTrackEntryForCurrent();
+  if (!cur || !cur.key || !threeTrackLyricMap[cur.key]) {
+    setThreeTrackStatus('当前歌曲没有三轨歌词');
+    return;
+  }
+  delete threeTrackLyricMap[cur.key];
+  saveThreeTrackLyricMap();
+  threeTrackActiveLines = null;
+  updateThreeTrackOverlay();
+  var lrc = document.getElementById('three-track-lrc');
+  var tlyric = document.getElementById('three-track-tlyric');
+  var romalrc = document.getElementById('three-track-romalrc');
+  if (lrc) lrc.value = '';
+  if (tlyric) tlyric.value = '';
+  if (romalrc) romalrc.value = '';
+  setThreeTrackStatus('已删除三轨歌词');
+  showToast('已删除三轨歌词');
+}
+
+// ============================================================
+//  音乐星图（歌手星座 3D 空间可视化）
+// ============================================================
+var MUSIC_PLANET_POOL_LIMIT = 96;
+var musicPlanetState = {
+  open: false,
+  previousFocus: null,
+  songs: [],
+  artists: [],
+  currentSong: null,
+  renderer: null,
+  scene: null,
+  camera: null,
+  root: null,
+  halo: null,
+  canvas: null,
+  pickables: [],
+  artistMeshes: [],
+  satelliteGroups: [],
+  textures: [],
+  raf: 0,
+  buildId: 0,
+  drag: null,
+  hoverNode: null,
+  selectedArtistKey: '',
+  keyboardIndex: 0,
+  zoom: 10.8,
+  reducedMotion: false,
+  resizeObserver: null,
+  controlsBound: false
+};
+function musicPlanetNormalizeText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[\s\u3000]+/g, '')
+    .replace(/[·•・]/g, '')
+    .trim();
+}
+function musicPlanetArtistName(song) {
+  song = song || {};
+  var value = song.artist || song.singer || song.artistName || song.author || song.albumArtist || '';
+  if (!value && Array.isArray(song.artists)) {
+    value = song.artists.map(function (artist) { return artist && (artist.name || artist.artistName || artist); }).filter(Boolean).join(' / ');
+  }
+  if (Array.isArray(value)) value = value.map(function (artist) { return artist && (artist.name || artist); }).filter(Boolean).join(' / ');
+  value = String(value || '').split(/\s*(?:\/|、|,|&| feat\.? | ft\.? )\s*/i)[0].trim();
+  return value || '未知歌手';
+}
+function musicPlanetSongIdentity(song) {
+  song = song || {};
+  var provider = String(song.provider || song.source || song.type || 'song').toLowerCase();
+  var id = song.id || song.songId || song.songmid || song.mid || song.hash || song.localKey || song.path || '';
+  if (id) return provider + ':' + String(id);
+  return musicPlanetNormalizeText(song.name || song.title) + '|' + musicPlanetNormalizeText(musicPlanetArtistName(song));
+}
+function musicPlanetEquivalentIdentity(song) {
+  song = song || {};
+  return musicPlanetNormalizeText(song.name || song.title) + '|' + musicPlanetNormalizeText(musicPlanetArtistName(song));
+}
+function musicPlanetUniqueSongs(songs, limit) {
+  var providerSeen = {};
+  var equivalentSeen = {};
+  var result = [];
+  (Array.isArray(songs) ? songs : []).some(function (song) {
+    if (!song || !(song.name || song.title)) return false;
+    if (song.type === 'podcast' || song.type === 'podcast-radio' || song.programId || song.radioId) return false;
+    var providerKey = musicPlanetSongIdentity(song);
+    var equivalentKey = musicPlanetEquivalentIdentity(song);
+    if (!equivalentKey || providerSeen[providerKey] || equivalentSeen[equivalentKey]) return false;
+    providerSeen[providerKey] = true;
+    equivalentSeen[equivalentKey] = true;
+    result.push(song);
+    return result.length >= (Number(limit) || MUSIC_PLANET_POOL_LIMIT);
+  });
+  return result;
+}
+function musicPlanetCollectSongPool() {
+  var pool = [];
+  function append(list) {
+    if (Array.isArray(list)) list.forEach(function (song) { if (song) pool.push(song); });
+  }
+  var current = (typeof playQueue !== 'undefined' && typeof currentIdx !== 'undefined' && currentIdx >= 0)
+    ? playQueue[currentIdx]
+    : null;
+  if (current) pool.push(current);
+  if (typeof playQueue !== 'undefined') append(playQueue);
+  if (typeof playlist !== 'undefined') append(playlist);
+  if (typeof currentLocalSong !== 'undefined' && currentLocalSong) pool.push(currentLocalSong);
+  if (typeof homeDiscoverState !== 'undefined' && homeDiscoverState) append(homeDiscoverState.songs);
+  if (typeof homePlatformRankingState !== 'undefined' && homePlatformRankingState) append(homePlatformRankingState.songs);
+  if (typeof userPlaylists !== 'undefined' && Array.isArray(userPlaylists)) {
+    userPlaylists.forEach(function (item) { append(item && item.songs); });
+  }
+  if (typeof qqPlaylists !== 'undefined' && Array.isArray(qqPlaylists)) {
+    qqPlaylists.forEach(function (item) { append(item && item.songs); });
+  }
+  return musicPlanetUniqueSongs(pool, MUSIC_PLANET_POOL_LIMIT);
+}
+function musicPlanetLayoutCaps(width, lowPower) {
+  var compact = Number(width) <= 620 || lowPower === true;
+  return compact
+    ? { artists: 8, tracksPerArtist: 3, tracks: 24 }
+    : { artists: 12, tracksPerArtist: 4, tracks: 48 };
+}
+function musicPlanetGroupSongs(songs, currentSong, caps) {
+  caps = caps || musicPlanetLayoutCaps(1280, false);
+  var buckets = {};
+  musicPlanetUniqueSongs(songs, MUSIC_PLANET_POOL_LIMIT).forEach(function (song) {
+    var name = musicPlanetArtistName(song);
+    var key = musicPlanetNormalizeText(name) || 'unknown';
+    if (!buckets[key]) buckets[key] = { key: key, name: name, songs: [] };
+    buckets[key].songs.push(song);
+  });
+  var artists = Object.keys(buckets).map(function (key) { return buckets[key]; });
+  artists.sort(function (a, b) {
+    if (a.songs.length !== b.songs.length) return b.songs.length - a.songs.length;
+    return a.name.localeCompare(b.name, 'zh-CN');
+  });
+  var currentKey = currentSong ? musicPlanetNormalizeText(musicPlanetArtistName(currentSong)) : '';
+  if (currentKey) {
+    var currentArtistIndex = artists.findIndex(function (artist) { return artist.key === currentKey; });
+    if (currentArtistIndex > 0) artists.unshift(artists.splice(currentArtistIndex, 1)[0]);
+  }
+  artists = artists.slice(0, Math.max(1, Number(caps.artists) || 12));
+  var remaining = Math.max(1, Number(caps.tracks) || 48);
+  artists.forEach(function (artist) {
+    var take = Math.min(remaining, Math.max(1, Number(caps.tracksPerArtist) || 4), artist.songs.length);
+    artist.songs = artist.songs.slice(0, take);
+    remaining -= take;
+  });
+  artists = artists.filter(function (artist) { return artist.songs.length; });
+  return {
+    artists: artists,
+    songs: artists.reduce(function (result, artist) { return result.concat(artist.songs); }, []),
+    currentSong: currentSong || (artists[0] && artists[0].songs[0]) || null,
+    currentArtistKey: currentKey
+  };
+}
+function musicPlanetHash(value) {
+  var hash = 2166136261;
+  String(value || '').split('').forEach(function (character) {
+    hash ^= character.charCodeAt(0);
+    hash = Math.imul(hash, 16777619);
+  });
+  return hash >>> 0;
+}
+function musicPlanetColor(value, lightness) {
+  var hue = musicPlanetHash(value) % 360;
+  return 'hsl(' + hue + ', 30%, ' + (Number(lightness) || 58) + '%)';
+}
+function musicPlanetSongCover(song, size) {
+  if (!song) return '';
+  try {
+    if (typeof songCoverSrc === 'function') return songCoverSrc(song, size || 160) || '';
+  } catch (_error) { }
+  return song.cover || song.picUrl || song.img || '';
+}
+function musicPlanetEscape(value) {
+  return typeof escHtml === 'function'
+    ? escHtml(String(value || ''))
+    : String(value || '').replace(/[&<>"']/g, function (character) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character];
+    });
+}
+function musicPlanetPlayIcon() {
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z" fill="currentColor" stroke="none"/></svg>';
+}
+function musicPlanetNextIcon() {
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 7.5v9l7-4.5-7-4.5Zm9.5-1v11M19 8v8M15 12h8"/></svg>';
+}
+function musicPlanetCollectIcon() {
+  return '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5.5h14v14H5zM8 9h8M8 13h6M9 3h6"/></svg>';
+}
+function musicPlanetSetSummary(message) {
+  var summary = document.getElementById('music-planet-summary');
+  if (summary) summary.textContent = message || '';
+}
+function musicPlanetSetCounts(grouped) {
+  var artists = grouped && grouped.artists || [];
+  var songs = grouped && grouped.songs || [];
+  var label = artists.length + ' 位歌手 · ' + songs.length + ' 首歌曲';
+  var counts = document.getElementById('music-planet-counts');
+  if (counts) counts.textContent = label;
+  musicPlanetSetSummary(songs.length ? ('从现有曲库连接出 ' + label) : '当前还没有可绘制的歌曲');
+}
+function musicPlanetFallbackHtml(grouped, failed) {
+  var artists = grouped && grouped.artists || [];
+  if (!artists.length) {
+    return '<div class="music-planet-fallback-empty"><strong>星图还没有亮起来</strong><span>先播放、导入或载入一些音乐，再回来看看。</span></div>';
+  }
+  return '<div class="music-planet-fallback-artists"' + (failed ? ' data-webgl-fallback="true"' : '') + '>' + artists.map(function (artist, index) {
+    return '<button class="music-planet-fallback-artist" type="button" data-music-planet-artist="' + index + '">' +
+      '<span>' + musicPlanetEscape(artist.name) + '</span><small>' + artist.songs.length + ' 首</small></button>';
+  }).join('') + '</div>';
+}
+function musicPlanetShowFallback(grouped, failed) {
+  var fallback = document.getElementById('music-planet-fallback');
+  var canvas = document.getElementById('music-planet-canvas');
+  if (!fallback) return;
+  fallback.innerHTML = musicPlanetFallbackHtml(grouped, failed);
+  fallback.hidden = false;
+  if (canvas) canvas.hidden = true;
+}
+function musicPlanetHideFallback() {
+  var fallback = document.getElementById('music-planet-fallback');
+  var canvas = document.getElementById('music-planet-canvas');
+  if (fallback) fallback.hidden = true;
+  if (canvas) canvas.hidden = false;
+}
+function musicPlanetDisposeScene() {
+  musicPlanetState.buildId += 1;
+  if (musicPlanetState.scene) {
+    var disposedGeometry = [];
+    var disposedMaterial = [];
+    musicPlanetState.scene.traverse(function (object) {
+      if (object.geometry && disposedGeometry.indexOf(object.geometry) < 0) {
+        disposedGeometry.push(object.geometry);
+        if (typeof object.geometry.dispose === 'function') object.geometry.dispose();
+      }
+      var materials = Array.isArray(object.material) ? object.material : [object.material];
+      materials.forEach(function (material) {
+        if (!material || disposedMaterial.indexOf(material) >= 0) return;
+        disposedMaterial.push(material);
+        if (material.map && typeof material.map.dispose === 'function') material.map.dispose();
+        if (typeof material.dispose === 'function') material.dispose();
+      });
+    });
+  }
+  musicPlanetState.textures.forEach(function (texture) {
+    try { if (texture && typeof texture.dispose === 'function') texture.dispose(); } catch (_error) { }
+  });
+  musicPlanetState.textures = [];
+  musicPlanetState.scene = null;
+  musicPlanetState.camera = null;
+  musicPlanetState.root = null;
+  musicPlanetState.halo = null;
+  musicPlanetState.pickables = [];
+  musicPlanetState.artistMeshes = [];
+  musicPlanetState.satelliteGroups = [];
+}
+function musicPlanetSeededUnit(index, salt) {
+  var value = musicPlanetHash(String(index) + '|' + String(salt));
+  return (value % 100000) / 100000;
+}
+function musicPlanetAddStars(scene, compact) {
+  var count = compact ? 260 : 520;
+  var positions = new Float32Array(count * 3);
+  var colors = new Float32Array(count * 3);
+  for (var index = 0; index < count; index += 1) {
+    var radius = 6 + musicPlanetSeededUnit(index, 'r') * 19;
+    var theta = musicPlanetSeededUnit(index, 't') * Math.PI * 2;
+    var phi = Math.acos(2 * musicPlanetSeededUnit(index, 'p') - 1);
+    positions[index * 3] = radius * Math.sin(phi) * Math.cos(theta);
+    positions[index * 3 + 1] = radius * Math.cos(phi);
+    positions[index * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+    var value = .52 + musicPlanetSeededUnit(index, 'c') * .48;
+    colors[index * 3] = value * .78;
+    colors[index * 3 + 1] = value * .88;
+    colors[index * 3 + 2] = value;
+  }
+  var geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  var material = new THREE.PointsMaterial({
+    size: compact ? .045 : .036,
+    vertexColors: true,
+    transparent: true,
+    opacity: .78,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending
+  });
+  scene.add(new THREE.Points(geometry, material));
+}
+function musicPlanetFallbackTexture(label, color) {
+  if (typeof document === 'undefined' || typeof THREE === 'undefined' || !THREE.CanvasTexture) return null;
+  var canvas = document.createElement('canvas');
+  canvas.width = 96;
+  canvas.height = 96;
+  var context = canvas.getContext('2d');
+  if (!context) return null;
+  context.clearRect(0, 0, 96, 96);
+  context.fillStyle = '#14191e';
+  context.fillRect(3, 3, 90, 90);
+  context.fillStyle = color || '#6f9da3';
+  context.fillRect(3, 3, 5, 90);
+  context.lineWidth = 2;
+  context.strokeStyle = 'rgba(255,255,255,.18)';
+  context.strokeRect(3, 3, 90, 90);
+  context.fillStyle = 'rgba(255,255,255,.92)';
+  context.font = '600 32px "Microsoft YaHei", "Noto Sans SC", sans-serif';
+  context.textAlign = 'center';
+  context.textBaseline = 'middle';
+  context.fillText(String(label || '?').trim().slice(0, 1).toUpperCase() || '?', 48, 50);
+  var texture = new THREE.CanvasTexture(canvas);
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  musicPlanetState.textures.push(texture);
+  return texture;
+}
+function musicPlanetArtistMarkerTexture(name, color) {
+  if (typeof document === 'undefined' || typeof THREE === 'undefined' || !THREE.CanvasTexture) return null;
+  var canvas = document.createElement('canvas');
+  canvas.width = 640;
+  canvas.height = 128;
+  var context = canvas.getContext('2d');
+  if (!context) return null;
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.strokeStyle = 'rgba(255,255,255,.18)';
+  context.lineWidth = 2;
+  context.beginPath();
+  context.moveTo(24, 64);
+  context.lineTo(82, 64);
+  context.stroke();
+  context.fillStyle = color || '#87a5aa';
+  context.beginPath();
+  context.arc(28, 64, 7, 0, Math.PI * 2);
+  context.fill();
+  context.fillStyle = 'rgba(255,255,255,.92)';
+  context.font = '600 34px "Microsoft YaHei", "Noto Sans SC", sans-serif';
+  context.textAlign = 'left';
+  context.textBaseline = 'middle';
+  context.fillText(String(name || '未知歌手'), 98, 63, 520);
+  var texture = new THREE.CanvasTexture(canvas);
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  musicPlanetState.textures.push(texture);
+  return texture;
+}
+function musicPlanetAddCoverFrame(group, size, color) {
+  var half = size / 2;
+  var corner = size * .22;
+  var positions = [
+    -half, half, 0, -half + corner, half, 0,
+    -half, half, 0, -half, half - corner, 0,
+    half, half, 0, half - corner, half, 0,
+    half, half, 0, half, half - corner, 0,
+    -half, -half, 0, -half + corner, -half, 0,
+    -half, -half, 0, -half, -half + corner, 0,
+    half, -half, 0, half - corner, -half, 0,
+    half, -half, 0, half, -half + corner, 0
+  ];
+  var geometry = new THREE.BufferGeometry();
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  var frame = new THREE.LineSegments(
+    geometry,
+    new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: .58, depthWrite: false })
+  );
+  frame.position.z = .012;
+  group.add(frame);
+  return frame;
+}
+function musicPlanetConnection(start, end, color, opacity) {
+  var geometry = new THREE.BufferGeometry().setFromPoints([start, end]);
+  return new THREE.Line(
+    geometry,
+    new THREE.LineBasicMaterial({ color: color, transparent: true, opacity: opacity, depthWrite: false })
+  );
+}
+function musicPlanetApplyCover(material, cover, buildId, fallbackLabel, fallbackColor) {
+  if (!material || typeof THREE === 'undefined') return;
+  var fallbackTexture = musicPlanetFallbackTexture(fallbackLabel, fallbackColor);
+  if (fallbackTexture) {
+    material.map = fallbackTexture;
+    material.color.set(0xffffff);
+    material.needsUpdate = true;
+  }
+  if (!cover || !THREE.TextureLoader) return;
+  var loader = new THREE.TextureLoader();
+  if (typeof loader.setCrossOrigin === 'function') loader.setCrossOrigin('anonymous');
+  loader.load(cover, function (texture) {
+    if (buildId !== musicPlanetState.buildId || !material) {
+      if (texture && typeof texture.dispose === 'function') texture.dispose();
+      return;
+    }
+    if (THREE.sRGBEncoding) texture.encoding = THREE.sRGBEncoding;
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    material.map = texture;
+    material.color.set(0xffffff);
+    material.needsUpdate = true;
+    musicPlanetState.textures.push(texture);
+  }, undefined, function () { });
+}
+function musicPlanetBuildScene(grouped) {
+  musicPlanetDisposeScene();
+  var canvas = document.getElementById('music-planet-canvas');
+  if (!canvas || typeof THREE === 'undefined' || !THREE.WebGLRenderer) return false;
+  musicPlanetState.canvas = canvas;
+  try {
+    if (!musicPlanetState.renderer) {
+      musicPlanetState.renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: false,
+        powerPreference: 'high-performance'
+      });
+      musicPlanetState.renderer.setClearColor(0x030508, 1);
+    }
+    var scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x030508, .035);
+    var camera = new THREE.PerspectiveCamera(46, 1, .1, 60);
+    var root = new THREE.Group();
+    root.rotation.x = -.08;
+    root.userData.musicPlanetTargetY = 0;
+    scene.add(root);
+    musicPlanetState.scene = scene;
+    musicPlanetState.camera = camera;
+    musicPlanetState.root = root;
+    var compact = window.innerWidth <= 620;
+    musicPlanetState.zoom = compact ? 11.2 : 9.4;
+    camera.position.set(0, .15, musicPlanetState.zoom);
+    camera.lookAt(0, 0, 0);
+    musicPlanetAddStars(scene, compact);
+    var buildId = musicPlanetState.buildId;
+    var current = grouped.currentSong;
+    if (current) {
+      var currentGroup = new THREE.Group();
+      var currentColor = musicPlanetColor(musicPlanetArtistName(current), 62);
+      var currentMaterial = new THREE.SpriteMaterial({ color: new THREE.Color(currentColor), transparent: true, opacity: 1 });
+      var currentSprite = new THREE.Sprite(currentMaterial);
+      currentSprite.scale.set(1.06, 1.06, 1);
+      currentSprite.userData.musicPlanetNode = { type: 'song', song: current, label: current.name || current.title || '当前歌曲' };
+      currentGroup.add(currentSprite);
+      musicPlanetAddCoverFrame(currentGroup, 1.3, 0xc7dfdf);
+      root.add(currentGroup);
+      musicPlanetState.pickables.push(currentSprite);
+      musicPlanetApplyCover(currentMaterial, musicPlanetSongCover(current, 220), buildId, current.name || current.title, currentColor);
+    }
+    grouped.artists.forEach(function (artist, artistIndex) {
+      var angle = artistIndex * 2.399963229728653;
+      var radius = 1.32 + Math.sqrt(artistIndex + 1) * .72;
+      var x = Math.cos(angle) * radius * (compact ? .58 : 1.1);
+      var y = Math.sin(angle) * radius * .72;
+      var z = ((artistIndex % 3) - 1) * .28;
+      var group = new THREE.Group();
+      group.position.set(x, y, z);
+      group.userData.musicPlanetArtist = artist;
+      root.add(group);
+      var color = musicPlanetColor(artist.name, 64);
+      var markerTexture = musicPlanetArtistMarkerTexture(artist.name, color);
+      var markerMaterial = new THREE.SpriteMaterial({ map: markerTexture, color: 0xffffff, transparent: true, opacity: .82, depthWrite: false });
+      var marker = new THREE.Sprite(markerMaterial);
+      var markerWidth = Math.min(2.45, Math.max(1.55, 1.05 + Array.from(String(artist.name || '')).length * .16));
+      var markerHeight = markerWidth / 5;
+      marker.scale.set(markerWidth, markerHeight, 1);
+      marker.userData.musicPlanetNode = { type: 'artist', artist: artist, artistIndex: artistIndex, label: artist.name };
+      marker.userData.musicPlanetScale = 1;
+      marker.userData.musicPlanetTargetScale = 1;
+      group.add(marker);
+      musicPlanetState.pickables.push(marker);
+      var connection = musicPlanetConnection(
+        new THREE.Vector3(0, 0, 0),
+        new THREE.Vector3(x, y, z),
+        0x8fa5aa,
+        .045
+      );
+      root.add(connection);
+      var satelliteGroup = new THREE.Group();
+      group.add(satelliteGroup);
+      satelliteGroup.visible = false;
+      satelliteGroup.userData.musicPlanetScale = .78;
+      var satelliteSongs = artist.songs.filter(function (song) {
+        return !current || musicPlanetEquivalentIdentity(song) !== musicPlanetEquivalentIdentity(current);
+      });
+      var songLinkPositions = [];
+      satelliteSongs.forEach(function (song, songIndex) {
+        var spread = satelliteSongs.length <= 1 ? 0 : songIndex / (satelliteSongs.length - 1) - .5;
+        var outwardAngle = Math.atan2(y, x || .001) + spread * .9;
+        var satelliteRadius = 1.02 + (songIndex % 2) * .16;
+        var songX = Math.cos(outwardAngle) * satelliteRadius;
+        var songY = Math.sin(outwardAngle) * satelliteRadius * .74;
+        var songZ = (songIndex - (satelliteSongs.length - 1) / 2) * .11;
+        var material = new THREE.SpriteMaterial({ color: new THREE.Color(color), transparent: true, opacity: .94 });
+        var sprite = new THREE.Sprite(material);
+        sprite.position.set(songX, songY, songZ);
+        var scale = songIndex === 0 ? .38 : .32;
+        sprite.scale.set(scale, scale, 1);
+        sprite.userData.musicPlanetNode = {
+          type: 'song',
+          song: song,
+          artist: artist,
+          label: song.name || song.title || '未知歌曲'
+        };
+        satelliteGroup.add(sprite);
+        musicPlanetState.pickables.push(sprite);
+        songLinkPositions.push(0, 0, 0, songX, songY, songZ);
+        musicPlanetApplyCover(material, musicPlanetSongCover(song, 120), buildId, song.name || song.title, color);
+      });
+      var songLinks = null;
+      if (songLinkPositions.length) {
+        var songLinkGeometry = new THREE.BufferGeometry();
+        songLinkGeometry.setAttribute('position', new THREE.Float32BufferAttribute(songLinkPositions, 3));
+        songLinks = new THREE.LineSegments(
+          songLinkGeometry,
+          new THREE.LineBasicMaterial({ color: 0x9dafb1, transparent: true, opacity: .2, depthWrite: false })
+        );
+        satelliteGroup.add(songLinks);
+      }
+      var entry = {
+        key: artist.key,
+        group: group,
+        marker: marker,
+        connection: connection,
+        satelliteGroup: satelliteGroup,
+        songLinks: songLinks,
+        baseWidth: markerWidth,
+        baseHeight: markerHeight
+      };
+      musicPlanetState.artistMeshes.push(entry);
+      musicPlanetState.satelliteGroups.push({ key: artist.key, group: satelliteGroup });
+    });
+    musicPlanetResize();
+    return true;
+  } catch (error) {
+    console.warn('[MusicPlanet] WebGL init failed', error);
+    musicPlanetDisposeScene();
+    return false;
+  }
+}
+function musicPlanetResize() {
+  var canvas = musicPlanetState.canvas;
+  var renderer = musicPlanetState.renderer;
+  var camera = musicPlanetState.camera;
+  if (!canvas || !renderer || !camera) return;
+  var rect = canvas.getBoundingClientRect();
+  var width = Math.max(1, Math.round(rect.width));
+  var height = Math.max(1, Math.round(rect.height));
+  var lowPower = window.innerWidth <= 620;
+  var dpr = Math.min(lowPower ? 1 : 1.5, window.devicePixelRatio || 1);
+  renderer.setPixelRatio(dpr);
+  renderer.setSize(width, height, false);
+  camera.aspect = width / height;
+  camera.updateProjectionMatrix();
+}
+function musicPlanetStartFrame() {
+  if (musicPlanetState.raf || !musicPlanetState.open || document.hidden || !musicPlanetState.renderer || !musicPlanetState.scene) return;
+  musicPlanetState.raf = requestAnimationFrame(musicPlanetFrame);
+}
+function musicPlanetStopFrame() {
+  if (musicPlanetState.raf) cancelAnimationFrame(musicPlanetState.raf);
+  musicPlanetState.raf = 0;
+}
+function musicPlanetFrame() {
+  musicPlanetState.raf = 0;
+  if (!musicPlanetState.open || document.hidden || !musicPlanetState.renderer || !musicPlanetState.scene || !musicPlanetState.camera) return;
+  if (!musicPlanetState.reducedMotion && !musicPlanetState.drag && musicPlanetState.root) musicPlanetState.root.rotation.y += .00022;
+  if (musicPlanetState.root) {
+    var rootTargetY = Number(musicPlanetState.root.userData.musicPlanetTargetY) || 0;
+    musicPlanetState.root.position.y += (rootTargetY - musicPlanetState.root.position.y) * (musicPlanetState.reducedMotion ? 1 : .12);
+  }
+  musicPlanetState.artistMeshes.forEach(function (entry) {
+    if (!entry.marker) return;
+    var currentScale = Number(entry.marker.userData.musicPlanetScale) || 1;
+    var targetScale = Number(entry.marker.userData.musicPlanetTargetScale) || 1;
+    currentScale += (targetScale - currentScale) * (musicPlanetState.reducedMotion ? 1 : .12);
+    entry.marker.userData.musicPlanetScale = currentScale;
+    entry.marker.scale.set(entry.baseWidth * currentScale, entry.baseHeight * currentScale, 1);
+  });
+  musicPlanetState.satelliteGroups.forEach(function (entry) {
+    var group = entry.group;
+    if (!group || !group.visible) return;
+    var currentScale = Number(group.userData.musicPlanetScale) || .78;
+    currentScale += (1 - currentScale) * (musicPlanetState.reducedMotion ? 1 : .13);
+    group.userData.musicPlanetScale = currentScale;
+    group.scale.setScalar(currentScale);
+  });
+  musicPlanetState.renderer.render(musicPlanetState.scene, musicPlanetState.camera);
+  musicPlanetState.raf = requestAnimationFrame(musicPlanetFrame);
+}
+function musicPlanetObjectIsVisible(object) {
+  var current = object;
+  while (current) {
+    if (current.visible === false) return false;
+    current = current.parent;
+  }
+  return true;
+}
+function musicPlanetPointerNode(event) {
+  if (!musicPlanetState.canvas || !musicPlanetState.camera || !musicPlanetState.pickables.length || typeof THREE === 'undefined') return null;
+  var rect = musicPlanetState.canvas.getBoundingClientRect();
+  var x = (event.clientX - rect.left) / Math.max(1, rect.width) * 2 - 1;
+  var y = -((event.clientY - rect.top) / Math.max(1, rect.height) * 2 - 1);
+  var raycaster = new THREE.Raycaster();
+  raycaster.setFromCamera(new THREE.Vector2(x, y), musicPlanetState.camera);
+  var visiblePickables = musicPlanetState.pickables.filter(musicPlanetObjectIsVisible);
+  var hits = raycaster.intersectObjects(visiblePickables, false);
+  return hits.length ? hits[0].object.userData.musicPlanetNode || null : null;
+}
+function musicPlanetShowNodeLabel(node, event) {
+  var label = document.getElementById('music-planet-node-label');
+  var stage = document.querySelector('.music-planet-stage');
+  if (!label || !stage) return;
+  if (!node) {
+    label.classList.remove('show');
+    label.textContent = '';
+    return;
+  }
+  var rect = stage.getBoundingClientRect();
+  label.textContent = node.type === 'artist'
+    ? node.artist.name + ' · ' + node.artist.songs.length + ' 首'
+    : (node.label + ' · ' + musicPlanetArtistName(node.song));
+  label.style.left = Math.max(16, Math.min(rect.width - 16, event.clientX - rect.left)) + 'px';
+  label.style.top = Math.max(24, Math.min(rect.height - 24, event.clientY - rect.top)) + 'px';
+  label.classList.add('show');
+}
+function musicPlanetSelectArtistMesh(key) {
+  var match = null;
+  var hasSelection = !!key;
+  musicPlanetState.artistMeshes.forEach(function (entry) {
+    var selected = entry.key === key;
+    if (entry.marker && entry.marker.material) {
+      entry.marker.material.opacity = hasSelection ? (selected ? 1 : .26) : .82;
+      entry.marker.userData.musicPlanetTargetScale = selected ? 1.08 : (hasSelection ? .96 : 1);
+    }
+    if (entry.connection && entry.connection.material) entry.connection.material.opacity = selected ? .32 : (hasSelection ? .018 : .045);
+    if (entry.satelliteGroup) {
+      entry.satelliteGroup.visible = selected;
+      entry.satelliteGroup.userData.musicPlanetScale = selected ? .78 : 1;
+      if (selected) entry.satelliteGroup.scale.setScalar(.78);
+    }
+    if (selected) match = entry;
+  });
+  if (musicPlanetState.root) {
+    var compact = window.innerWidth <= 620;
+    var targetY = compact && match ? .9 - match.group.position.y : 0;
+    targetY = Math.max(-3, Math.min(3, targetY));
+    musicPlanetState.root.userData.musicPlanetTargetY = targetY;
+    if (musicPlanetState.reducedMotion) {
+      musicPlanetState.root.position.y = targetY;
+    } else if (typeof gsap !== 'undefined' && gsap && typeof gsap.to === 'function') {
+      gsap.to(musicPlanetState.root.position, { y: targetY, duration: .52, ease: 'power3.out', overwrite: true });
+    }
+  }
+  return match;
+}
+function musicPlanetRowHtml(song, index, artist) {
+  var cover = musicPlanetSongCover(song, 100);
+  var coverStyle = cover
+    ? ' style="--music-planet-cover:url(\'' + musicPlanetEscape(cover) + '\')"'
+    : ' style="--music-planet-cover:' + musicPlanetColor(artist.name + index, 34) + '"';
+  var album = song.album || song.albumName || song.source || song.provider || '';
+  return '<div class="music-planet-row" role="listitem" data-music-planet-song="' + index + '">' +
+    '<button class="music-planet-row-main" type="button" data-music-planet-action="play" data-music-planet-song="' + index + '" aria-label="播放 ' + musicPlanetEscape(song.name || song.title || '歌曲') + '">' +
+    '<span class="music-planet-row-cover"' + coverStyle + '></span>' +
+    '<span class="music-planet-row-copy"><strong>' + musicPlanetEscape(song.name || song.title || '未知歌曲') + '</strong><small>' + musicPlanetEscape(album || musicPlanetArtistName(song)) + '</small></span></button>' +
+    '<span class="music-planet-row-actions">' +
+    '<button class="music-planet-row-action" type="button" data-music-planet-action="next" data-music-planet-song="' + index + '" title="下一首播放" aria-label="下一首播放">' + musicPlanetNextIcon() + '</button>' +
+    '<button class="music-planet-row-action" type="button" data-music-planet-action="collect" data-music-planet-song="' + index + '" title="收藏到歌单" aria-label="收藏到歌单">' + musicPlanetCollectIcon() + '</button></span></div>';
+}
+function openMusicPlanetArtist(artistOrIndex) {
+  var artist = typeof artistOrIndex === 'number'
+    ? musicPlanetState.artists[artistOrIndex]
+    : artistOrIndex;
+  if (!artist) return false;
+  var drawer = document.getElementById('music-planet-drawer');
+  var name = document.getElementById('music-planet-drawer-name');
+  var meta = document.getElementById('music-planet-drawer-meta');
+  var marker = document.getElementById('music-planet-drawer-marker');
+  var list = document.getElementById('music-planet-drawer-list');
+  var selection = document.getElementById('music-planet-selection');
+  if (!drawer || !list) return false;
+  musicPlanetState.selectedArtistKey = artist.key;
+  musicPlanetState.keyboardIndex = Math.max(0, musicPlanetState.artists.indexOf(artist));
+  if (name) name.textContent = artist.name;
+  if (meta) meta.textContent = artist.songs.length + ' 首关联歌曲';
+  if (marker) marker.style.setProperty('--music-planet-marker', musicPlanetColor(artist.name, 64));
+  if (selection) selection.textContent = artist.name + ' · ' + artist.songs.length + ' 首歌曲';
+  list.innerHTML = artist.songs.map(function (song, index) { return musicPlanetRowHtml(song, index, artist); }).join('');
+  drawer.classList.add('show');
+  drawer.setAttribute('aria-hidden', 'false');
+  musicPlanetSelectArtistMesh(artist.key);
+  return true;
+}
+function closeMusicPlanetDrawer() {
+  var drawer = document.getElementById('music-planet-drawer');
+  var selection = document.getElementById('music-planet-selection');
+  if (drawer) {
+    drawer.classList.remove('show');
+    drawer.setAttribute('aria-hidden', 'true');
+  }
+  musicPlanetState.selectedArtistKey = '';
+  musicPlanetSelectArtistMesh('');
+  if (selection) selection.textContent = '选择一位歌手展开歌曲';
+}
+function musicPlanetSelectedSong(index) {
+  var artist = musicPlanetState.artists.find(function (entry) { return entry.key === musicPlanetState.selectedArtistKey; });
+  return artist && artist.songs[Number(index)] || null;
+}
+function musicPlanetQueueIndex(song) {
+  if (!song || typeof playQueue === 'undefined') return -1;
+  var identity = musicPlanetSongIdentity(song);
+  for (var index = 0; index < playQueue.length; index += 1) {
+    if (musicPlanetSongIdentity(playQueue[index]) === identity || musicPlanetEquivalentIdentity(playQueue[index]) === musicPlanetEquivalentIdentity(song)) return index;
+  }
+  if (typeof queueSong === 'function') return queueSong(song);
+  return -1;
+}
+function playMusicPlanetSong(song) {
+  if (!song) return false;
+  var index = musicPlanetQueueIndex(song);
+  if (index < 0 || typeof playQueueAt !== 'function') return false;
+  currentIdx = index;
+  Promise.resolve(playQueueAt(index, {
+    manual: true,
+    context: { type: 'music-planet', playlistName: '音乐星图' }
+  })).then(function (started) {
+    if (started === false) {
+      if (typeof showToast === 'function') showToast('这首歌暂时无法播放');
+      return;
+    }
+    closeMusicPlanet();
+  }).catch(function (error) {
+    console.warn('[MusicPlanetPlay]', error);
+    if (typeof showToast === 'function') showToast('这首歌暂时无法播放');
+  });
+  return true;
+}
+function queueMusicPlanetSongNext(song) {
+  if (!song || typeof queueSongNext !== 'function') return false;
+  queueSongNext(song);
+  if (typeof showToast === 'function') showToast('已设为下一首: ' + (song.name || song.title || '当前歌曲'));
+  return true;
+}
+function collectMusicPlanetSong(song) {
+  if (!song || typeof openCollectModal !== 'function') return false;
+  closeMusicPlanet();
+  setTimeout(function () { openCollectModal(song); }, 240);
+  return true;
+}
+function musicPlanetHandleSongAction(action, index) {
+  var song = musicPlanetSelectedSong(index);
+  if (!song) return;
+  if (action === 'play') playMusicPlanetSong(song);
+  else if (action === 'next') queueMusicPlanetSongNext(song);
+  else if (action === 'collect') collectMusicPlanetSong(song);
+}
+function resetMusicPlanetView() {
+  musicPlanetState.zoom = window.innerWidth <= 620 ? 11.2 : 9.4;
+  if (musicPlanetState.camera) {
+    musicPlanetState.camera.position.set(0, .15, musicPlanetState.zoom);
+    musicPlanetState.camera.lookAt(0, 0, 0);
+  }
+  if (musicPlanetState.root) {
+    musicPlanetState.root.rotation.set(-.08, 0, 0);
+    musicPlanetState.root.position.y = 0;
+    musicPlanetState.root.userData.musicPlanetTargetY = 0;
+  }
+  closeMusicPlanetDrawer();
+}
+function musicPlanetBuild() {
+  var width = window.innerWidth || 1280;
+  var lowPower = width <= 620;
+  var songs = musicPlanetCollectSongPool();
+  var current = (typeof playQueue !== 'undefined' && typeof currentIdx !== 'undefined' && currentIdx >= 0) ? playQueue[currentIdx] : songs[0] || null;
+  var grouped = musicPlanetGroupSongs(songs, current, musicPlanetLayoutCaps(width, !!lowPower));
+  musicPlanetState.songs = grouped.songs;
+  musicPlanetState.artists = grouped.artists;
+  musicPlanetState.currentSong = grouped.currentSong;
+  musicPlanetSetCounts(grouped);
+  closeMusicPlanetDrawer();
+  if (!grouped.songs.length) {
+    musicPlanetDisposeScene();
+    musicPlanetShowFallback(grouped, false);
+    return;
+  }
+  if (!musicPlanetBuildScene(grouped)) {
+    musicPlanetShowFallback(grouped, true);
+    musicPlanetSetSummary('3D 渲染不可用，已切换为歌曲列表');
+    return;
+  }
+  musicPlanetHideFallback();
+  musicPlanetStartFrame();
+}
+function musicPlanetOpenSurface() {
+  var mask = document.getElementById('music-planet-mask');
+  if (!mask) return;
+  musicPlanetState.open = true;
+  mask.setAttribute('aria-hidden', 'false');
+  if (typeof openGsapModal === 'function') openGsapModal(mask);
+  else mask.classList.add('show');
+  setTimeout(function () {
+    musicPlanetBuild();
+    var canvas = document.getElementById('music-planet-canvas');
+    if (canvas && !canvas.hidden) canvas.focus();
+  }, 60);
+}
+function openMusicPlanet() {
+  musicPlanetState.previousFocus = document.activeElement;
+  musicPlanetOpenSurface();
+}
+function closeMusicPlanet() {
+  if (!musicPlanetState.open) return;
+  var mask = document.getElementById('music-planet-mask');
+  musicPlanetState.open = false;
+  musicPlanetStopFrame();
+  closeMusicPlanetDrawer();
+  var label = document.getElementById('music-planet-node-label');
+  if (label) label.classList.remove('show');
+  if (mask) mask.setAttribute('aria-hidden', 'true');
+  var focusTarget = musicPlanetState.previousFocus;
+  musicPlanetState.previousFocus = null;
+  var finish = function () {
+    if (focusTarget && typeof focusTarget.focus === 'function') focusTarget.focus();
+  };
+  if (typeof closeGsapModal === 'function') closeGsapModal(mask, finish);
+  else {
+    if (mask) mask.classList.remove('show');
+    finish();
+  }
+}
+function bindMusicPlanetControls() {
+  if (musicPlanetState.controlsBound || typeof document === 'undefined') return;
+  musicPlanetState.controlsBound = true;
+  musicPlanetState.reducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var canvas = document.getElementById('music-planet-canvas');
+  var list = document.getElementById('music-planet-drawer-list');
+  var fallback = document.getElementById('music-planet-fallback');
+  if (canvas) {
+    canvas.addEventListener('pointerdown', function (event) {
+      musicPlanetState.drag = { id: event.pointerId, startX: event.clientX, startY: event.clientY, lastX: event.clientX, lastY: event.clientY };
+      canvas.setPointerCapture(event.pointerId);
+    });
+    canvas.addEventListener('pointermove', function (event) {
+      var drag = musicPlanetState.drag;
+      if (drag) {
+        var dx = event.clientX - drag.lastX;
+        var dy = event.clientY - drag.lastY;
+        drag.lastX = event.clientX;
+        drag.lastY = event.clientY;
+        if (musicPlanetState.root) {
+          musicPlanetState.root.rotation.y += dx * .006;
+          musicPlanetState.root.rotation.x = Math.max(-.75, Math.min(.55, musicPlanetState.root.rotation.x + dy * .004));
+        }
+        musicPlanetShowNodeLabel(null, event);
+        return;
+      }
+      var node = musicPlanetPointerNode(event);
+      musicPlanetState.hoverNode = node;
+      canvas.style.cursor = node ? 'pointer' : 'grab';
+      musicPlanetShowNodeLabel(node, event);
+    });
+    canvas.addEventListener('pointerup', function (event) {
+      var drag = musicPlanetState.drag;
+      musicPlanetState.drag = null;
+      if (!drag) return;
+      var moved = Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY);
+      if (moved > 7) return;
+      var node = musicPlanetPointerNode(event);
+      if (!node) return;
+      if (node.type === 'artist') openMusicPlanetArtist(node.artist);
+      else if (node.song) playMusicPlanetSong(node.song);
+    });
+    canvas.addEventListener('pointerleave', function () {
+      musicPlanetState.drag = null;
+      musicPlanetShowNodeLabel(null, null);
+    });
+    canvas.addEventListener('pointercancel', function () {
+      musicPlanetState.drag = null;
+      musicPlanetShowNodeLabel(null, null);
+    });
+    canvas.addEventListener('wheel', function (event) {
+      event.preventDefault();
+      musicPlanetState.zoom = Math.max(7, Math.min(15, musicPlanetState.zoom + (event.deltaY > 0 ? .65 : -.65)));
+      if (musicPlanetState.camera) musicPlanetState.camera.position.z = musicPlanetState.zoom;
+    }, { passive: false });
+    canvas.addEventListener('keydown', function (event) {
+      if (!musicPlanetState.artists.length) return;
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        var step = event.key === 'ArrowRight' ? 1 : -1;
+        musicPlanetState.keyboardIndex = (musicPlanetState.keyboardIndex + step + musicPlanetState.artists.length) % musicPlanetState.artists.length;
+        openMusicPlanetArtist(musicPlanetState.keyboardIndex);
+      } else if (event.key === 'Enter') {
+        event.preventDefault();
+        openMusicPlanetArtist(musicPlanetState.keyboardIndex);
+      } else if (event.key === '+' || event.key === '=') {
+        event.preventDefault();
+        musicPlanetState.zoom = Math.max(7, musicPlanetState.zoom - .65);
+        if (musicPlanetState.camera) musicPlanetState.camera.position.z = musicPlanetState.zoom;
+      } else if (event.key === '-' || event.key === '_') {
+        event.preventDefault();
+        musicPlanetState.zoom = Math.min(15, musicPlanetState.zoom + .65);
+        if (musicPlanetState.camera) musicPlanetState.camera.position.z = musicPlanetState.zoom;
+      }
+    });
+    if (typeof ResizeObserver !== 'undefined') {
+      musicPlanetState.resizeObserver = new ResizeObserver(musicPlanetResize);
+      musicPlanetState.resizeObserver.observe(canvas);
+    }
+  }
+  if (list) list.addEventListener('click', function (event) {
+    var action = event.target.closest('[data-music-planet-action]');
+    if (!action || !list.contains(action)) return;
+    musicPlanetHandleSongAction(action.getAttribute('data-music-planet-action'), action.getAttribute('data-music-planet-song'));
+  });
+  if (fallback) fallback.addEventListener('click', function (event) {
+    var artist = event.target.closest('[data-music-planet-artist]');
+    if (!artist || !fallback.contains(artist)) return;
+    openMusicPlanetArtist(Number(artist.getAttribute('data-music-planet-artist')) || 0);
+  });
+  document.addEventListener('visibilitychange', function () {
+    if (document.hidden) musicPlanetStopFrame();
+    else musicPlanetStartFrame();
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape' || !musicPlanetState.open) return;
+    var drawer = document.getElementById('music-planet-drawer');
+    if (drawer && drawer.classList.contains('show')) closeMusicPlanetDrawer();
+    else closeMusicPlanet();
+  });
+  window.addEventListener('resize', musicPlanetResize, { passive: true });
+  window.addEventListener('beforeunload', function () {
+    musicPlanetStopFrame();
+    if (musicPlanetState.resizeObserver) musicPlanetState.resizeObserver.disconnect();
+    musicPlanetDisposeScene();
+    if (musicPlanetState.renderer) {
+      try { musicPlanetState.renderer.dispose(); } catch (_error) { }
+      musicPlanetState.renderer = null;
+    }
+  });
 }
 function isCloudSong(song) {
   if (!song || !song.id) return false;
@@ -18615,15 +19955,164 @@ function initAudio() {
   beatAnalyser.smoothingTimeConstant = 0.10;
   source.connect(analyser);
   source.connect(beatAnalyser);
-  analyser.connect(gainNode);
+  buildAudioFXChain();
   gainNode.connect(audioCtx.destination);
   applyVolumeToAudio();
+  applyAudioFX();
   frequencyData.fill(0);
   beatFrequencyData.fill(0);
   beatTimeDomainData.fill(128);
   resetRealtimeBeatEngine();
   audioReady = true;
 }
+
+// ============================================================
+//  听感调节：前级增益 / 均衡器 / 空间听感 / 速度 / 音高
+// ============================================================
+function readAudioFX() {
+  var def = { preamp: 1, bass: 0, midLow: 0, mid: 0, midHigh: 0, treble: 0, spatial: 0, speed: 1, pitch: 0 };
+  try {
+    var raw = localStorage.getItem(AUDIO_FX_STORE_KEY);
+    if (!raw) return def;
+    var parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed !== 'object') return def;
+    Object.keys(def).forEach(function(k){
+      var v = Number(parsed[k]);
+      if (isFinite(v)) def[k] = v;
+    });
+  } catch (e) {}
+  return def;
+}
+function saveAudioFX() {
+  try { localStorage.setItem(AUDIO_FX_STORE_KEY, JSON.stringify(audioFX)); } catch (e) {}
+}
+function buildAudioFXChain() {
+  if (!audioCtx) return;
+  try {
+    if (preampNode) { try { preampNode.disconnect(); } catch (_) {} preampNode = null; }
+    if (spatialNode) { try { spatialNode.disconnect(); } catch (_) {} spatialNode = null; }
+    eqFilters.forEach(function(f){ try { f.disconnect(); } catch (_) {} });
+    eqFilters = [];
+    preampNode = audioCtx.createGain();
+    preampNode.gain.value = audioFX.preamp;
+    var prev = preampNode;
+    AUDIO_FX_EQ_BANDS.forEach(function(band){
+      var f = audioCtx.createBiquadFilter();
+      f.type = band.type;
+      f.frequency.value = band.freq;
+      f.Q.value = 0.9;
+      f.gain.value = audioFX[band.key] || 0;
+      prev.connect(f);
+      prev = f;
+      eqFilters.push(f);
+    });
+    if (audioCtx.createStereoPanner) {
+      spatialNode = audioCtx.createStereoPanner();
+      spatialNode.pan.value = audioFX.spatial;
+      prev.connect(spatialNode);
+      prev = spatialNode;
+    }
+    prev.connect(gainNode);
+  } catch (e) {
+    console.warn('[AudioFX] build chain failed:', e);
+    eqFilters = [];
+    try { source.connect(gainNode); } catch (_) {}
+  }
+}
+function applyAudioFX() {
+  if (!audioCtx || !gainNode) { applyPlaybackRateFX(); return; }
+  if (!preampNode || !eqFilters.length) buildAudioFXChain();
+  var now = audioCtx.currentTime || 0;
+  try {
+    if (preampNode) {
+      preampNode.gain.cancelScheduledValues(now);
+      preampNode.gain.setTargetAtTime(clampRange(Number(audioFX.preamp) || 1, 0.5, 2), now, 0.02);
+    }
+    eqFilters.forEach(function(f, i){
+      var band = AUDIO_FX_EQ_BANDS[i];
+      if (!band) return;
+      f.gain.cancelScheduledValues(now);
+      f.gain.setTargetAtTime(clampRange(Number(audioFX[band.key]) || 0, -12, 12), now, 0.02);
+    });
+    if (spatialNode) {
+      spatialNode.pan.cancelScheduledValues(now);
+      spatialNode.pan.setTargetAtTime(clampRange(Number(audioFX.spatial) || 0, -1, 1), now, 0.02);
+    }
+  } catch (e) { console.warn('[AudioFX] apply failed:', e); }
+  applyPlaybackRateFX();
+}
+function applyPlaybackRateFX() {
+  if (!audio) return;
+  var pitch = clampRange(Number(audioFX.pitch) || 0, -12, 12);
+  var speed = clampRange(Number(audioFX.speed) || 1, 0.5, 2);
+  try {
+    audio.preservesPitch = pitch === 0;
+    audio.playbackRate = speed * Math.pow(2, pitch / 12);
+  } catch (e) {}
+}
+function setAudioFXValue(key, value) {
+  if (key === 'preamp') audioFX.preamp = clampRange(Number(value) || 1, 0.5, 2);
+  else if (key === 'spatial') audioFX.spatial = clampRange(Number(value) || 0, -1, 1);
+  else if (key === 'speed') audioFX.speed = clampRange(Number(value) || 1, 0.5, 2);
+  else if (key === 'pitch') audioFX.pitch = clampRange(Number(value) || 0, -12, 12);
+  else audioFX[key] = clampRange(Number(value) || 0, -12, 12);
+  saveAudioFX();
+  applyAudioFX();
+  syncAudioFXUI();
+}
+function formatFxDb(v) {
+  v = Number(v) || 0;
+  return (v > 0 ? '+' : '') + v.toFixed(1) + 'dB';
+}
+function formatFxGain(v) {
+  var db = 20 * Math.log10(Math.max(0.001, Number(v) || 1));
+  return (db >= 0 ? '+' : '') + db.toFixed(1) + 'dB';
+}
+function formatFxSpatial(v) {
+  v = Number(v) || 0;
+  return (v > 0 ? '右' : v < 0 ? '左' : '中') + ' ' + Math.abs(v).toFixed(2);
+}
+function formatFxSpeed(v) {
+  return (Number(v) || 1).toFixed(2) + 'x';
+}
+function formatFxPitch(v) {
+  v = Number(v) || 0;
+  return (v > 0 ? '+' : '') + v + ' 半音';
+}
+function setFxSliderValue(id, val, text) {
+  var el = document.getElementById(id);
+  if (el) el.value = val;
+  var out = document.getElementById(id + '-out');
+  if (out) out.textContent = text;
+}
+function syncAudioFXUI() {
+  AUDIO_FX_EQ_BANDS.forEach(function(band){
+    setFxSliderValue('audiofx-' + band.key, audioFX[band.key] || 0, formatFxDb(audioFX[band.key]));
+  });
+  setFxSliderValue('audiofx-preamp', audioFX.preamp, formatFxGain(audioFX.preamp));
+  setFxSliderValue('audiofx-spatial', audioFX.spatial, formatFxSpatial(audioFX.spatial));
+  setFxSliderValue('audiofx-speed', audioFX.speed, formatFxSpeed(audioFX.speed));
+  setFxSliderValue('audiofx-pitch', audioFX.pitch, formatFxPitch(audioFX.pitch));
+}
+function bindAudioFXUI() {
+  AUDIO_FX_EQ_BANDS.forEach(function(band){
+    var el = document.getElementById('audiofx-' + band.key);
+    if (el && !el.dataset.fxBound) { el.dataset.fxBound = '1'; el.addEventListener('input', function(){ setAudioFXValue(band.key, el.value); }); }
+  });
+  ['preamp', 'spatial', 'speed', 'pitch'].forEach(function(k){
+    var el = document.getElementById('audiofx-' + k);
+    if (el && !el.dataset.fxBound) { el.dataset.fxBound = '1'; el.addEventListener('input', function(){ setAudioFXValue(k, el.value); }); }
+  });
+  syncAudioFXUI();
+}
+function resetAudioFX() {
+  audioFX = { preamp: 1, bass: 0, midLow: 0, mid: 0, midHigh: 0, treble: 0, spatial: 0, speed: 1, pitch: 0 };
+  saveAudioFX();
+  applyAudioFX();
+  syncAudioFXUI();
+  showToast('听感调节已重置');
+}
+
 function resumeAudioAnalysis() {
   if (audioCtx && audioCtx.state === 'suspended') return audioCtx.resume().catch(function(e){ console.warn('audio context resume failed:', e); });
   return Promise.resolve();
@@ -19310,6 +20799,7 @@ async function playQueueAt(idx, opts) {
     updateControlTrackInfo(song);
     document.getElementById('thumb-wrap').classList.add('visible');
   });
+  safePlaybackStep('media-session', function(){ syncMediaSession(); });
   markPlayPhase('lyric-prep');
   safePlaybackStep('lyric-prep', function(){
     var initialLyricLines = withLyricFallback([]);
@@ -19578,7 +21068,43 @@ function setPlayIcon(p) {
   document.getElementById('play-icon').innerHTML = p
     ? '<rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/>'
     : '<path d="M8 5v14l11-7z"/>';
+  syncMediaSession();
 }
+
+// ============================================================
+//  系统媒体键 / 锁屏媒体控制（Android MediaSession 桥接）
+// ============================================================
+function syncMediaSession() {
+  if (!window.AndroidBridge || typeof window.AndroidBridge.updateMediaSession !== 'function') return;
+  var song = playQueue && currentIdx >= 0 ? playQueue[currentIdx] : null;
+  song = song || currentLocalSong || null;
+  var title = song ? (song.name || song.title || 'Mineradio') : 'Mineradio';
+  var artist = song ? (song.artist || song.ar || song.author || '') : '';
+  var album = song ? (song.album || song.al || '') : '';
+  var cover = '';
+  try {
+    cover = song && typeof songCoverSrc === 'function' ? (songCoverSrc(song, 360) || song.cover || '') : (song && song.cover ? song.cover : '');
+  } catch (e) { cover = song && song.cover ? song.cover : ''; }
+  var duration = audio && isFinite(audio.duration) ? Math.round(audio.duration * 1000) : 0;
+  var position = audio && isFinite(audio.currentTime) ? Math.round(audio.currentTime * 1000) : 0;
+  var isPlaying = !!(audio && !audio.paused);
+  try {
+    window.AndroidBridge.updateMediaSession(title, artist, album, cover, duration, position, isPlaying);
+  } catch (e) {}
+}
+window.__mediaCommand = function(cmd) {
+  try {
+    if (cmd === 'play') { if (audio && audio.paused) togglePlay(); }
+    else if (cmd === 'pause') { if (audio && !audio.paused) togglePlay(); }
+    else if (cmd === 'next') { nextTrack(); }
+    else if (cmd === 'prev') { prevTrack(); }
+    else if (cmd === 'stop') { if (audio && !audio.paused) togglePlay(); }
+    else if (cmd && cmd.indexOf('seek:') === 0) {
+      var ms = parseInt(cmd.slice(5), 10);
+      if (audio && isFinite(ms)) { audio.currentTime = ms / 1000; updatePlaybackProgressUi(); }
+    }
+  } catch (e) {}
+};
 function nextTrack() {
   if (!playQueue.length) return;
   playToggleBusy = false;
@@ -22468,7 +23994,7 @@ function fxPanelTargetForNode(node, current) {
   if (id === 'preset-grid' || id === 'user-archive-grid') return 'presets';
   if (id === 'fx-lyric-fold') return 'lyrics';
   if (id === 'fx-overlay-fold' || id === 'fx-stage-fold') return 'motion';
-  if (id === 'fx-advanced' || node.classList.contains('fx-actions')) return 'advanced';
+  if (id === 'fx-advanced' || id === 'fx-audio-fold' || node.classList.contains('fx-actions')) return 'advanced';
   if (node.classList.contains('lyric-color-row') || node.classList.contains('cover-color-pop') || node.classList.contains('color-lab-pop') || node.classList.contains('cover-color-loupe')) return 'appearance';
   if (inputId === 'fx-bgopacity' || inputId === 'fx-glassaberration') return 'appearance';
   if (inputId === 'fx-lyricglow') return 'lyrics';
@@ -22527,7 +24053,7 @@ function organizeFxPanel() {
     }
     (pages[target] || pages.presets).appendChild(node);
   });
-  ['fx-lyric-fold','fx-overlay-fold','fx-stage-fold','fx-advanced'].forEach(function(id){
+  ['fx-lyric-fold','fx-overlay-fold','fx-stage-fold','fx-audio-fold','fx-advanced'].forEach(function(id){
     var fold = document.getElementById(id);
     if (fold) fold.classList.add('open');
   });
@@ -27003,6 +28529,8 @@ function toggleFullscreen() {
 // ============================================================
 applyDiyMode(diyPlayerMode, { save: false });
 bindFxPanel();
+bindAudioFXUI();
+bindMusicPlanetControls();
 applySavedLyricPaletteState();
 bindQualityControl();
 bindVolumeControls();

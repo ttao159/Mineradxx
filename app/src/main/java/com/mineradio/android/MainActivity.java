@@ -2,7 +2,14 @@ package com.mineradio.android;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioFocusRequest;
+import android.media.AudioManager;
+import android.media.MediaMetadata;
+import android.media.session.MediaSession;
+import android.media.session.PlaybackState;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -17,6 +24,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.webkit.WebViewAssetLoader;
 import androidx.webkit.WebViewCompat;
+
+import org.json.JSONObject;
 
 import java.io.ByteArrayInputStream;
 import java.io.FilterInputStream;
@@ -47,6 +56,20 @@ public class MainActivity extends AppCompatActivity {
     private WebView webView;
     private NodeService nodeService;
     private String currentMode = MODE_PLAYER;
+
+    private MediaSession mediaSession;
+    private AudioManager audioManager;
+    private AudioFocusRequest audioFocusRequest;
+
+    private final AudioManager.OnAudioFocusChangeListener focusListener = new AudioManager.OnAudioFocusChangeListener() {
+        @Override
+        public void onAudioFocusChange(int focusChange) {
+            if (focusChange == AudioManager.AUDIOFOCUS_LOSS
+                    || focusChange == AudioManager.AUDIOFOCUS_LOSS_TRANSIENT) {
+                dispatchMediaCommand("pause");
+            }
+        }
+    };
 
     public class AndroidBridge {
         @JavascriptInterface
@@ -88,6 +111,19 @@ public class MainActivity extends AppCompatActivity {
         public void showToast(String msg) {
             Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
         }
+
+        @JavascriptInterface
+        public void updateMediaSession(String title, String artist, String album,
+                                       String artUrl, long durationMs, long positionMs,
+                                       boolean isPlaying) {
+            runOnUiThread(() -> updateMediaSessionInternal(
+                    title, artist, album, artUrl, durationMs, positionMs, isPlaying));
+        }
+
+        @JavascriptInterface
+        public void setMediaPlaybackState(boolean isPlaying, long positionMs) {
+            runOnUiThread(() -> updatePlaybackState(positionMs, isPlaying));
+        }
     }
 
     @Override
@@ -99,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         nodeService.start(this, () -> runOnUiThread(() -> initWebViewIfNeeded()));
 
         initWebViewIfNeeded();
+        initMediaSession();
     }
 
     private void initWebViewIfNeeded() {
@@ -213,6 +250,99 @@ public class MainActivity extends AppCompatActivity {
     private void switchMode(String mode) {
         if (mode.equals(currentMode)) return;
         loadMode(mode);
+    }
+
+    // ====================================================================
+    // 系统媒体键 / 锁屏媒体控制（MediaSession + 音频焦点）
+    // ====================================================================
+    private void initMediaSession() {
+        try {
+            audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+            mediaSession = new MediaSession(this, "Mineradio");
+            mediaSession.setCallback(new MediaSession.Callback() {
+                @Override public void onPlay() { dispatchMediaCommand("play"); }
+                @Override public void onPause() { dispatchMediaCommand("pause"); }
+                @Override public void onSkipToNext() { dispatchMediaCommand("next"); }
+                @Override public void onSkipToPrevious() { dispatchMediaCommand("prev"); }
+                @Override public void onSeekTo(long pos) { dispatchMediaCommand("seek:" + pos); }
+                @Override public void onStop() { dispatchMediaCommand("stop"); }
+            });
+            mediaSession.setFlags(MediaSession.FLAG_HANDLES_MEDIA_BUTTONS
+                    | MediaSession.FLAG_HANDLES_TRANSPORT_CONTROLS);
+            mediaSession.setActive(true);
+        } catch (Exception e) {
+            // MediaSession 初始化失败不影响主功能
+        }
+    }
+
+    private void dispatchMediaCommand(String cmd) {
+        runOnUiThread(() -> {
+            if (webView == null) return;
+            try {
+                webView.evaluateJavascript(
+                        "window.__mediaCommand && window.__mediaCommand(" + JSONObject.quote(cmd) + ");",
+                        null);
+            } catch (Exception ignored) {}
+        });
+    }
+
+    private void updateMediaSessionInternal(String title, String artist, String album,
+                                            String artUrl, long durationMs, long positionMs,
+                                            boolean isPlaying) {
+        try {
+            if (mediaSession == null) return;
+            MediaMetadata.Builder meta = new MediaMetadata.Builder()
+                    .putString(MediaMetadata.METADATA_KEY_TITLE, title == null ? "" : title)
+                    .putString(MediaMetadata.METADATA_KEY_ARTIST, artist == null ? "" : artist)
+                    .putString(MediaMetadata.METADATA_KEY_ALBUM, album == null ? "" : album)
+                    .putLong(MediaMetadata.METADATA_KEY_DURATION, Math.max(0, durationMs));
+            if (artUrl != null && !artUrl.isEmpty()) {
+                meta.putString(MediaMetadata.METADATA_KEY_ART_URI, artUrl);
+                meta.putString(MediaMetadata.METADATA_KEY_MEDIA_URI, artUrl);
+            }
+            mediaSession.setMetadata(meta.build());
+            updatePlaybackState(positionMs, isPlaying);
+            if (isPlaying) requestAudioFocus();
+        } catch (Exception ignored) {}
+    }
+
+    private void updatePlaybackState(long positionMs, boolean isPlaying) {
+        if (mediaSession == null) return;
+        try {
+            PlaybackState.Builder builder = new PlaybackState.Builder()
+                    .setActions(PlaybackState.ACTION_PLAY
+                            | PlaybackState.ACTION_PAUSE
+                            | PlaybackState.ACTION_PLAY_PAUSE
+                            | PlaybackState.ACTION_SKIP_TO_NEXT
+                            | PlaybackState.ACTION_SKIP_TO_PREVIOUS
+                            | PlaybackState.ACTION_SEEK_TO
+                            | PlaybackState.ACTION_STOP)
+                    .setState(isPlaying ? PlaybackState.STATE_PLAYING : PlaybackState.STATE_PAUSED,
+                            Math.max(0, positionMs), isPlaying ? 1.0f : 0.0f);
+            mediaSession.setPlaybackState(builder.build());
+        } catch (Exception ignored) {}
+    }
+
+    private void requestAudioFocus() {
+        if (audioManager == null) return;
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (audioFocusRequest == null) {
+                    AudioAttributes attrs = new AudioAttributes.Builder()
+                            .setUsage(AudioAttributes.USAGE_MEDIA)
+                            .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                            .build();
+                    audioFocusRequest = new AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+                            .setAudioAttributes(attrs)
+                            .setOnAudioFocusChangeListener(focusListener)
+                            .build();
+                }
+                audioManager.requestAudioFocus(audioFocusRequest);
+            } else {
+                audioManager.requestAudioFocus(focusListener,
+                        AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN);
+            }
+        } catch (Exception ignored) {}
     }
 
     // ====================================================================
@@ -365,6 +495,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         if (nodeService != null) nodeService.stop();
+        if (mediaSession != null) {
+            try { mediaSession.setActive(false); mediaSession.release(); } catch (Exception ignored) {}
+            mediaSession = null;
+        }
         if (webView != null) { webView.destroy(); webView = null; }
         super.onDestroy();
     }
