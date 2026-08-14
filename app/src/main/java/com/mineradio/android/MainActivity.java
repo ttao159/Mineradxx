@@ -2,7 +2,6 @@ package com.mineradio.android;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -208,19 +207,21 @@ public class MainActivity extends AppCompatActivity {
         modeSwitchButton = new Button(this);
         modeSwitchButton.setText("歌词舞台");
         modeSwitchButton.setContentDescription("切换到歌词舞台");
-        modeSwitchButton.setTextColor(Color.WHITE);
-        modeSwitchButton.setTextSize(14);
+        modeSwitchButton.setTextColor(0xFFEDF6F4);
+        modeSwitchButton.setTextSize(13);
         modeSwitchButton.setAllCaps(false);
         modeSwitchButton.setGravity(android.view.Gravity.CENTER);
-        GradientDrawable bg = new GradientDrawable();
-        bg.setColor(0x99000000);
-        bg.setCornerRadius(32);
-        bg.setStroke(2, 0x55FFFFFF);
-        modeSwitchButton.setBackground(bg);
 
         float density = getResources().getDisplayMetrics().density;
-        int padH = (int) (20 * density + 0.5f);
-        int padV = (int) (13 * density + 0.5f);
+        GradientDrawable bg = new GradientDrawable(
+                GradientDrawable.Orientation.TOP_BOTTOM,
+                new int[]{0x2E8FF0E0, 0x7A000000, 0x8C000000});
+        bg.setCornerRadius(26 * density);
+        bg.setStroke((int) (1 * density + 0.5f), 0x38FFFFFF);
+        modeSwitchButton.setBackground(bg);
+
+        int padH = (int) (18 * density + 0.5f);
+        int padV = (int) (10 * density + 0.5f);
         modeSwitchButton.setPadding(padH, padV, padH, padV);
 
         modeSwitchButton.setOnClickListener(v -> {
