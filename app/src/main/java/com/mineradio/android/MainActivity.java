@@ -2,20 +2,16 @@ package com.mineradio.android;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.webkit.WebSettings;
 import android.webkit.JavascriptInterface;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -50,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
     private WebView webView;
     private NodeService nodeService;
-    private Button modeSwitchButton;
     private String currentMode = MODE_PLAYER;
 
     public class AndroidBridge {
@@ -104,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
         nodeService.start(this, () -> runOnUiThread(() -> initWebViewIfNeeded()));
 
         initWebViewIfNeeded();
-        setupModeSwitchButton();
     }
 
     private void initWebViewIfNeeded() {
@@ -203,50 +197,8 @@ public class MainActivity extends AppCompatActivity {
         loadMode(MODE_PLAYER);
     }
 
-    private void setupModeSwitchButton() {
-        modeSwitchButton = new Button(this);
-        modeSwitchButton.setText("歌词舞台");
-        modeSwitchButton.setContentDescription("切换到歌词舞台");
-        modeSwitchButton.setTextColor(0xFFEDF6F4);
-        modeSwitchButton.setTextSize(13);
-        modeSwitchButton.setAllCaps(false);
-        modeSwitchButton.setGravity(android.view.Gravity.CENTER);
-
-        float density = getResources().getDisplayMetrics().density;
-        GradientDrawable bg = new GradientDrawable(
-                GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{0x2E8FF0E0, 0x7A000000, 0x8C000000});
-        bg.setCornerRadius(26 * density);
-        bg.setStroke((int) (1 * density + 0.5f), 0x38FFFFFF);
-        modeSwitchButton.setBackground(bg);
-
-        int padH = (int) (18 * density + 0.5f);
-        int padV = (int) (10 * density + 0.5f);
-        modeSwitchButton.setPadding(padH, padV, padH, padV);
-
-        modeSwitchButton.setOnClickListener(v -> {
-            if (MODE_PLAYER.equals(currentMode)) {
-                switchMode(MODE_FOLIA);
-            } else {
-                switchMode(MODE_PLAYER);
-            }
-        });
-
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-        lp.gravity = android.view.Gravity.TOP | android.view.Gravity.START;
-        lp.topMargin = (int) (20 * density + 0.5f);
-        lp.leftMargin = (int) (16 * density + 0.5f);
-        addContentView(modeSwitchButton, lp);
-    }
-
     private void loadMode(String mode) {
         currentMode = mode;
-        if (modeSwitchButton != null) {
-            modeSwitchButton.setText(MODE_FOLIA.equals(mode) ? "返回播放器" : "歌词舞台");
-            modeSwitchButton.setContentDescription(MODE_FOLIA.equals(mode) ? "返回播放器模式" : "切换到歌词舞台");
-        }
         if (webView == null) return;
         int port = (nodeService != null) ? nodeService.getPort() : 0;
         if (port > 0) {

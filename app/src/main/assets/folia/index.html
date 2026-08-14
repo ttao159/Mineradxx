@@ -34,6 +34,9 @@
           --folia-controls-scale: 0.68;
         }
       }
+      #folia-back-btn{display:none;position:fixed;z-index:9999;top:18px;left:18px;height:34px;padding:0 14px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:linear-gradient(180deg,rgba(143,240,224,.14),rgba(0,0,0,.44) 55%,rgba(0,0,0,.56));color:rgba(237,246,244,.86);font-family:inherit;font-size:12px;font-weight:720;letter-spacing:.06em;cursor:pointer;align-items:center;justify-content:center;gap:7px;backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:0 10px 30px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.10)}
+      #folia-back-btn::before{content:'';width:6px;height:6px;border-radius:50%;background:#8ff0e0;box-shadow:0 0 10px rgba(143,240,224,.6);flex-shrink:0}
+      #folia-back-btn:hover{color:#fff;border-color:rgba(143,240,224,.38);background:linear-gradient(180deg,rgba(143,240,224,.22),rgba(0,0,0,.5) 55%,rgba(0,0,0,.6))}
     </style>
 
   <script type="importmap">
@@ -57,6 +60,24 @@
 </head>
   <body>
     <div id="root"></div>
+    <button id="folia-back-btn" type="button" onclick="switchToPlayer()" title="返回播放器" aria-label="返回播放器">返回播放器</button>
+    <script>
+      function switchToPlayer() {
+        try {
+          if (window.AndroidBridge && typeof window.AndroidBridge.switchToPlayer === 'function') {
+            window.AndroidBridge.switchToPlayer();
+          } else if (window.history && window.history.length > 1) {
+            window.history.back();
+          }
+        } catch (e) {}
+      }
+      (function () {
+        var btn = document.getElementById('folia-back-btn');
+        if (window.AndroidBridge && typeof window.AndroidBridge.switchToPlayer === 'function') {
+          btn.style.display = 'inline-flex';
+        }
+      })();
+    </script>
     <script>
       // Android WebView 内禁用 Service Worker，避免 / 范围拦截本地资源与 API 请求
       if ('serviceWorker' in navigator) {

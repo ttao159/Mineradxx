@@ -419,6 +419,11 @@ body.empty-home-active.controls-visible #empty-home{bottom:128px}
 @media (max-height:760px){.home-visual.generated{height:64px!important;max-width:260px!important}}
 
 /* ---------- 顶部右侧按钮 ---------- */
+#folia-switch-btn{display:none;position:fixed;z-index:9;top:22px;left:18px;height:34px;padding:0 14px;border:1px solid rgba(255,255,255,.12);border-radius:999px;background:linear-gradient(180deg,rgba(143,240,224,.14),rgba(0,0,0,.44) 55%,rgba(0,0,0,.56));color:rgba(237,246,244,.86);font-family:inherit;font-size:12px;font-weight:720;letter-spacing:.06em;cursor:pointer;align-items:center;justify-content:center;gap:7px;transition:background .18s,color .18s,transform .18s,border-color .18s,box-shadow .18s;backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);box-shadow:0 10px 30px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.10)}
+#folia-switch-btn::before{content:'';width:6px;height:6px;border-radius:50%;background:#8ff0e0;box-shadow:0 0 10px rgba(143,240,224,.6);flex-shrink:0}
+#folia-switch-btn:hover{color:#fff;border-color:rgba(143,240,224,.38);background:linear-gradient(180deg,rgba(143,240,224,.22),rgba(0,0,0,.5) 55%,rgba(0,0,0,.6));transform:translateY(-1px)}
+#folia-switch-btn:active{transform:translateY(0) scale(.97)}
+body:not(.desktop-shell) #folia-switch-btn{display:inline-flex}
 #top-right{position:fixed;z-index:10;top:24px;right:24px;display:flex;align-items:center;gap:10px}
 .icon-btn{width:44px;height:44px;border:1px solid rgba(255,255,255,0.08);border-radius:50%;background:rgba(255,255,255,0.035);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);color:rgba(255,255,255,0.55);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s;font-family:inherit;padding:0}
 .icon-btn:hover{background:rgba(255,255,255,0.09);border-color:rgba(255,255,255,0.18);color:#fff;transform:scale(1.04)}
@@ -2327,6 +2332,8 @@ html.control-glass-svg-ok #visual-guide-btn:hover{
 
 <div id="hint" aria-hidden="true"></div>
 
+<button id="folia-switch-btn" type="button" onclick="switchToFoliaStage()" title="切换到歌词舞台" aria-label="切换到歌词舞台">歌词舞台</button>
+
 <!-- 顶部搜索 -->
 <div id="search-area">
   <div id="search-stack">
@@ -3252,12 +3259,19 @@ var activeRadioContext = null;
 var listenStatsState = loadListenStatsState();
 var listenSession = null;
 var appPerfMarks = [];
-function markAppPerf(name) {
+ function markAppPerf(name) {
   try {
     var value = performance.now();
     appPerfMarks.push({ name: name, value: Math.round(value) });
     if (performance && performance.mark) performance.mark('mineradio:' + name);
     if (appPerfMarks.length <= 16) console.debug('[MineradioPerf]', name, Math.round(value) + 'ms');
+  } catch (e) {}
+}
+function switchToFoliaStage() {
+  try {
+    if (window.AndroidBridge && typeof window.AndroidBridge.switchToFolia === 'function') {
+      window.AndroidBridge.switchToFolia();
+    }
   } catch (e) {}
 }
 markAppPerf('script-start');
