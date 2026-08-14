@@ -3135,7 +3135,7 @@ var neteaseWebLoginBusy = false;
 var qqWebLoginBusy = false;
 var qqManualCookieOpen = false;
 var loginStatusChecked = false, loginStatusCheckFailed = false;
-var qrPollTimer = null, qrKey = null;
+var qrPollTimer = null, qrKey = null, qrAutoRefreshCount = 0;
 var volumeTween = null, trackSwitchToken = 0;
 var audioFadeTimer = null, audioElementFadeFrame = 0, audioFadeSerial = 0;
 var AUDIO_FADE_IN_MS = 460;
@@ -23778,6 +23778,7 @@ function renderUserBtn() {
 async function showLoginModal(opts) {
   opts = opts || {};
   if (opts.provider) loginProvider = opts.provider === 'qq' ? 'qq' : 'netease';
+  qrAutoRefreshCount = 0;
   var modal = document.getElementById('login-modal');
   openGsapModal(modal);
   updateLoginProviderUi();
@@ -24031,7 +24032,18 @@ async function checkQr() {
   try {
     var r = await apiJson('/api/login/qr/check?key=' + encodeURIComponent(qrKey));
     var $st = document.getElementById('qr-status');
-    if (r.code === 800) { $st.textContent = '二维码已过期, 请刷新'; $st.className = 'fail'; stopQrPoll(); }
+    if (r.code === 800) {
+      stopQrPoll();
+      if (qrAutoRefreshCount < 2) {
+        qrAutoRefreshCount++;
+        $st.textContent = '二维码已过期，正在自动刷新…';
+        $st.className = '';
+        refreshQr();
+      } else {
+        $st.textContent = '二维码已过期, 请刷新';
+        $st.className = 'fail';
+      }
+    }
     else if (r.code === 801) { $st.textContent = '请在 App 中扫码'; $st.className = ''; }
     else if (r.code === 802) { $st.textContent = '已扫码, 请在手机确认…'; $st.className = 'scan'; }
     else if (r.code === 803 && (r.loggedIn || r.hasCookie)) {
